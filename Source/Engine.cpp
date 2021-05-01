@@ -8,14 +8,25 @@
 #include "Renderer.hpp"
 namespace Orion
 {
+	//Initialize the static boolean that runs the engine
+	bool Engine::s_isUpdating{ true };
+
+	/**************************************************************************!
+	* \fn void Engine::Engine();
+	* \brief Default constructor.
+	***************************************************************************/
+	Engine::Engine()
+	{
+
+	}
+
 	/**************************************************************************!
 	* \fn void Engine::Init();
 	* \brief Initialize engine systems.
 	***************************************************************************/
 	void Engine::Init()
 	{
-		Window::Init(800, 600, "Golem Farm");
-		//Renderer::Init();
+		Window::Init();
 	}
 
 	/**************************************************************************!
@@ -24,15 +35,27 @@ namespace Orion
 	***************************************************************************/
 	void Engine::Update()
 	{
-		while (true);
+		while (s_isUpdating)
+		{
+			Window::Update();
+		}
 	}
 
 	/**************************************************************************!
-	* \fn void Engine::Exit();
+	* \fn void Engine::Shutdown();
 	* \brief Clean up engine systems.
 	***************************************************************************/
-	void Engine::Exit()
+	void Engine::Shutdown()
 	{
 		Window::Shutdown();
+	}
+
+	/**************************************************************************!
+	* \fn void Engine::NotifyShutdown();
+	* \brief Tell the engine to initiate the shutdown sequence.
+	***************************************************************************/
+	void Engine::NotifyShutdown()
+	{
+		s_isUpdating = false;
 	}
 }

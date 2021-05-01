@@ -7,9 +7,10 @@
 int main(int, char**)
 {
 	//Go through the engine's entire life cycle.
-	Orion::Engine::Init();
-	Orion::Engine::Update();
-	Orion::Engine::Exit();
+	Orion::Engine orionEngine;
+	orionEngine.Init();
+	orionEngine.Update();
+	orionEngine.Shutdown();
 	//Exit the application.
 	return 0;
 }
