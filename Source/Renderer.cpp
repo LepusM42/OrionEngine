@@ -3,6 +3,7 @@
 * \author Lepus
 * \brief Displays graphics.
 *******************************************************************************/
+#include "glew.h"
 #include "Renderer.hpp"
 namespace Orion
 {
