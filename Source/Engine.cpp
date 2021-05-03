@@ -27,6 +27,7 @@ namespace Orion
 	void Engine::Init()
 	{
 		Window::Init();
+		Renderer::Init();
 	}
 
 	/**************************************************************************!

@@ -1,5 +1,5 @@
 /******************************************************************************!
-* \file Stub.hpp
+* \file Stub.cpp
 * \author Lepus
 * \brief This is a stub file, used as a template for all other files.
 *******************************************************************************/

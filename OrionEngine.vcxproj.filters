@@ -47,5 +47,8 @@
     <ClInclude Include="Source\Window.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Rigel.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

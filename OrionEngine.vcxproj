@@ -95,7 +95,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;OpenGL32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;OpenGL32.lib;glew32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <AdditionalOptions>/NODEFAULTLIB:glfw3.lib,opengl32.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
@@ -155,6 +155,7 @@
     <ClInclude Include="Source\Engine.hpp" />
     <ClInclude Include="Source\Orion.hpp" />
     <ClInclude Include="Source\Renderer.hpp" />
+    <ClInclude Include="Source\Rigel.hpp" />
     <ClInclude Include="Source\Stub.hpp" />
     <ClInclude Include="Source\Window.hpp" />
   </ItemGroup>
