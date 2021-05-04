@@ -19,7 +19,7 @@ namespace Orion
 		GLenum retval = glewInit();
 		if (retval == GLEW_OK)
 		{
-			Shader s;
+			ShaderProgram s;
 			s.Init();
 
 			float pos[] = {

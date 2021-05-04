@@ -19,7 +19,7 @@ namespace Orion
 	{
 		if (glfwInit() == GLFW_TRUE)
 		{
-			CreateWindow(800, 600, "Golem Farm");
+			CreateWindow(800, 600, "OrionEngine");
 			glfwMakeContextCurrent(s_window);
 			glfwSetWindowCloseCallback(s_window, WindowCloseCallback);
 		}
