@@ -39,6 +39,7 @@ namespace Orion
 		while (s_isUpdating)
 		{
 			Window::Update();
+			Renderer::Update();
 		}
 	}
 

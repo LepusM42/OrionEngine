@@ -16,6 +16,7 @@ namespace Orion
 	public:
 		//!< Initialize the renderer.
 		static void Init();
+		static void Update();
 	private:
 	};
 }
