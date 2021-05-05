@@ -5,6 +5,8 @@
 *******************************************************************************/
 #pragma once
 #include "glew.h"
+#include <vector>
+#include <string>
 namespace Orion
 {
 	/**************************************************************************!
@@ -38,9 +40,11 @@ namespace Orion
 		//!< Initialize the shader program.
 		void Init();
 		//!< Add a new shader file to the program.
-		void AddShader(const char* file, GLenum type) const;
+		void AddShader(const char* file, GLenum type);
 		//!< Retrieve the name of a vertex attribute from the shader program.
 		int GetAttribute(const char* attribute) const;
+		//!< Clean up shader objects.
+		~ShaderProgram();
 	private:
 		//!< Compile one shader object and attach it to the shader program.
 		void CompileShaderSource(ShaderObject shader) const;
@@ -48,5 +52,8 @@ namespace Orion
 		void LinkShaderProgram() const;
 		//!< OpenGL handle of the shader program.
 		GLuint m_shaderProgram{ 0 };
+		//!< All shader objects attached to the program. Really only used for
+		//!< detachment from the program in the destructor.
+		std::vector<ShaderObject> m_objects;
 	};
 }

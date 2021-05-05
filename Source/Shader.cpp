@@ -6,7 +6,6 @@
 #include "Shader.hpp"
 #include <fstream>
 #include <iostream>
-#include <string>
 namespace Orion
 {
 	/**************************************************************************!
@@ -82,12 +81,13 @@ namespace Orion
 	* \param file Name of the shader file to read from.
 	* \param type Enumerated type of shader to read, such as GL_VERTEX_SHADER.
 	***************************************************************************/
-	void ShaderProgram::AddShader(const char* file, GLenum type) const
+	void ShaderProgram::AddShader(const char* file, GLenum type)
 	{
 		//Read shader source code of the specified shader type from a file.
 		ShaderObject source(file, type);
 		//Compile and attach the shader to the shader program.
 		CompileShaderSource(source);
+		m_objects.push_back(source);
 	}
 
 	/**************************************************************************!
@@ -147,5 +147,19 @@ namespace Orion
 		//Validate the shader program after linking to ensure that it is ready
 		//for use.
 		glValidateProgram(m_shaderProgram);
+	}
+
+	/**************************************************************************!
+	* \fn void ShaderProgram::~ShaderProgram();
+	* \brief Clean up shader objects.
+	***************************************************************************/
+	ShaderProgram::~ShaderProgram()
+	{
+		for (ShaderObject shader : m_objects)
+		{
+			glDetachShader(m_shaderProgram, shader.GetHandle());
+			glDeleteShader(shader.GetHandle());
+		}
+		glDeleteProgram(m_shaderProgram);
 	}
 }
