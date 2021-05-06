@@ -14,19 +14,19 @@ namespace Orion
 	class Engine
 	{
 	public:
-		//!< Default constructor.
+		//! Default constructor.
 		Engine();
-		//!< Initialize engine systems.
+		//! Initialize engine systems.
 		void Init();
-		//!< Update engine systems.
+		//! Update engine systems.
 		void Update();
-		//!< Clean up engine systems.
+		//! Clean up engine systems.
 		void Shutdown();
-		//!< Tell the engine to initiate the shutdown sequence.
+		//! Tell the engine to initiate the shutdown sequence.
 		static void NotifyShutdown();
 	private:
-		//!< The engine runs as long as this is true. Kept static to avoid the
-		//!< clunky Singleton Pattern.
+		//! The engine runs as long as this is true. Kept static to avoid the
+		//! clunky Singleton Pattern.
 		static bool s_isUpdating;
 	};
 }

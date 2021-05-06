@@ -16,15 +16,15 @@ namespace Orion
 	***************************************************************************/
 	struct ShaderObject
 	{
-		//!< Constructor for a shader object.
+		//! Constructor for a shader object.
 		ShaderObject(const char* filename, GLenum type);
-		//!< Get the shader's OpenGL ID for compilation and attachment.
+		//! Get the shader's OpenGL ID for compilation and attachment.
 		GLuint GetHandle() const;
 	private:
-		//!< Get the contents of a GLSL file.
+		//! Get the contents of a GLSL file.
 		std::string LoadShaderFile(std::string filename) const;
-		//!< Handle of the shader object in OpenGL, used to compile it and 
-		//!< attach it to a shader program.
+		//! Handle of the shader object in OpenGL, used to compile it and 
+		//! attach it to a shader program.
 		GLuint m_objID{ 0 };
 	};
 
@@ -37,23 +37,23 @@ namespace Orion
 	class ShaderProgram
 	{
 	public:
-		//!< Initialize the shader program.
+		//! Initialize the shader program.
 		void Init();
-		//!< Add a new shader file to the program.
+		//! Add a new shader file to the program.
 		void AddShader(const char* file, GLenum type);
-		//!< Retrieve the name of a vertex attribute from the shader program.
+		//! Retrieve the name of a vertex attribute from the shader program.
 		int GetAttribute(const char* attribute) const;
-		//!< Clean up shader objects.
+		//! Clean up shader objects.
 		~ShaderProgram();
 	private:
-		//!< Compile one shader object and attach it to the shader program.
+		//! Compile one shader object and attach it to the shader program.
 		void CompileShaderSource(ShaderObject shader) const;
-		//!< Link all compiled shader objects, then validate the program.
+		//! Link all compiled shader objects, then validate the program.
 		void LinkShaderProgram() const;
-		//!< OpenGL handle of the shader program.
+		//! OpenGL handle of the shader program.
 		GLuint m_shaderProgram{ 0 };
-		//!< All shader objects attached to the program. Really only used for
-		//!< detachment from the program in the destructor.
+		//! All shader objects attached to the program. Really only used for
+		//! detachment from the program in the destructor.
 		std::vector<ShaderObject> m_objects;
 	};
 }

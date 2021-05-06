@@ -7,13 +7,13 @@
 namespace Orion
 {
 	/**************************************************************************!
-	* \class Foo
-	* \brief Template for a class.
+	* \class 
+	* \brief 
 	***************************************************************************/
 	class Foo
 	{
 	public:
-		//!< Does nothing.
+		//! Does nothing.
 		int Bar(int);
 	private:
 	};

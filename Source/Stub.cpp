@@ -7,10 +7,10 @@
 namespace Orion
 {
 	/**************************************************************************!
-	* \fn void Foo::Bar();
-	* \brief Does nothing.
-	* \param foobar Does nothing.
-	* \return Value of foobar.
+	* \fn 
+	* \brief 
+	* \param 
+	* \return 
 	***************************************************************************/
 	int Foo::Bar(int foobar)
 	{
