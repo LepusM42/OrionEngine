@@ -93,16 +93,16 @@ namespace Rigel
 	}
 
 	/**************************************************************************!
-	* \fn Matrix<T>::Matrix(std::vector<T> array, unsigned width,
+	* \fn Matrix<T>::Matrix(std::vector<T> vector, unsigned width,
 	*  unsigned height);
 	* \brief Copy the contents of a vector into a matrix of two different
 	*  dimensions.
-	* \param array List of values to pass into this matrix.
+	* \param vector List of values to pass into this matrix.
 	* \param width Width of the matrix to be created.
 	* \param height Height of the matrix to be created.
 	***************************************************************************/
 	template <typename T>
-	Matrix<T>::Matrix(std::vector<T> array, unsigned width, unsigned height) :
+	Matrix<T>::Matrix(std::vector<T> vector, unsigned width, unsigned height) :
 		m_width{ width },
 		m_height{ height }
 	{
@@ -111,9 +111,104 @@ namespace Rigel
 		{
 			for (unsigned j = 0; j < m_width; ++j)
 			{
-				m_matrix[i][j] = array[i][j];
+				m_matrix[i][j] = vector[i][j];
 			}
 		}
+	}
+
+	/**************************************************************************!
+	* \fn Matrix<T>::Matrix(Vector<T> vector, unsigned width, unsigned height);
+	* \brief Copy the contents of a Rigel vector into a matrix of two different
+	*  dimensions.
+	* \param vector List of values to pass into this matrix.
+	* \param width Width of the matrix to be created.
+	* \param height Height of the matrix to be created.
+	***************************************************************************/
+	template <typename T>
+	Matrix<T>::Matrix(Vector<T> vector, unsigned width, unsigned height) :
+		m_width{ width },
+		m_height{ height }
+	{
+		m_matrix = AllocateMatrix();
+		for (unsigned i = 0; i < m_height; ++i)
+		{
+			for (unsigned j = 0; j < m_width; ++j)
+			{
+				m_matrix[i][j] = vector[i][j];
+			}
+		}
+	}
+
+	/**************************************************************************!
+	* \fn Matrix<T> Matrix<T>::RotationMatrix2D(T theta);
+	* \brief Create a matrix that rotates a vector about the origin in 2D space.
+	* \param theta How far input vectors will be rotated.
+	* \return Matrix used to perform a rotation by the given amount about the
+	*  origin in 2D space.
+	***************************************************************************/
+	template <typename T>
+	Matrix<T> Matrix<T>::RotationMatrix2D(T theta)
+	{
+		T rotationMatrixValues[4] = { cos(theta), -sin(theta),
+									  sin(theta),  cos(theta) };
+		return Matrix<T>(rotationMatrixValues, 2, 2);
+	}
+
+	/**************************************************************************!
+	* \fn Matrix<T> Matrix<T>::RotationMatrix3D(Vector<T> axis, T theta);
+	* \brief Create a matrix that rotates a vector about an axis in 3D space.
+	* \param axis 3D directional vector from the origin representing an axis
+	*  about which input vectors will be rotated.
+	* \param theta How far input vectors will be rotated.
+	* \return Matrix used to perform a rotation by the given amount about a
+	*  directional vector from the origin in 3D space.
+	***************************************************************************/
+	template <typename T>
+	Matrix<T> Matrix<T>::RotationMatrix3D(Vector<T> axis, T theta)
+	{
+		T a = axis[0],
+		  b = axis[1],
+		  c = axis[2];
+		T rotationMatrixValues[9] = { 0, -c,  b,
+									  c,  0, -a,
+									 -b,  a,  0 };
+		Matrix<T> m0 = Matrix(rotationMatrixValues, 3, 3);
+		m0 *= (sin(theta) / axis.magnitude());
+		Matrix<T> m1 = Matrix<T>::MatrixFromVector(axis, false);
+		Matrix<T> m2 = Matrix<T>::MatrixFromVector(axis, true);
+		Matrix<T> m3 = ((m1 * m3) * 1 / (axis * axis)) * (1 - cos(theta));
+		Matrix<T> m4 = Matrix<T>(3) * cos(theta);
+		Matrix<T> finalMatrix = m3 + m4 + m0;
+		return finalMatrix;
+	}
+
+	//!
+	/**************************************************************************!
+	* \fn Matrix<T> Matrix<T>::MatrixFromVector(Vector<T> vector,
+	   bool transpose);
+	* \brief Create a matrix from a vector.
+	* \param vector Vector to convert to a matrix.
+	* \param transpose Whether to swap the width and height of the resulting
+	*  matrix, swapping the columns and rows in the process.
+	* \return If transpose is false, returns a matrix with width of 1, or a
+	*  matrix with height of 1 otherwise. The components of this matrix are
+	*  equal to those of the original vector.
+	***************************************************************************/
+	template <typename T>
+	Matrix<T> Matrix<T>::MatrixFromVector(Vector<T> vector, bool transpose)
+	{
+		unsigned width, height;
+		if (transpose)
+		{
+			width = vector.size();
+			height = 1;
+		}
+		else
+		{
+			width = 1;
+			height = vector.size();
+		}
+		return Matrix<T>(vector, width, height);
 	}
 
 	/**************************************************************************!

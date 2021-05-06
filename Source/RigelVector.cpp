@@ -105,6 +105,30 @@ namespace Rigel
 	}
 
 	/**************************************************************************!
+	* \fn T Vector<T>::magnitude();
+	* \brief Magnitude of a vector.
+	* \return The magnitude of the vector, equal to the square root of the dot
+	*  product of the vector and itself.
+	***************************************************************************/
+	template <typename T>
+	T Vector<T>::magnitude()
+	{
+		return static_cast<T>(sqrt((*this) * (*this)));
+	}
+
+	/**************************************************************************!
+	* \fn const T Vector<T>::operator[](unsigned index);
+	* \brief Access a component.
+	* \param index Which component to access.
+	* \return Value of the component stored at the specified index.
+	***************************************************************************/
+	template <typename T>
+	const T Vector<T>::operator[](unsigned index)
+	{
+		return m_components[index];
+	}
+
+	/**************************************************************************!
 	* \fn T* Vector<T>::AllocateVector();
 	* \brief Allocate memory for a vector using the stored dimension.
 	* \return Block of memory large enough to hold the data necessary for this

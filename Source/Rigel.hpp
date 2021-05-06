@@ -32,6 +32,10 @@ namespace Rigel
 		const T operator*(Vector<T> vector);
 		//! Get the number of components this vector contains.
 		unsigned size();
+		//! Access a component.
+		const T operator[](unsigned index);
+		//! Magnitude of a vector.
+		T magnitude();
 	private:
 		//! Allocate memory for a vector using the stored dimension.
 		T* AllocateVector();
@@ -67,6 +71,15 @@ namespace Rigel
 		//! Copy the contents of a vector into a matrix of two different
 		//! dimensions.
 		Matrix(std::vector<T> array, unsigned width, unsigned height);
+		//! Copy the contents of a Rigel vector into a matrix of two different
+		//! dimensions.
+		Matrix(Vector<T> array, unsigned width, unsigned height);
+		//! Create a matrix that rotates a vector about a point in 2D space.
+		static Matrix<T> RotationMatrix2D(T theta);
+		//! Create a matrix that rotates a vector about an axis in 3D space.
+		static Matrix<T> RotationMatrix3D(Vector<T> axis, T theta);
+		//! Create a matrix from a vector.
+		static Matrix<T> MatrixFromVector(Vector<T> vector, bool transpose);
 		//! Create a new resultant matrix by scaling an existing matrix by a 
 		//! scalar value.
 		const Matrix<T> operator*(T scalar);
