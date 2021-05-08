@@ -43,6 +43,8 @@ namespace Orion
 		void AddShader(const char* file, GLenum type);
 		//! Retrieve the name of a vertex attribute from the shader program.
 		int GetAttribute(const char* attribute) const;
+		//! Retrieve the name of a uniform variable from the shader program.
+		int GetUniform(const char* attribute) const;
 		//! Clean up shader objects.
 		~ShaderProgram();
 	private:

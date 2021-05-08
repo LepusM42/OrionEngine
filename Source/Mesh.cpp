@@ -4,6 +4,7 @@
 * \brief This is a stub file, used as a template for all other files.
 *******************************************************************************/
 #include "Mesh.hpp"
+#include "Shader.hpp"
 namespace Orion
 {
 	/**************************************************************************!
@@ -52,13 +53,21 @@ namespace Orion
 		//0 - Stride in bytes between instances of the passed data.
 		//nullptr - Offset inside the buffer at which to find the
 		//attribute.
-		int attr_Pos = 0;// s.GetAttribute("position");
+		int attr_Pos = m_shader.GetAttribute("position");
 		glVertexAttribPointer(attr_Pos, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+		int uni_Scale = m_shader.GetUniform("scale");
+		glUniform1f(uni_Scale, sinf(m_scale));
+		m_scale += .001f;
 		//Draw a series of points, starting at index 0, drawing 1 point.
 		//glDrawArrays draws in order, as opposed to indexed drawing.
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 		//Disable the attribute at index 0.
 		glDisableVertexAttribArray(0);
+	}
+
+	void Mesh::SetShader(ShaderProgram shader)
+	{
+		m_shader = shader;
 	}
 
 	/**************************************************************************!

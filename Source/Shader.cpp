@@ -102,6 +102,17 @@ namespace Orion
 	}
 
 	/**************************************************************************!
+	* \fn int ShaderProgram::GetUniform(const char* uniform);
+	* \brief Retrieve the name of a uniform variable from the shader program.
+	* \param uniform Name of the uniform to retrieve from the program.
+	* \return Index of the uniform in the vertex buffer.
+	***************************************************************************/
+	int ShaderProgram::GetUniform(const char* uniform) const
+	{
+		return glGetUniformLocation(m_shaderProgram, uniform);
+	}
+
+	/**************************************************************************!
 	* \fn void ShaderProgram::CompileShaderSource(ShaderObject shader);
 	* \brief Compile one shader object and attach it to the shader program.
 	* \param shader Structure representing a shader object, including its source

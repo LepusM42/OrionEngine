@@ -24,6 +24,7 @@ namespace Orion
 			ShaderProgram s;
 			s.Init();
 			m.Init();
+			m.SetShader(s);
 		}
 		else
 		{

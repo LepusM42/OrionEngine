@@ -19,6 +19,8 @@ namespace Orion
 	{
 		if (glfwInit() == GLFW_TRUE)
 		{
+			glfwWindowHint(GLFW_DOUBLEBUFFER, true);
+			glfwWindowHint(GLFW_REFRESH_RATE, GLFW_DONT_CARE);
 			CreateWindow(800, 600, "OrionEngine");
 			glfwMakeContextCurrent(s_window);
 			glfwSetWindowCloseCallback(s_window, WindowCloseCallback);
@@ -36,7 +38,13 @@ namespace Orion
 	{
 		if (!glfwWindowShouldClose(s_window))
 		{
+			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+			GLbitfield mask = 0;
+			mask |= GL_COLOR_BUFFER_BIT;
+			mask |= GL_DEPTH_BUFFER_BIT;
+			mask |= GL_STENCIL_BUFFER_BIT;
 			glfwSwapBuffers(s_window);
+			glClear(mask);
 			glfwPollEvents();
 		}
 	}
