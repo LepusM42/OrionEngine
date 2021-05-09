@@ -12,6 +12,7 @@
 namespace Orion
 {
 	Mesh m;
+	Rigel::Matrix<float> s_world(4);
 	/**************************************************************************!
 	* \fn void Renderer::Init();
 	* \brief Initialize the renderer.

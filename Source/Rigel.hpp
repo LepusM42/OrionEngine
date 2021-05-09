@@ -93,9 +93,9 @@ namespace Rigel
 		~Matrix();
 	private:
 		//! Allocate memory for a matrix using the stored width and height.
-		T* AllocateMatrix();
+		T** AllocateMatrix();
 		//! List of values that the matrix contains.
-		T* m_matrix{};
+		T** m_matrix{};
 		//! Width of the matrix.
 		unsigned m_width{ 0 };
 		//! Height of the matrix.

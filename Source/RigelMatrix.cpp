@@ -317,9 +317,14 @@ namespace Rigel
 	*  this matrix.
 	***************************************************************************/
 	template <typename T>
-	T* Matrix<T>::AllocateMatrix()
+	T** Matrix<T>::AllocateMatrix()
 	{
-		return new T[m_width * m_height]{ 0 };
+		T** newMatrix = new T*[m_height];
+		for (unsigned i = 0; i < m_height; ++i)
+		{
+			newMatrix[i] = new T[m_width];
+		}
+		return newMatrix;
 	}
 
 	/**************************************************************************!
@@ -329,6 +334,10 @@ namespace Rigel
 	template <typename T>
 	Matrix<T>::~Matrix()
 	{
+		for (unsigned i = 0; i < m_height; ++i)
+		{
+			delete m_matrix[i];
+		}
 		delete[] m_matrix;
 	}
 }

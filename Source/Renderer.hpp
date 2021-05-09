@@ -4,6 +4,7 @@
 * \brief Displays graphics.
 *******************************************************************************/
 #pragma once
+#include "Rigel.hpp"
 namespace Orion
 {
 	/**************************************************************************!
@@ -19,5 +20,6 @@ namespace Orion
 		//! Update the renderer.
 		static void Update();
 	private:
+		static Rigel::Matrix<float> s_world;
 	};
 }
