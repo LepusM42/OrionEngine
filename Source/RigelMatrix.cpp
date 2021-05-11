@@ -22,7 +22,7 @@ namespace Rigel
 		{
 			for (unsigned j = 0; j < m_width; ++j)
 			{
-				m_matrix[i][j] = other.m_matrix[i][j];
+				m_matrix[i * sizeof(T) + j] = other.m_matrix[i * sizeof(T) + j];
 			}
 		}
 	}
@@ -43,7 +43,7 @@ namespace Rigel
 		{
 			for (unsigned j = 0; j < m_width; ++j)
 			{
-				m_matrix[i][j] = i == j;
+				GetMember(i, j) = i == j;
 			}
 		}
 	}
@@ -56,7 +56,7 @@ namespace Rigel
 	* \param height Height of the matrix to be created.
 	***************************************************************************/
 	template <typename T>
-	Matrix<T>:: Matrix(const T value, unsigned width, unsigned height) :
+	Matrix<T>::Matrix(const T value, unsigned width, unsigned height) :
 		m_width{ width },
 		m_height{ height }
 	{
@@ -65,7 +65,7 @@ namespace Rigel
 		{
 			for (unsigned j = 0; j < m_width; ++j)
 			{
-				m_matrix[i][j] = value;
+				GetMember(i, j) = value;
 			}
 		}
 	}
@@ -83,11 +83,12 @@ namespace Rigel
 		m_width{ width },
 		m_height{ height }
 	{
+		m_matrix = AllocateMatrix();
 		for (unsigned i = 0; i < m_height; ++i)
 		{
 			for (unsigned j = 0; j < m_width; ++j)
 			{
-				m_matrix[i][j] = array[i][j];
+				GetMember(i, j) = array[i * sizeof(T) + j];
 			}
 		}
 	}
@@ -111,7 +112,7 @@ namespace Rigel
 		{
 			for (unsigned j = 0; j < m_width; ++j)
 			{
-				m_matrix[i][j] = vector[i][j];
+				GetMember(i, j) = vector[i][j];
 			}
 		}
 	}
@@ -134,7 +135,7 @@ namespace Rigel
 		{
 			for (unsigned j = 0; j < m_width; ++j)
 			{
-				m_matrix[i][j] = vector[i][j];
+				GetMember(i, j) = vector[i * sizeof(T) + j];
 			}
 		}
 	}
@@ -169,15 +170,16 @@ namespace Rigel
 		T a = axis[0],
 		  b = axis[1],
 		  c = axis[2];
-		T rotationMatrixValues[9] = { 0, -c,  b,
-									  c,  0, -a,
-									 -b,  a,  0 };
-		Matrix<T> m0 = Matrix(rotationMatrixValues, 3, 3);
-		m0 *= (sin(theta) / axis.magnitude());
+		T rotationMatrixValues[16] = { 0, -c,  b, 0,
+									   c,  0, -a, 0,
+									  -b,  a,  0, 0,
+									   0,  0,  0, 1 };
+		Matrix<T> m0 = Matrix(rotationMatrixValues, 4, 4);
+		m0 *= (sinf(theta) / axis.magnitude());
 		Matrix<T> m1 = Matrix<T>::MatrixFromVector(axis, false);
 		Matrix<T> m2 = Matrix<T>::MatrixFromVector(axis, true);
-		Matrix<T> m3 = ((m1 * m3) * 1 / (axis * axis)) * (1 - cos(theta));
-		Matrix<T> m4 = Matrix<T>(3) * cos(theta);
+		Matrix<T> m3 = ((m1 * m2) * (1.0f / (axis * axis))) * (1 - cosf(theta));
+		Matrix<T> m4 = Matrix<T>(4) * cosf(theta);
 		Matrix<T> finalMatrix = m3 + m4 + m0;
 		return finalMatrix;
 	}
@@ -219,7 +221,7 @@ namespace Rigel
 	* \return A new matrix, equal to the original scaled by the passed in value.
 	***************************************************************************/
 	template <typename T>
-	const Matrix<T> Matrix<T>::operator*(T scalar)
+	Matrix<T> Matrix<T>::operator*(T scalar)
 	{
 		Matrix<T> newMatrix(*this);
 		newMatrix *= scalar;
@@ -239,7 +241,7 @@ namespace Rigel
 		{
 			for (unsigned j = 0; j < m_width; ++j)
 			{
-				m_matrix[i][j] = m_matrix[i][j] * scalar;
+				GetMember(i, j) = GetMember(i, j) * scalar;
 			}
 		}
 		return *this;
@@ -255,9 +257,9 @@ namespace Rigel
 	*  matrix is returned.
 	***************************************************************************/
 	template <typename T>
-	const Matrix<T> Matrix<T>::operator*(Matrix<T> other)
+	Matrix<T> Matrix<T>::operator*(Matrix<T> other)
 	{
-		Matrix<T> newMatrix(0, other.m_width, m_height);
+		Matrix<T> newMatrix(0.0f, other.m_width, m_height);
 		T sum;
 		if (m_width != other.m_height)
 		{
@@ -270,9 +272,28 @@ namespace Rigel
 				sum = 0;
 				for (unsigned k = 0; k < other.m_height; ++k)
 				{
-					sum += m_matrix[i][k] * other.m_matrix[k][j];
+					sum += GetMember(i, k) * other[k][j];
 				}
-				newMatrix.m_matrix[i][j] = sum;
+				newMatrix.GetMember(i, j) = sum;
+			}
+		}
+		return newMatrix;
+	}
+
+	//! Add a matrix to another matrix.
+	template <typename T>
+	Matrix<T> Matrix<T>::operator+(Matrix<T> matrix)
+	{
+		Matrix<T> newMatrix(0.0f, m_width, m_height);
+		if (m_width != matrix.m_height)
+		{
+			return newMatrix;
+		}
+		for (unsigned i = 0; i < m_height; ++i)
+		{
+			for (unsigned j = 0; j < m_width; ++j)
+			{
+				newMatrix.GetMember(i, j) = matrix[i][j];
 			}
 		}
 		return newMatrix;
@@ -287,7 +308,7 @@ namespace Rigel
 	*  vector is not equal to the width of the matrix, a zero vector is returned.
 	***************************************************************************/
 	template <typename T>
-	const Vector<T> Matrix<T>::operator*(Vector<T> vector)
+	Vector<T> Matrix<T>::operator*(Vector<T> vector)
 	{
 		unsigned size = vector.size();
 		Vector<T> newVector(0, size);
@@ -301,11 +322,31 @@ namespace Rigel
 			sum = 0;
 			for (unsigned j = 0; j < size; ++j)
 			{
-				sum += m_matrix[i][j] * vector[j];
+				sum += GetMember(i, j) * vector[j];
 			}
 			newVector[i] = sum;
 		}
 		return newVector;
+	}
+
+	/**************************************************************************!
+	* \fn T* Matrix<T>::operator[](unsigned index);
+	* \brief Access a row.
+	* \param index A value between 0 and m_height representing the index of the
+	*  row to access.
+	* \return A pointer to an array of this matrix's type, representing a row.
+	***************************************************************************/
+	template <typename T>
+	T* Matrix<T>::operator[](unsigned index)
+	{
+		return &m_matrix[index * m_height];
+	}
+
+	//! Access the raw data of the matrix.
+	template <typename T>
+	T* Matrix<T>::GetRawMatrixData()
+	{
+		return m_matrix;
 	}
 
 	/**************************************************************************!
@@ -317,14 +358,17 @@ namespace Rigel
 	*  this matrix.
 	***************************************************************************/
 	template <typename T>
-	T** Matrix<T>::AllocateMatrix()
+	T* Matrix<T>::AllocateMatrix()
 	{
-		T** newMatrix = new T*[m_height];
-		for (unsigned i = 0; i < m_height; ++i)
-		{
-			newMatrix[i] = new T[m_width];
-		}
+		T* newMatrix = new T[m_width * m_height];
 		return newMatrix;
+	}
+
+	//! Get a particular element.
+	template <typename T>
+	T& Matrix<T>::GetMember(unsigned row, unsigned element)
+	{
+		return m_matrix[row * sizeof(T) + element];
 	}
 
 	/**************************************************************************!
@@ -334,10 +378,6 @@ namespace Rigel
 	template <typename T>
 	Matrix<T>::~Matrix()
 	{
-		for (unsigned i = 0; i < m_height; ++i)
-		{
-			delete m_matrix[i];
-		}
 		delete[] m_matrix;
 	}
 }

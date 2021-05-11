@@ -69,6 +69,11 @@ namespace Orion
 		AddShader("FragmentShader.glsl", GL_FRAGMENT_SHADER);
 		//Link all compiled shaders.
 		LinkShaderProgram();
+		Use();
+	}
+
+	void ShaderProgram::Use()
+	{
 		//Activate the fully assembled shader program.
 		glUseProgram(m_shaderProgram);
 	}
@@ -110,6 +115,13 @@ namespace Orion
 	int ShaderProgram::GetUniform(const char* uniform) const
 	{
 		return glGetUniformLocation(m_shaderProgram, uniform);
+	}
+
+	//! Retrieve the name of a uniform variable from the shader program.
+	void ShaderProgram::GetUniformData(const char* uniform, float* data) const
+	{
+		GLuint uniformName = glGetUniformLocation(m_shaderProgram, uniform);
+		glGetUniformfv(m_shaderProgram, uniformName, data);
 	}
 
 	/**************************************************************************!

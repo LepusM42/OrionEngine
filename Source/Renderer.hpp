@@ -19,6 +19,8 @@ namespace Orion
 		static void Init();
 		//! Update the renderer.
 		static void Update();
+		//! World conversion matrix.
+		static Rigel::Matrix<float>& GetWorldMatrix();
 	private:
 		static Rigel::Matrix<float> s_world;
 	};

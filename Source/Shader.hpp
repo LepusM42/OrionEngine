@@ -39,12 +39,16 @@ namespace Orion
 	public:
 		//! Initialize the shader program.
 		void Init();
+		//! Use the program
+		void Use();
 		//! Add a new shader file to the program.
 		void AddShader(const char* file, GLenum type);
 		//! Retrieve the name of a vertex attribute from the shader program.
 		int GetAttribute(const char* attribute) const;
 		//! Retrieve the name of a uniform variable from the shader program.
-		int GetUniform(const char* attribute) const;
+		int GetUniform(const char* uniform) const;
+		//! Retrieve the name of a uniform variable from the shader program.
+		void GetUniformData(const char* uniform, float* data) const;
 		//! Clean up shader objects.
 		~ShaderProgram();
 	private:

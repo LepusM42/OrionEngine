@@ -82,20 +82,28 @@ namespace Rigel
 		static Matrix<T> MatrixFromVector(Vector<T> vector, bool transpose);
 		//! Create a new resultant matrix by scaling an existing matrix by a 
 		//! scalar value.
-		const Matrix<T> operator*(T scalar);
+		Matrix<T> operator*(T scalar);
 		//! Scale a matrix by a scalar value.
 		Matrix<T>& operator*=(T scalar);
 		//! Multiply a matrix by another matrix.
-		const Matrix<T> operator*(Matrix<T> matrix);
+		Matrix<T> operator*(Matrix<T> matrix);
+		//! Add a matrix to another matrix.
+		Matrix<T> operator+(Matrix<T> matrix);
 		//! Transform a vector by multiplying it by a matrix.
-		const Vector<T> operator*(Vector<T> vector);
+		Vector<T> operator*(Vector<T> vector);
+		//! Access a row.
+		T* operator[](unsigned index);
+		//! Access the raw data of the matrix.
+		T* GetRawMatrixData();
 		//! Destructor deallocates the memory used for the internal matrix.
 		~Matrix();
 	private:
 		//! Allocate memory for a matrix using the stored width and height.
-		T** AllocateMatrix();
+		T* AllocateMatrix();
+		//! Get a particular element.
+		T& GetMember(unsigned row, unsigned element);
 		//! List of values that the matrix contains.
-		T** m_matrix{};
+		T* m_matrix{};
 		//! Width of the matrix.
 		unsigned m_width{ 0 };
 		//! Height of the matrix.

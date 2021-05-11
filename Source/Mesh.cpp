@@ -5,6 +5,7 @@
 *******************************************************************************/
 #include "Mesh.hpp"
 #include "Shader.hpp"
+#include "Renderer.hpp"
 namespace Orion
 {
 	/**************************************************************************!
@@ -53,11 +54,24 @@ namespace Orion
 		//0 - Stride in bytes between instances of the passed data.
 		//nullptr - Offset inside the buffer at which to find the
 		//attribute.
+
 		int attr_Pos = m_shader.GetAttribute("position");
 		glVertexAttribPointer(attr_Pos, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+
 		int uni_Scale = m_shader.GetUniform("scale");
-		glUniform1f(uni_Scale, sinf(m_scale));
+		glUniform1f(uni_Scale, (m_scale));
 		m_scale += .001f;
+
+		Renderer::GetWorldMatrix()[0][0] = cosf(m_scale);
+		Renderer::GetWorldMatrix()[0][1] = -sinf(m_scale);
+		Renderer::GetWorldMatrix()[1][0] = sinf(m_scale);
+		Renderer::GetWorldMatrix()[1][1] = cosf(m_scale);
+		//Renderer::GetWorldMatrix()[2][3] = sinf(m_scale);
+		int uni_World = m_shader.GetUniform("gWorld");
+		glUniformMatrix4fv(uni_World, 1, GL_TRUE, &(Renderer::GetWorldMatrix()[0][0]));
+		float matVal[16];
+		m_shader.GetUniformData("gWorld", matVal);
+
 		//Draw a series of points, starting at index 0, drawing 1 point.
 		//glDrawArrays draws in order, as opposed to indexed drawing.
 		glDrawArrays(GL_TRIANGLES, 0, 3);

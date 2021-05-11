@@ -12,7 +12,7 @@
 namespace Orion
 {
 	Mesh m;
-	Rigel::Matrix<float> s_world(4);
+	Rigel::Matrix<float> Renderer::s_world(4);
 	/**************************************************************************!
 	* \fn void Renderer::Init();
 	* \brief Initialize the renderer.
@@ -40,5 +40,15 @@ namespace Orion
 	void Renderer::Update()
 	{
 		m.Update();
+	}
+
+	/**************************************************************************!
+	* \fn Rigel::Matrix<float> GetWorldMatrix();
+	* \brief World conversion matrix.
+	* \return A matrix used to convert world to screen coordinates.
+	***************************************************************************/
+	Rigel::Matrix<float>& Renderer::GetWorldMatrix()
+	{
+		return s_world;
 	}
 }
