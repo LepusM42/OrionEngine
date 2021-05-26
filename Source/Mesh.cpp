@@ -29,6 +29,15 @@ namespace Orion
 		//Fill the bound buffer object with the vertex data, and declare
 		//it to be used for static drawing.
 		glBufferData(GL_ARRAY_BUFFER, sizeof(pos), pos, GL_STATIC_DRAW);
+		unsigned int indices[] = {
+			0, 1, 2,
+			0, 1, 3,
+			0, 2, 3,
+			1, 2, 3
+		};
+		glGenBuffers(1, &m_IBO);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 	}
 
 	/**************************************************************************!
@@ -68,13 +77,14 @@ namespace Orion
 		Renderer::GetWorldMatrix()[1][1] = cosf(m_scale);
 		//Renderer::GetWorldMatrix()[2][3] = sinf(m_scale);
 		int uni_World = m_shader.GetUniform("gWorld");
-		glUniformMatrix4fv(uni_World, 1, GL_TRUE, &(Renderer::GetWorldMatrix()[0][0]));
+		glUniformMatrix4fv(uni_World, 1, GL_TRUE, Renderer::GetWorldMatrix()[0]);
 		float matVal[16];
 		m_shader.GetUniformData("gWorld", matVal);
 
 		//Draw a series of points, starting at index 0, drawing 1 point.
-		//glDrawArrays draws in order, as opposed to indexed drawing.
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
+		glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
+
 		//Disable the attribute at index 0.
 		glDisableVertexAttribArray(0);
 	}
