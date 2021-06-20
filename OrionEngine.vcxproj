@@ -152,6 +152,7 @@
     <ClCompile Include="Source\Renderer.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\Stub.cpp" />
+    <ClCompile Include="Source\UnitTest.cpp" />
     <ClCompile Include="Source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +164,7 @@
     <ClInclude Include="Source\Rigel.hpp" />
     <ClInclude Include="Source\Shader.hpp" />
     <ClInclude Include="Source\Stub.hpp" />
+    <ClInclude Include="Source\UnitTest.h" />
     <ClInclude Include="Source\Window.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
