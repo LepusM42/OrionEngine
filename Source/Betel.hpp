@@ -7,12 +7,6 @@
 #pragma once
 namespace Betel
 {
-	void* Allocate(unsigned count = 1);
-	void Deallocate(void* address);
-}
-
-namespace BetelInterior
-{
 	/**********************************************************************!
 	* \class
 	* \brief
@@ -75,10 +69,8 @@ namespace BetelInterior
 		void AddToList(Block*& blockList, Block* block);
 		//! Does nothing.
 		Block* BlockContaining(void* address);
-
 		//! Does nothing.
 		void DestroyList(Block*& blockList);
-
 		//! Does nothing.
 		Page* m_next{ nullptr };
 		//! Does nothing.
@@ -113,7 +105,6 @@ namespace BetelInterior
 		Page* FirstAvailablePage(unsigned size);
 		//! Does nothing.
 		Page* PageContaining(void* address);
-
 		//! Does nothing.
 		void DestroyPages();
 		//! Does nothing.
@@ -123,4 +114,14 @@ namespace BetelInterior
 		//! Does nothing.
 		unsigned m_minSize{ 0 };
 	};
+
+	Allocator& GetAllocator();
+
+	template <typename ObjectType>
+	ObjectType* Allocate(unsigned count = 1)
+	{
+		return static_cast<ObjectType*>(GetAllocator().Allocate(count));
+	}
+
+	void Deallocate(void* address);
 }

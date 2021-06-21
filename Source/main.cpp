@@ -4,7 +4,7 @@
 * \brief Entry point of the application.
 *******************************************************************************/
 #include "Orion.hpp" //OEPI
-#include "UnitTest.h"
+#include "UnitTest.h" //Unit testing functions
 int main(int, char**)
 {
 	if (RunUnitTests()) return 1;

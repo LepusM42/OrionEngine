@@ -36,10 +36,10 @@
     <ClCompile Include="Source\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Betel.cpp">
+    <ClCompile Include="Source\UnitTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\UnitTest.cpp">
+    <ClCompile Include="Source\Betel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

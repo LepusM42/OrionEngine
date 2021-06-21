@@ -8,23 +8,12 @@
 *  making allocation and deallocation fairly quick processes, each being roughly
 *  O(N) in complexity.
 *******************************************************************************/
+#pragma once
 #include "Betel.hpp"
-
 namespace Betel
 {
-	static BetelInterior::Allocator Betelgeuse(4096);
-	void* Allocate(unsigned count)
-	{
-		return static_cast<void*>(Betelgeuse.Allocate(count));
-	}
-	void Deallocate(void* address)
-	{
-		Betelgeuse.Deallocate(address);
-	}
-}
+	Betel::Allocator Betelgeuse(4096);
 
-namespace BetelInterior
-{
 	Block::Block(char* address, unsigned size) :
 		m_address{ address }
 		, m_size{ size }
@@ -86,66 +75,11 @@ namespace BetelInterior
 		AddToList(m_freeList, block);
 	}
 
-	void Page::DestroyList(Block*& blockList)
+	Page::~Page()
 	{
-		while (blockList)
-		{
-			Block* toDestroy = blockList;
-			blockList = blockList->Next();
-			delete toDestroy;
-		}
-	}
-
-	void Page::AdvanceList(Block*& blockList)
-	{
-		blockList = blockList->Next();
-		if (blockList) blockList->SetPrevious(nullptr);
-	}
-
-	bool Page::Invalid(unsigned size)
-	{
-		return m_blockSize < size || m_freeList == nullptr;
-	}
-
-	Page* Page::Next()
-	{
-		return m_next;
-	}
-
-	bool Page::Contains(void* address)
-	{
-		if (address < m_rawMemory)
-			return false;
-		else if (address > m_rawMemory + m_pageSize)
-			return false;
-		else
-			return true;
-	}
-
-	Block* Page::BlockContaining(void* address)
-	{
-		Block* currentBlock = m_usedList;
-		while (currentBlock && currentBlock->Address() != address)
-		{
-			currentBlock = currentBlock->Next();
-		}
-		return currentBlock;
-	}
-
-	void Page::AddToList(Block*& blockList, Block* block)
-	{
-		block->SetNext(blockList);
-		blockList = block;
-	}
-
-	void Page::Deallocate(void* address)
-	{
-		if (Block* block = BlockContaining(address))
-		{
-			if (block == m_usedList) AdvanceList(m_usedList);
-			else block->Cut();
-			AddToList(m_freeList, block);
-		}
+		DestroyList(m_freeList);
+		DestroyList(m_usedList);
+		delete[] m_rawMemory;
 	}
 
 	void* Page::Allocate(unsigned size)
@@ -160,11 +94,77 @@ namespace BetelInterior
 		return nullptr;
 	}
 
-	Page::~Page()
+	void Page::Deallocate(void* address)
 	{
-		DestroyList(m_freeList);
-		DestroyList(m_usedList);
-		delete[] m_rawMemory;
+		if (Block* block = BlockContaining(address))
+		{
+			if (block == m_usedList) AdvanceList(m_usedList);
+			else block->Cut();
+			AddToList(m_freeList, block);
+		}
+	}
+
+	Page* Page::Next()
+	{
+		return m_next;
+	}
+
+	bool Page::Invalid(unsigned size)
+	{
+		return m_blockSize < size || m_freeList == nullptr;
+	}
+
+	bool Page::Contains(void* address)
+	{
+		if (address < m_rawMemory)
+			return false;
+		else if (address > m_rawMemory + m_pageSize)
+			return false;
+		else
+			return true;
+	}
+
+	//! Does nothing.
+	void Page::AddPage()
+	{
+		if (m_blockSize <= m_pageSize)
+		{
+			Page* nextPage = m_next;
+			m_next = new Page(m_pageSize, m_blockSize * 2);
+			m_next->m_next = nextPage;
+		}
+	}
+
+	void Page::AdvanceList(Block*& blockList)
+	{
+		blockList = blockList->Next();
+		if (blockList) blockList->SetPrevious(nullptr);
+	}
+
+	void Page::AddToList(Block*& blockList, Block* block)
+	{
+		block->SetNext(blockList);
+		blockList = block;
+	}
+
+	Block* Page::BlockContaining(void* address)
+	{
+		Block* currentBlock = m_usedList;
+		while (currentBlock && currentBlock->Address() != address)
+		{
+			currentBlock = currentBlock->Next();
+		}
+		return currentBlock;
+	}
+
+	void Page::DestroyList(Block*& blockList)
+	{
+		while (blockList)
+		{
+			Block* toDestroy = blockList;
+			blockList = blockList->Next();
+			delete toDestroy;
+		}
 	}
 
 	Allocator::Allocator(unsigned max, unsigned min) :
@@ -189,6 +189,11 @@ namespace BetelInterior
 		{
 			currentPage->Deallocate(address);
 		}
+	}
+
+	Allocator::~Allocator()
+	{
+		DestroyPages();
 	}
 
 	Page* Allocator::FirstAvailablePage(unsigned size)
@@ -223,17 +228,6 @@ namespace BetelInterior
 		return currentPage;
 	}
 
-	//! Does nothing.
-	void Page::AddPage()
-	{
-		if (m_blockSize <= m_pageSize)
-		{
-			Page* nextPage = m_next;
-			m_next = new Page(m_pageSize, m_blockSize * 2);
-			m_next->m_next = nextPage;
-		}
-	}
-
 	void Allocator::DestroyPages()
 	{
 		while (m_pageList)
@@ -244,8 +238,13 @@ namespace BetelInterior
 		}
 	}
 
-	Allocator::~Allocator()
+	Allocator& GetAllocator()
 	{
-		DestroyPages();
+		return Betelgeuse;
+	}
+
+	void Deallocate(void* address)
+	{
+		GetAllocator().Deallocate(address);
 	}
 }
