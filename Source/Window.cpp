@@ -3,7 +3,7 @@
 * \author Lepus
 * \brief Creates and manages the application window.
 *******************************************************************************/
-#include <glew.h>
+#include "glew.h"
 #include "Window.hpp"
 #include "Engine.hpp"
 #include "Rigel.hpp"

@@ -3,17 +3,24 @@
 * \author Lepus
 * \brief The Betelgeuse Memory Manager (hereafter called Betel) is a custom
 *  memory management system for C++ applications. It uses a singly-linked list
-*  of pages, each used for allocating chunks of graduating size. Each page uses
-*  two separate lists to keep track of allocated/unallocated blocks of memory,
-*  making allocation and deallocation fairly quick processes, each being roughly
-*  O(N) in complexity.
+*  of pages, each used for allocating chunks of graduating size (by a factor of
+*  2 each time). Each page uses two separate lists to keep track of allocated/
+*  unallocated blocks of memory, making allocation and deallocation fairly quick
+*  processes, each being roughly O(N) in complexity.
 *******************************************************************************/
-#pragma once
 #include "Betel.hpp"
+#include <iostream>
 namespace Betel
 {
-	Betel::Allocator Betelgeuse(4096);
+	//The internal allocator used to manage allocation and deallocation.
+	static Betel::Allocator Betelgeuse;
 
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
 	Block::Block(char* address, unsigned size) :
 		m_address{ address }
 		, m_size{ size }
@@ -30,51 +37,105 @@ namespace Betel
 	void Block::Split(unsigned size)
 	{
 		Block* block = nullptr;
-		if (m_size >= size)
+		if (m_size > size)
 		{
 			block = new Block(m_address + size, m_size - size);
 			m_size = size;
+			SetNext(block);
 		}
-		SetNext(block);
 	}
 
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
 	Block* Block::Next()
 	{
 		return m_next;
 	}
 
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
 	char* Block::Address()
 	{
 		return m_address;
 	}
 
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
 	void Block::SetNext(Block* block)
 	{
 		m_next = block;
 		if (block) block->m_previous = this;
 	}
 
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
 	void Block::SetPrevious(Block* block)
 	{
 		m_previous = block;
 		if (block) block->m_next = this;
 	}
 
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
 	void Block::Cut()
 	{
 		if (m_previous) m_previous->SetNext(m_next);
 		if (m_next) m_next->SetPrevious(m_previous);
 	}
 
-	Page::Page(unsigned max, unsigned blockSize) :
+	/**************************************************************************!
+	* \fn
+	* \brief Print a visual representation of a block of memory.
+	* \param
+	* \return
+	***************************************************************************/
+	void Block::Display()
+	{
+		std::cout << "[" << m_size << "]->";
+	}
+
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
+	Page::Page(unsigned max, unsigned blockSize, unsigned growthFactor) :
 		m_blockSize{ blockSize }
 		, m_pageSize{ max }
+		, m_growthFactor{ growthFactor }
 	{
 		m_rawMemory = new char[max];
 		Block* block = new Block(m_rawMemory, max);
 		AddToList(m_freeList, block);
 	}
 
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
 	Page::~Page()
 	{
 		DestroyList(m_freeList);
@@ -82,7 +143,13 @@ namespace Betel
 		delete[] m_rawMemory;
 	}
 
-	void* Page::Allocate(unsigned size)
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
+	void* Page::Allocate()
 	{
 		if (Block* currentBlock = m_freeList)
 		{
@@ -94,6 +161,12 @@ namespace Betel
 		return nullptr;
 	}
 
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
 	void Page::Deallocate(void* address)
 	{
 		if (Block* block = BlockContaining(address))
@@ -104,16 +177,34 @@ namespace Betel
 		}
 	}
 
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
 	Page* Page::Next()
 	{
 		return m_next;
 	}
 
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
 	bool Page::Invalid(unsigned size)
 	{
 		return m_blockSize < size || m_freeList == nullptr;
 	}
 
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
 	bool Page::Contains(void* address)
 	{
 		if (address < m_rawMemory)
@@ -124,29 +215,60 @@ namespace Betel
 			return true;
 	}
 
-	//! Does nothing.
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
 	void Page::AddPage()
 	{
 		if (m_blockSize <= m_pageSize)
 		{
 			Page* nextPage = m_next;
-			m_next = new Page(m_pageSize, m_blockSize * 2);
+			m_next = new Page(m_pageSize, m_blockSize * m_growthFactor, m_growthFactor);
 			m_next->m_next = nextPage;
 		}
 	}
 
+
+	void Page::Display()
+	{
+		ListDump(m_freeList, "FREE  : ");
+		ListDump(m_usedList, "IN USE: ");
+		std::cout << std::endl;
+	}
+
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
 	void Page::AdvanceList(Block*& blockList)
 	{
 		blockList = blockList->Next();
 		if (blockList) blockList->SetPrevious(nullptr);
 	}
 
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
 	void Page::AddToList(Block*& blockList, Block* block)
 	{
 		block->SetNext(blockList);
 		blockList = block;
 	}
 
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
 	Block* Page::BlockContaining(void* address)
 	{
 		Block* currentBlock = m_usedList;
@@ -157,6 +279,12 @@ namespace Betel
 		return currentBlock;
 	}
 
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
 	void Page::DestroyList(Block*& blockList)
 	{
 		while (blockList)
@@ -167,22 +295,58 @@ namespace Betel
 		}
 	}
 
-	Allocator::Allocator(unsigned max, unsigned min) :
-		m_maxSize{ max }
-		, m_minSize{ min }
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
+	void Page::ListDump(Block*& blockList, const char* msg)
 	{
-		m_pageList = new Page(max, min);
+		std::cout << msg;
+		Block* currentBlock = blockList;
+		while (currentBlock)
+		{
+			currentBlock->Display();
+			currentBlock = currentBlock->Next();
+		}
+		std::cout << std::endl;
 	}
 
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
+	void Allocator::Initialize(unsigned max, unsigned min, unsigned factor)
+	{
+		m_maxSize = max;
+		m_minSize = min;
+		m_pageList = new Page(max, min, factor);
+	}
+
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
 	void* Allocator::Allocate(unsigned size)
 	{
 		if (Page* currentPage = FirstAvailablePage(size))
 		{
-			return currentPage->Allocate(size);
+			return currentPage->Allocate();
 		}
 		return nullptr;
 	}
 
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
 	void Allocator::Deallocate(void* address)
 	{
 		if (Page* currentPage = PageContaining(address))
@@ -191,13 +355,41 @@ namespace Betel
 		}
 	}
 
+	void Allocator::Display()
+	{
+		std::cout << "---------------------------------------------------------------------------------" << std::endl;
+		Page* currentPage = m_pageList;
+		int pageCount = 1;
+		while (currentPage)
+		{
+			std::cout << "PAGE [" << pageCount++ << "]:" << std::endl;
+			currentPage->Display();
+			currentPage = currentPage->Next();
+		}
+		std::cout << "---------------------------------------------------------------------------------" << std::endl;
+	}
+
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
 	Allocator::~Allocator()
 	{
 		DestroyPages();
 	}
 
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
 	Page* Allocator::FirstAvailablePage(unsigned size)
 	{
+		if (m_pageList == nullptr) Initialize(4096);
+
 		Page* currentPage = m_pageList;
 
 		while (currentPage->Next())
@@ -218,6 +410,12 @@ namespace Betel
 		return currentPage;
 	}
 
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
 	Page* Allocator::PageContaining(void* address)
 	{
 		Page* currentPage = m_pageList;
@@ -228,6 +426,12 @@ namespace Betel
 		return currentPage;
 	}
 
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
 	void Allocator::DestroyPages()
 	{
 		while (m_pageList)
@@ -235,16 +439,45 @@ namespace Betel
 			Page* toDestroy = m_pageList;
 			m_pageList = m_pageList->Next();
 			delete toDestroy;
+			toDestroy = nullptr;
 		}
 	}
 
-	Allocator& GetAllocator()
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
+	void Initialize(unsigned max, unsigned min, unsigned factor)
 	{
-		return Betelgeuse;
+		Betelgeuse.Initialize(max, min, factor);
 	}
 
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
+	void* Balloc(unsigned size)
+	{
+		return Betelgeuse.Allocate(size);
+	}
+
+	/**************************************************************************!
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
 	void Deallocate(void* address)
 	{
-		GetAllocator().Deallocate(address);
+		Betelgeuse.Deallocate(address);
+	}
+	
+	void Display()
+	{
+		Betelgeuse.Display();
 	}
 }
