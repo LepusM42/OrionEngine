@@ -1,14 +1,22 @@
-/******************************************************************************!
+/*!*****************************************************************************
 * \file Betel.hpp
 * \author Lepus
-* \brief The Betelgeuse Memory Manager (hereafter called Betel) is a custom
+* \mainpage Welcome to the Betelgeuse Memory Manager Doxygen page!
+*  The Betelgeuse Memory Manager (hereafter called Betel) is a custom
 *  memory management system for C++ applications. It uses a singly-linked list
 *  of pages, each used for allocating chunks of graduating size (by a factor of
 *  2 each time). Each page uses two separate lists to keep track of allocated/
 *  unallocated blocks of memory, making allocation and deallocation fairly quick
 *  processes, each being roughly O(N) in complexity.
+*  The following functions are available to the client:
+*  - Initialize
+*  - Balloc
+*  - Allocate
+*  - Deallocate
+*  - Display
 *******************************************************************************/
 #pragma once
+//! \namespace Betel Contains all Betel functions and classes
 namespace Betel
 {
 	//! Set Betel's maximum and minimum Page size, as well as how much larger

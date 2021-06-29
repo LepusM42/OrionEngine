@@ -1,4 +1,4 @@
-/******************************************************************************!
+/*!*****************************************************************************
 * \file Betel.cpp
 * \author Lepus
 * \brief The Betelgeuse Memory Manager (hereafter called Betel) is a custom
@@ -10,11 +10,12 @@
 *******************************************************************************/
 #include "Betel.hpp"
 #include <iostream>
+//! If the client doesn't specify a max page size, this value will be used instead.
 #define DEFAULT_PAGE_LIMIT 10000
-//! Betel class interfaces
+// Betel class interfaces
 namespace Betel
 {
-	/**************************************************************************!
+	/*!*************************************************************************
 	* \class Block
 	* \brief Wrapper class around an address that points somewhere within a
 	*  chunk of preallocated raw memory.
@@ -54,9 +55,11 @@ namespace Betel
 		unsigned m_size{ 0 };
 	};
 
-	/**************************************************************************!
+	/*!*************************************************************************
 	* \class Page
-	* \brief A structure representing a preallocated chunk of raw memory, which
+	* \brief Allocates chunks of a specific size.
+	*  
+	*  A structure representing a preallocated chunk of raw memory, which
 	*  it partitions and gives to the user upon request. To do this it uses two
 	*  doubly linked lists of Blocks (free and allocated memory). Each Page can
 	*  partition Blocks of memory of a certain predetermined size, up to the
@@ -114,15 +117,18 @@ namespace Betel
 		char* m_rawMemory{ nullptr };
 	};
 
-	/**************************************************************************!
+	/*!*************************************************************************
 	* \class Allocator
-	* \brief Holds a singly linked list of Pages, each able to partition Blocks
+	* \brief Responsible for allocation and deallocation requests from the
+	*  client.
+	*  
+	*  Holds a singly linked list of Pages, each able to partition Blocks
 	*  twice as large as the previous Page is able to. The maximum amount of
 	*  memory each Page can partition in total is specified during construction.
 	*  The minimum amount of memory a Page can partition at once be set during
 	*  construction as well, though specifying this is optional.
 	***************************************************************************/
-	static class Allocator
+	class Allocator
 	{
 	public:
 		//! Configure the settings for this allocator.
@@ -144,13 +150,15 @@ namespace Betel
 		void DestroyPages();
 		//! List of Pages, each able to allocate larger Blocks than the last.
 		Page* m_pageList{ nullptr };
-	} Betelgeuse; //!< Betel's internal Allocator, for client-side simplicity.
+	};
+	//! Betel's internal Allocator, for client-side simplicity.
+	static Allocator Betelgeuse;
 }
-//! Betel class method implementations
+// Betel class method implementations
 namespace Betel
 {
-	/**************************************************************************!
-	* \fn Block(char* address, unsigned size);
+	/*!*************************************************************************
+	* \fn Block::Block(char* address, unsigned size);
 	* \brief Block constructor.
 	* \param address Address this Block will contain
 	* \param size Maximum number of bytes from this Block that the user can use
@@ -163,8 +171,8 @@ namespace Betel
 
 	}
 
-	/**************************************************************************!
-	* \fn void Split(unsigned size);
+	/*!*************************************************************************
+	* \fn void Block::Split(unsigned size);
 	* \brief Split a Block into two smaller Blocks during partitioning.
 	* \param size New size (in bytes) of the first Block, the byte offset from
 	*  the first Block's address from which the second Block's address will be,
@@ -181,8 +189,8 @@ namespace Betel
 		}
 	}
 
-	/**************************************************************************!
-	* \fn Block* Next();
+	/*!*************************************************************************
+	* \fn Block* Block::Next();
 	* \brief Access the next Block in a list.
 	* \return Next Block.
 	***************************************************************************/
@@ -191,10 +199,10 @@ namespace Betel
 		return m_next;
 	}
 
-	/**************************************************************************!
-	* \fn char* Address();
+	/*!*************************************************************************
+	* \fn char* Block::Address();
 	* \brief Access the address that this Block will give to the user after
-	   partitioning.
+	*  partitioning.
 	* \return Address stored in this Block.
 	***************************************************************************/
 	char* Block::Address()
@@ -202,8 +210,8 @@ namespace Betel
 		return m_address;
 	}
 
-	/**************************************************************************!
-	* \fn void SetNext(Block* block);
+	/*!*************************************************************************
+	* \fn void Block::SetNext(Block* block);
 	* \brief Place a new Block after this one in a list. The new Block will also
 	*  set this as its previous Block.
 	* \param block Next Block in the list.
@@ -217,12 +225,11 @@ namespace Betel
 		}
 	}
 
-	/**************************************************************************!
-	* \fn void SetPrevious(Block* block);
+	/*!*************************************************************************
+	* \fn void Block::SetPrevious(Block* block);
 	* \brief Place a new Block before this one in a list. The new Block will
 	*  also set this as its next Block.
-	* \param
-	* \return
+	* \param block Previous Block in the list.
 	***************************************************************************/
 	void Block::SetPrevious(Block* block)
 	{
@@ -233,8 +240,8 @@ namespace Betel
 		}
 	}
 
-	/**************************************************************************!
-	* \fn void Cut();
+	/*!*************************************************************************
+	* \fn void Block::Cut();
 	* \brief Remove this Block from the middle of a list.
 	***************************************************************************/
 	void Block::Cut()
@@ -249,8 +256,8 @@ namespace Betel
 		}
 	}
 
-	/**************************************************************************!
-	* \fn void Display();
+	/*!*************************************************************************
+	* \fn void Block::Display();
 	* \brief Print a visual representation of a Block of memory.
 	***************************************************************************/
 	void Block::Display()
@@ -258,8 +265,8 @@ namespace Betel
 		std::cout << "[" << m_size << "]->";
 	}
 
-	/**************************************************************************!
-	* \fn Page(unsigned max, unsigned blockSize, unsigned growth);
+	/*!*************************************************************************
+	* \fn Page::Page(unsigned max, unsigned blockSize, unsigned growth);
 	* \brief Page constructor.
 	* \param max The maximum amount of memory, in bytes, that this Page can
 	*  allocate.
@@ -276,8 +283,8 @@ namespace Betel
 		AddToList(m_freeList, block);
 	}
 
-	/**************************************************************************!
-	* \fn void* Allocate();
+	/*!*************************************************************************
+	* \fn void* Page::Allocate();
 	* \brief Partition a Block of this Page's blocksize.
 	* \return The address contained within the first free Block of this page,
 	*  which points to somewhere within this Page's preallocated chunk of
@@ -296,8 +303,8 @@ namespace Betel
 		return nullptr;
 	}
 
-	/**************************************************************************!
-	* \fn void Deallocate(void* address);
+	/*!*************************************************************************
+	* \fn void Page::Deallocate(void* address);
 	* \brief Mark a Block containing an address as able to be used again.
 	* \param address Address to return to the system for reuse.
 	***************************************************************************/
@@ -317,8 +324,8 @@ namespace Betel
 		}
 	}
 
-	/**************************************************************************!
-	* \fn Page* Next()
+	/*!*************************************************************************
+	* \fn Page* Page::Next()
 	* \brief The next Page in a list.
 	* \return Next Page in the list.
 	***************************************************************************/
@@ -327,8 +334,8 @@ namespace Betel
 		return m_next;
 	}
 
-	/**************************************************************************!
-	* \fn bool Invalid(unsigned size);
+	/*!*************************************************************************
+	* \fn bool Page::Invalid(unsigned size);
 	* \brief Whether this page can be partition Blocks of a specific size.
 	* \param size Amount of memory the user wishes to allocate.
 	* \return Return true if Blocks on this Page are too small to accomodate
@@ -340,8 +347,8 @@ namespace Betel
 		return m_blockSize < size || m_freeList == nullptr;
 	}
 
-	/**************************************************************************!
-	* \fn bool Contains(void* address);
+	/*!*************************************************************************
+	* \fn bool Page::Contains(void* address);
 	* \brief Whether an address is within this Page's range of addresses.
 	* \param address Address to be compared against this Page's range of
 	*  addresses.
@@ -354,8 +361,8 @@ namespace Betel
 		return address >= m_rawMemory && address < m_rawMemory + m_pageSize;
 	}
 
-	/**************************************************************************!
-	* \fn void AddPage();
+	/*!*************************************************************************
+	* \fn void Page::AddPage();
 	* \brief Add a new, larger Page after this one.
 	***************************************************************************/
 	void Page::AddPage()
@@ -368,8 +375,8 @@ namespace Betel
 		}
 	}
 
-	/**************************************************************************!
-	* \fn void Display();
+	/*!*************************************************************************
+	* \fn void Page::Display();
 	* \brief Show all allocated/unallocated Blocks on this Page.
 	***************************************************************************/
 	void Page::Display()
@@ -379,8 +386,8 @@ namespace Betel
 		std::cout << std::endl;
 	}
 
-	/**************************************************************************!
-	* \fn ~Page();
+	/*!*************************************************************************
+	* \fn Page::~Page();
 	* \brief Page destructor.
 	***************************************************************************/
 	Page::~Page()
@@ -390,10 +397,10 @@ namespace Betel
 		delete[] m_rawMemory;
 	}
 
-	/**************************************************************************!
-	* \fn void AdvanceList(Block*& blockList);
+	/*!*************************************************************************
+	* \fn void Page::AdvanceList(Block*& blockList);
 	* \brief Pop the first element from a list of Blocks, making the next Block
-	   the head of its list.
+	*  the head of its list.
 	* \param blockList Block list to pop.
 	***************************************************************************/
 	void Page::AdvanceList(Block*& blockList)
@@ -405,10 +412,10 @@ namespace Betel
 		}
 	}
 
-	/**************************************************************************!
-	* \fn void AddToList(Block*& blockList, Block* block);
-	* \brief Add a Block to the front of a list of Blocks, making it the new head
-	   of the list.
+	/*!*************************************************************************
+	* \fn void Page::AddToList(Block*& blockList, Block* block);
+	* \brief Add a Block to the front of a list of Blocks, making it the new
+	*  head of the list.
 	* \param blockList List of Blocks to which this new Block will be added.
 	* \param block Block to add to the front of the list.
 	***************************************************************************/
@@ -418,8 +425,8 @@ namespace Betel
 		blockList = block;
 	}
 
-	/**************************************************************************!
-	* \fn Block* BlockContaining(void* address);
+	/*!*************************************************************************
+	* \fn Block* Page::BlockContaining(void* address);
 	* \brief Find a Block in the usedlist containing an address to be freed.
 	* \param address Address to search the usedlist for.
 	* \return If a Block is found that contains the queried address, return it.
@@ -435,8 +442,8 @@ namespace Betel
 		return currentBlock;
 	}
 
-	/**************************************************************************!
-	* \fn void DestroyList(Block*& blockList);
+	/*!*************************************************************************
+	* \fn void Page::DestroyList(Block*& blockList);
 	* \brief Deallocate all nodes in a list of Blocks.
 	* \param blockList Head of the list of Blocks to deallocate.
 	***************************************************************************/
@@ -450,8 +457,8 @@ namespace Betel
 		}
 	}
 
-	/**************************************************************************!
-	* \fn void ListDump(Block*& blockList, const char* msg);
+	/*!*************************************************************************
+	* \fn void Page::ListDump(Block*& blockList, const char* msg);
 	* \brief Display the contents of a list of Blocks.
 	* \param blockList List of Blocks of display.
 	* \param msg A message to print before displaying the list.
@@ -468,8 +475,8 @@ namespace Betel
 		std::cout << std::endl;
 	}
 
-	/**************************************************************************!
-	* \fn void Init(unsigned max, unsigned min, unsigned growth);
+	/*!*************************************************************************
+	* \fn void Allocator::Init(unsigned max, unsigned min, unsigned growth);
 	* \brief Configure the settings for this allocator. If there are no Pages,
 	*  creates a Page of the smallest Block size.
 	* \param max Maximum amount of memory a Page can allocate. This is also the
@@ -489,8 +496,8 @@ namespace Betel
 		}
 	}
 
-	/**************************************************************************!
-	* \fn void* Allocate(unsigned size);
+	/*!*************************************************************************
+	* \fn void* Allocator::Allocate(unsigned size);
 	* \brief Allocate a chunk of memory of a specific size.
 	* \param size Amount of memory to allocate, in bytes.
 	* \return If a suitable address was found, return it. Otherwise, if that
@@ -505,8 +512,8 @@ namespace Betel
 		return nullptr;
 	}
 
-	/**************************************************************************!
-	* \fn void Deallocate(void* address);
+	/*!*************************************************************************
+	* \fn void Allocator::Deallocate(void* address);
 	* \brief Return used memory back to the system for future reuse.
 	* \param address Address that was previously allocated via the Allocate
 	*  method.
@@ -519,8 +526,8 @@ namespace Betel
 		}
 	}
 
-	/**************************************************************************!
-	* \fn void Display();
+	/*!*************************************************************************
+	* \fn void Allocator::Display();
 	* \brief Display the current state of all Pages.
 	***************************************************************************/
 	void Allocator::Display()
@@ -537,8 +544,8 @@ namespace Betel
 		std::cout << "-BETEL   END-" << std::endl;
 	}
 
-	/**************************************************************************!
-	* \fn ~Allocator();
+	/*!*************************************************************************
+	* \fn Allocator::~Allocator();
 	* \brief Allocator destructor.
 	***************************************************************************/
 	Allocator::~Allocator()
@@ -546,8 +553,8 @@ namespace Betel
 		DestroyPages();
 	}
 
-	/**************************************************************************!
-	* \fn Page* FindPage(unsigned size);
+	/*!*************************************************************************
+	* \fn Page* Allocator::FindPage(unsigned size);
 	* \brief Find a page able to accomodate Blocks of a specific size.
 	* \param size Number of bytes that a Page must be able to allocate at one
 	*  time.
@@ -578,8 +585,8 @@ namespace Betel
 		return currentPage;
 	}
 
-	/**************************************************************************!
-	* \fn Page* PageContaining(void* address);
+	/*!*************************************************************************
+	* \fn Page* Allocator::PageContaining(void* address);
 	* \brief Find a Page for which this address falls within its address range.
 	* \param address Address to search the Page list for.
 	* \return Return the first Page for which this address falls within its
@@ -595,8 +602,8 @@ namespace Betel
 		return currentPage;
 	}
 
-	/**************************************************************************!
-	* \fn void DestroyPages();
+	/*!*************************************************************************
+	* \fn void Allocator::DestroyPages();
 	* \brief Deallocate all Pages and their Blocks.
 	***************************************************************************/
 	void Allocator::DestroyPages()
@@ -609,7 +616,7 @@ namespace Betel
 		}
 	}
 
-	/**************************************************************************!
+	/*!*************************************************************************
 	* \fn void Initialize(unsigned max, unsigned min, unsigned growth);
 	* \brief Set Betel's maximum and minimum Page size, as well as how much
 	*  larger sequential Pages are.
@@ -623,7 +630,7 @@ namespace Betel
 		Betelgeuse.Init(max, min, growth);
 	}
 
-	/**************************************************************************!
+	/*!*************************************************************************
 	* \fn void* Balloc(unsigned size)
 	* \brief Malloc-style allocation for a chunk of memory.
 	* \param size Number of bytes to allocate.
@@ -635,7 +642,7 @@ namespace Betel
 		return Betelgeuse.Allocate(size);
 	}
 
-	/**************************************************************************!
+	/*!*************************************************************************
 	* \fn void Deallocate(void* address);
 	* \brief Give allocated memory back to the system.
 	* \param address Address allocated by Betel to be returned to it.
@@ -645,7 +652,7 @@ namespace Betel
 		Betelgeuse.Deallocate(address);
 	}
 
-	/**************************************************************************!
+	/*!*************************************************************************
 	* \fn void Display();
 	* \brief Show all allocated and unallocated Blocks in all Pages.
 	***************************************************************************/
