@@ -2,8 +2,7 @@
 #include "Betel.hpp"
 #include <time.h>
 #include <iostream>
-#define nodecount 1000
-#define sizeofnode 1000
+#define size 10000
 struct Foo
 {
 	int a{ 0 }, b{ 0 }, c{ 0 }, d{ 0 };
@@ -23,41 +22,45 @@ struct Stopwatch
 	}
 	clock_t initialTime{ 0 };
 };
-int RunUnitTests()
+void TestBetel()
 {
-	Stopwatch s;
-	//Pages can allocate up to 100,000 bytes of data each
-	Betel::Initialize(10000000);
-	//Betel's turn
-	s.Start();
-	//Allocate 100,000 arrays
-	Foo* fooArray1[nodecount];
-	for (int i = 0; i < nodecount; ++i)
+	Foo* fooArray1[size];
+	for (int i = 0; i < size; ++i)
 	{
-		//Allocate an array of 1000 Foo structs (each 12 bytes)
-		fooArray1[i] = Betel::Allocate<Foo>(sizeofnode);
-		fooArray1[i]->a = i;
+		fooArray1[i] = Betel::Allocate<Foo>(size);
 	}
-	//Betel::Display();
-	for (int i = 0; i < sizeofnode; ++i)
+	Betel::Display();
+	for (int i = 0; i < size; ++i)
 	{
 		Betel::Deallocate(fooArray1[i]);
 	}
-	std::cout << "Betel: " << s.Stop() << " ms" << std::endl;
-	//System's turn
-	s.Start();
-	//Allocate 100,000 arrays
-	Foo* fooArray2[nodecount];
-	for (int i = 0; i < nodecount; ++i)
+}
+void TestNew()
+{
+	Foo* fooArray2[size];
+	for (int i = 0; i < size; ++i)
 	{
-		//Allocate an array of 1000 Foo structs (each 12 bytes)
-		fooArray2[i] = new Foo[sizeofnode];
-		fooArray2[i]->a = i;
+		fooArray2[i] = new Foo[size];
 	}
-	for (int i = 0; i < sizeofnode; ++i)
+	for (int i = 0; i < size; ++i)
 	{
 		delete[] fooArray2[i];
 	}
+}
+int RunUnitTests()
+{
+	Stopwatch s;
+	Betel::Initialize(1000000);
+
+	//Betel's turn
+	s.Start();
+	TestBetel();
+	std::cout << "Betel: " << s.Stop() << " ms" << std::endl;
+
+	//System's turn
+	s.Start();
+	TestNew();
 	std::cout << "Keyword new: " << s.Stop() << " ms" << std::endl;
+
 	return 0;
 }
