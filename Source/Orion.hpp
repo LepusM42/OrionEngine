@@ -9,6 +9,7 @@
 #include "Engine.hpp"   //!< Core engine loop functionality
 #include "Renderer.hpp" //!< Drawing and buffer swapping
 #include "Rigel.hpp"    //!< Custom vector and matrix library
+#include "Betel.hpp"	//!< Custom memory manager
 //! \namespace Orion Namespace containing all Orion systems.
 namespace Orion
 {

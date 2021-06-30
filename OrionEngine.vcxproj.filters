@@ -36,6 +36,12 @@
     <ClCompile Include="Source\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\UnitTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Betel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.hpp">
@@ -60,6 +66,12 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mesh.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Betel.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UnitTest.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
