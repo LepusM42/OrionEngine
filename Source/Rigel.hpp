@@ -1,4 +1,4 @@
-/******************************************************************************!
+/*!*****************************************************************************
 * \file Rigel.hpp
 * \author Lepus
 * \brief Math library developed for use in OrionEngine. Allows operations with
@@ -8,7 +8,7 @@
 #include <vector>
 namespace Rigel
 {
-	/**************************************************************************!
+	/*!*************************************************************************
 	* \class Vector
 	* \brief An n-dimensional vector, containing n components of any supported
 	* type. Supported type in this context means that the operations used by
@@ -46,7 +46,7 @@ namespace Rigel
 		unsigned m_dim{ 0 };
 	};
 
-	/**************************************************************************!
+	/*!*************************************************************************
 	* \class Matrix
 	* \brief An n*m-dimensional matrix, used to transform vectors and matrices.
 	* Rigel matrices must be made up of data types that support basic arithmetic

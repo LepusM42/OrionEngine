@@ -1,7 +1,12 @@
-﻿  UnitTest.cpp
-  Generating code
-  8 of 329 functions ( 2.4%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
-  Finished generating code
-  OrionEngine.vcxproj -> C:\Users\sethm\Desktop\OrionEngine\Release\OrionEngine.exe
+﻿  Betel.cpp
+  Component.cpp
+  Engine.cpp
+  main.cpp
+  Mesh.cpp
+  Renderer.cpp
+  Shader.cpp
+  Stub.cpp
+  UnitTest.cpp
+  Window.cpp
+Stub.obj : error LNK2005: "public: int __thiscall Orion::Foo::Bar(int)" (?Bar@Foo@Orion@@QAEHH@Z) already defined in Component.obj
+C:\Users\sethm\Desktop\OrionEngine\Release\OrionEngine.exe : fatal error LNK1169: one or more multiply defined symbols found
