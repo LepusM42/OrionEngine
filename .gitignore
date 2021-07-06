@@ -194,3 +194,10 @@ Debug/OrionEngine.tlog/link.read.1.tlog
 Debug/Renderer.obj
 Debug/vc142.idb
 Debug/vc142.pdb
+.vs/OrionEngine/v16/ipch/AutoPCH/fd2d9fafa7e66b4e/BEHAVIOR.ipch
+.vs/OrionEngine/v16/ipch/AutoPCH/f25d1a3087623bab/TRANSFORM.ipch
+.vs/OrionEngine/v16/ipch/AutoPCH/d581eba1e88025d4/SPRITE.ipch
+.vs/OrionEngine/v16/ipch/AutoPCH/d4589cc1ae2a1183/PHYSICS.ipch
+.vs/OrionEngine/v16/ipch/AutoPCH/55838db3854c8d58/AUDIO.ipch
+.vs/OrionEngine/v16/ipch/AutoPCH/42058d30b4fbfa8e/TRANSFORM.ipch
+.vs/OrionEngine/v16/Browse.VC.db
