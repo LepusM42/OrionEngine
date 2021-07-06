@@ -5,7 +5,6 @@
 *******************************************************************************/
 #pragma once
 #include <iostream>
-//#include "Entity.hpp"
 namespace Orion
 {
 	class Entity;
@@ -44,25 +43,5 @@ namespace Orion
 		unsigned m_id{ 0 };
 		//! Entity to which this Component belongs.
 		Entity* m_parent{ nullptr };
-	};
-
-	class Transform : public Component
-	{
-	public:
-		Transform()
-		{
-			m_parent = nullptr;
-			std::cout << "transform." << std::endl;
-		}
-		int t{ 5 };
-	};
-
-	class Physics : public Component
-	{
-		Transform* GetTransform()
-		{
-			return Get<Transform>();
-		}
-		int p;
 	};
 }
