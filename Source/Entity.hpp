@@ -20,9 +20,8 @@ namespace Orion
 		template <typename ComponentType>
 		ComponentType* Get()
 		{
-			for (unsigned iter = 0; iter < m_components.size(); ++iter)
+			for (Component* comp : m_components)
 			{
-				Component* comp = m_components[iter];
 				if (ComponentType* cast = dynamic_cast<ComponentType*>(comp))
 				{
 					return cast;
@@ -32,6 +31,12 @@ namespace Orion
 		}
 		//! Does nothing.
 		void Add(Component* component);
+		//! Does nothing.
+		void Start();
+		//! Does nothing.
+		void Update(float dt);
+		//! Does nothing.
+		void Stop();
 	private:
 		//! Map of all components, accessed using each component's unique ID.
 		std::vector<Component*> m_components;

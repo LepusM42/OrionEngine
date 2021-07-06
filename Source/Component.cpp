@@ -16,7 +16,19 @@ namespace Orion
 	***************************************************************************/
 	Component::Component()
 	{
-		Start();
+
+	}
+
+	/*!*************************************************************************
+	* \fn
+	* \brief Called at least once in the constructor to initialize some
+	*  properties. Can be called later upon the reset of this component.
+	* \param
+	* \return
+	***************************************************************************/
+	void Component::Start()
+	{
+		std::cout << "New ";
 	}
 
 	/*!*************************************************************************
@@ -32,6 +44,18 @@ namespace Orion
 
 	/*!*************************************************************************
 	* \fn
+	* \brief Called at least once in the destructor for basic cleanup. Can be
+	*  called later upon the reset of this component.
+	* \param
+	* \return
+	***************************************************************************/
+	void Component::Stop()
+	{
+
+	}
+
+	/*!*************************************************************************
+	* \fn
 	* \brief Reset the state of this component.
 	* \param
 	* \return
@@ -40,17 +64,6 @@ namespace Orion
 	{
 		Stop();
 		Start();
-	}
-
-	/*!*************************************************************************
-	* \fn
-	* \brief Retrieve the unique ID of this Component.
-	* \param
-	* \return
-	***************************************************************************/
-	unsigned Component::Identity() const
-	{
-		return m_id;
 	}
 
 	/*!*************************************************************************
@@ -88,30 +101,6 @@ namespace Orion
 	* \return
 	***************************************************************************/
 	Component::~Component()
-	{
-		Stop();
-	}
-
-	/*!*************************************************************************
-	* \fn
-	* \brief Called at least once in the constructor to initialize some
-	*  properties. Can be called later upon the reset of this component.
-	* \param
-	* \return
-	***************************************************************************/
-	void Component::Start()
-	{
-		std::cout << "New ";
-	}
-
-	/*!*************************************************************************
-	* \fn
-	* \brief Called at least once in the destructor for basic cleanup. Can be
-	*  called later upon the reset of this component.
-	* \param
-	* \return
-	***************************************************************************/
-	void Component::Stop()
 	{
 
 	}

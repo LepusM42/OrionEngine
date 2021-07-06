@@ -16,10 +16,10 @@ namespace Orion
 	{
 	public:
 		Physics();
+		void Start() override;
 		void Update(float dt) override;
+		void Stop() override;
 		~Physics();
 	private:
-		void Start() override;
-		void Stop() override;
 	};
 }

@@ -18,12 +18,16 @@ namespace Orion
 		//! Constructor. Called only once, making it good for one-time initial
 		//! allocations.
 		Component();
+		//! Called at least once in the constructor to initialize some
+		//! properties. Can be called later upon the reset of this component.
+		virtual void Start();
 		//! Update this component once every frame.
 		virtual void Update(float);
+		//! Called at least once in the destructor for basic cleanup. Can be
+		//! called later upon the reset of this component.
+		virtual void Stop();
 		//! Reset the state of this component.
 		void Reset();
-		//! Retrieve the unique ID of this Component.
-		unsigned Identity() const;
 		//! Get another Component from the Entity to which this belongs.
 		template <typename ComponentType>
 		ComponentType* Get();
@@ -33,14 +37,6 @@ namespace Orion
 		//! objects.
 		~Component();
 	protected:
-		//! Called at least once in the constructor to initialize some
-		//! properties. Can be called later upon the reset of this component.
-		virtual void Start();
-		//! Called at least once in the destructor for basic cleanup. Can be
-		//! called later upon the reset of this component.
-		virtual void Stop();
-		//! Unique identification number to allow fast access by Entities.
-		unsigned m_id{ 0 };
 		//! Entity to which this Component belongs.
 		Entity* m_parent{ nullptr };
 	};

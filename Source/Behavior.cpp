@@ -21,17 +21,6 @@ namespace Orion
 
 	/*!*************************************************************************
 	* \fn
-	* \brief Update this component once every frame.
-	* \param
-	* \return
-	***************************************************************************/
-	void Behavior::Update(float)
-	{
-
-	}
-
-	/*!*************************************************************************
-	* \fn
 	* \brief Called at least once in the constructor to initialize some
 	*  properties. Can be called later upon the reset of this component.
 	* \param
@@ -40,6 +29,17 @@ namespace Orion
 	void Behavior::Start()
 	{
 		std::cout << "New ";
+	}
+
+	/*!*************************************************************************
+	* \fn
+	* \brief Update this component once every frame.
+	* \param
+	* \return
+	***************************************************************************/
+	void Behavior::Update(float)
+	{
+
 	}
 
 	/*!*************************************************************************

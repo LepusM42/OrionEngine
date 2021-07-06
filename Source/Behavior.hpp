@@ -16,10 +16,10 @@ namespace Orion
 	{
 	public:
 		Behavior();
+		void Start() override;
 		void Update(float dt) override;
+		void Stop() override;
 		~Behavior();
 	private:
-		void Start() override;
-		void Stop() override;
 	};
 }

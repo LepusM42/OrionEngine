@@ -19,4 +19,46 @@ namespace Orion
 		component->SetParent(this);
 		m_components.push_back(component);
 	}
+
+	/*!*************************************************************************
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
+	void Entity::Start()
+	{
+		for (Component* component : m_components)
+		{
+			component->Start();
+		}
+	}
+
+	/*!*************************************************************************
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
+	void Entity::Update(float dt)
+	{
+		for (Component* component : m_components)
+		{
+			component->Update(dt);
+		}
+	}
+
+	/*!*************************************************************************
+	* \fn
+	* \brief
+	* \param
+	* \return
+	***************************************************************************/
+	void Entity::Stop()
+	{
+		for (Component* component : m_components)
+		{
+			component->Stop();
+		}
+	}
 }
