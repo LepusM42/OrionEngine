@@ -1,12 +1,7 @@
-﻿  Betel.cpp
-  Component.cpp
-  Engine.cpp
-  main.cpp
-  Mesh.cpp
-  Renderer.cpp
-  Shader.cpp
-  Stub.cpp
-  UnitTest.cpp
-  Window.cpp
-Stub.obj : error LNK2005: "public: int __thiscall Orion::Foo::Bar(int)" (?Bar@Foo@Orion@@QAEHH@Z) already defined in Component.obj
-C:\Users\sethm\Desktop\OrionEngine\Release\OrionEngine.exe : fatal error LNK1169: one or more multiply defined symbols found
+﻿  main.cpp
+  Generating code
+  140 of 417 functions (33.6%) were compiled, the rest were copied from previous compilation.
+    22 functions were new in current compilation
+    21 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  OrionEngine.vcxproj -> C:\Users\sethm\Desktop\OrionEngine\Release\OrionEngine.exe

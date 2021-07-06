@@ -14,6 +14,8 @@
 *  - Allocate
 *  - Deallocate
 *  - Display
+*  Credit to https://en.cppreference.com/w/cpp/language/new for information on
+*  placement new.
 *******************************************************************************/
 #pragma once
 //! \namespace Betel Contains all Betel functions and classes
@@ -31,7 +33,12 @@ namespace Betel
 	ObjectType* Allocate(unsigned count = 1)
 	{
 		unsigned size = count * static_cast<unsigned>(sizeof(ObjectType));
-		return static_cast<ObjectType*>(Balloc(size));
+		ObjectType* obj = static_cast<ObjectType*>(Balloc(size));
+		if (obj)
+		{
+			return new(obj)ObjectType();
+		}
+		return nullptr;
 	}
 
 	//! Give allocated memory back to the system.
