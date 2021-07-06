@@ -150,24 +150,36 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Betel.cpp" />
+    <ClCompile Include="Source\Component.cpp" />
     <ClCompile Include="Source\Engine.cpp" />
+    <ClCompile Include="Source\Example.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
+    <ClCompile Include="Source\Entity.cpp" />
+    <ClCompile Include="Source\Physics.cpp" />
     <ClCompile Include="Source\Renderer.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
+    <ClCompile Include="Source\Sprite.cpp" />
     <ClCompile Include="Source\Stub.cpp" />
+    <ClCompile Include="Source\Transform.cpp" />
     <ClCompile Include="Source\UnitTest.cpp" />
     <ClCompile Include="Source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Betel.hpp" />
+    <ClInclude Include="Source\Component.hpp" />
     <ClInclude Include="Source\Engine.hpp" />
+    <ClInclude Include="Source\Example.hpp" />
     <ClInclude Include="Source\Mesh.hpp" />
+    <ClInclude Include="Source\Entity.hpp" />
     <ClInclude Include="Source\Orion.hpp" />
+    <ClInclude Include="Source\Physics.hpp" />
     <ClInclude Include="Source\Renderer.hpp" />
     <ClInclude Include="Source\Rigel.hpp" />
     <ClInclude Include="Source\Shader.hpp" />
+    <ClInclude Include="Source\Sprite.hpp" />
     <ClInclude Include="Source\Stub.hpp" />
+    <ClInclude Include="Source\Transform.hpp" />
     <ClInclude Include="Source\UnitTest.h" />
     <ClInclude Include="Source\Window.hpp" />
   </ItemGroup>

@@ -1,4 +1,4 @@
-/******************************************************************************!
+/*!*****************************************************************************
 * \file Window.cpp
 * \author Lepus
 * \brief Creates and manages the application window.
@@ -11,7 +11,7 @@
 namespace Orion
 {
 	GLFWwindow* Window::s_window;
-	/**************************************************************************!
+	/*!*************************************************************************
 	* \fn Window::Init(int, int, const char*);
 	* \brief Create the window and GL Context.
 	***************************************************************************/
@@ -30,7 +30,7 @@ namespace Orion
 
 		}
 	}
-	/**************************************************************************!
+	/*!*************************************************************************
 	* \fn void Window::Update();
 	* \brief Update the current state of the window.
 	***************************************************************************/
@@ -48,7 +48,7 @@ namespace Orion
 			glfwPollEvents();
 		}
 	}
-	/**************************************************************************!
+	/*!*************************************************************************
 	* \fn Window::Shutdown();
 	* \brief Shut down the window and GL Context.
 	***************************************************************************/
@@ -57,7 +57,7 @@ namespace Orion
 		glfwTerminate();
 	}
 
-	/**************************************************************************!
+	/*!*************************************************************************
 	* \fn Window::CreateWindow(int width, int height, const char* name);
 	* \brief Create a window instance.
 	* \param width Width of the window, in pixels.
@@ -71,7 +71,7 @@ namespace Orion
 			s_window = glfwCreateWindow(width, height, name, nullptr, nullptr);
 		}
 	}
-	/**************************************************************************!
+	/*!*************************************************************************
 	* \fn CreateWindow(int width, int height, const char* name);
 	* \brief Callback used when the window is closed.
 	* \param window Window that was closed.

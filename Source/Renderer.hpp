@@ -1,4 +1,4 @@
-/******************************************************************************!
+/*!*****************************************************************************
 * \file Renderer.hpp
 * \author Lepus
 * \brief Displays graphics.
@@ -7,7 +7,7 @@
 #include "Rigel.hpp"
 namespace Orion
 {
-	/**************************************************************************!
+	/*!*************************************************************************
 	* \class Renderer
 	* \brief Renders visual data to a rear buffer, which is displayed after
 	* being swapped with the front buffer.
