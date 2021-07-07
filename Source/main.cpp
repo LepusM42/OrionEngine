@@ -1,10 +1,13 @@
-/******************************************************************************!
+/*!*****************************************************************************
 * \file main.cpp
 * \author Lepus
 * \brief Entry point of the application.
 *******************************************************************************/
 #include "Orion.hpp" //OEPI
 #include "UnitTest.h" //Unit testing functions
+#include "Entity.hpp"
+#include "Component.hpp"
+using namespace Orion;
 int main(int, char**)
 {
 	if (RunUnitTests()) return 1;

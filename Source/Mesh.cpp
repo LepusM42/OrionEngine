@@ -1,4 +1,4 @@
-/******************************************************************************!
+/*!*****************************************************************************
 * \file Stub.cpp
 * \author Lepus
 * \brief This is a stub file, used as a template for all other files.
@@ -8,7 +8,7 @@
 #include "Renderer.hpp"
 namespace Orion
 {
-	/**************************************************************************!
+	/*!*************************************************************************
 	* \fn void Mesh::Init();
 	* \brief Does nothing.
 	* \param foobar Does nothing.
@@ -40,7 +40,7 @@ namespace Orion
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 	}
 
-	/**************************************************************************!
+	/*!*************************************************************************
 	* \fn void Mesh::Update();
 	* \brief Does nothing.
 	* \param foobar Does nothing.
@@ -94,7 +94,7 @@ namespace Orion
 		m_shader = shader;
 	}
 
-	/**************************************************************************!
+	/*!*************************************************************************
 	* \fn Mesh::~Mesh();
 	* \brief Does nothing.
 	* \param foobar Does nothing.

@@ -1,4 +1,4 @@
-/******************************************************************************!
+/*!*****************************************************************************
 * \file Window.hpp
 * \author Lepus
 * \brief Creates and manages the application window.
@@ -10,7 +10,7 @@ namespace Orion
 	//! Global callback used when a window is closed.
 	void WindowCloseCallback(GLFWwindow* window);
 
-	/**************************************************************************!
+	/*!*************************************************************************
 	* \class Window
 	* \brief Application window used to display visual data.
 	***************************************************************************/

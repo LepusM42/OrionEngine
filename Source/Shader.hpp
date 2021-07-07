@@ -1,4 +1,4 @@
-/******************************************************************************!
+/*!*****************************************************************************
 * \file Shader.hpp
 * \author Lepus
 * \brief Loads and executes shader files, which modify vertex data.
@@ -9,7 +9,7 @@
 #include <string>
 namespace Orion
 {
-	/**************************************************************************!
+	/*!*************************************************************************
 	* \class ShaderObject
 	* \brief Object representing executable shader code, which is to be added
 	* to a shader program before it can be used.
@@ -28,7 +28,7 @@ namespace Orion
 		GLuint m_objID{ 0 };
 	};
 
-	/**************************************************************************!
+	/*!*************************************************************************
 	* \class ShaderProgram
 	* \brief Wrapper around a shader program, which executes a number of
 	* shader objects that have all been successfully compiled, attached to it,
