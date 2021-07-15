@@ -1,2 +1,5 @@
-Debug/
-.vs/
+Debug/*
+.vs/*
+.vs/OrionEngine/v16/.suo
+.vs/OrionEngine/v16/Browse.VC.db
+.vs/OrionEngine/v16/ipch/AutoPCH/aa3264a1cff7f61d/SPRITE.ipch
