@@ -5,8 +5,12 @@
 *******************************************************************************/
 #pragma once
 #include "Rigel.hpp"
+#include "Shader.hpp"
 namespace Orion
 {
+	class Sprite;
+	class Transform;
+	class ShaderProgram;
 	/*!*************************************************************************
 	* \class Renderer
 	* \brief Renders visual data to a rear buffer, which is displayed after
@@ -15,13 +19,18 @@ namespace Orion
 	class Renderer
 	{
 	public:
+		//! Constructor
+		Renderer();
 		//! Initialize the renderer.
-		static void Init();
+		void Init();
 		//! Update the renderer.
-		static void Update();
+		void Update();
 		//! World conversion matrix.
 		static Rigel::Matrix<float>& GetWorldMatrix();
+		//! Draw something.
+		void Draw(Sprite* sprite, Transform* transform);
 	private:
 		static Rigel::Matrix<float> s_world;
+		ShaderProgram m_shader; //!< Used to retrieve shader variables.
 	};
 }

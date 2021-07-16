@@ -6,6 +6,7 @@
 #pragma once
 #include <iostream>
 #include "Component.hpp"
+#include "Mesh.hpp"
 namespace Orion
 {
 	/*!*************************************************************************
@@ -19,7 +20,9 @@ namespace Orion
 		void Start() override;
 		void Update(float dt) override;
 		void Stop() override;
+		Mesh& GetMesh();
 		~Sprite();
 	private:
+		Mesh m_mesh;
 	};
 }

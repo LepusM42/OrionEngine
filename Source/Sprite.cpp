@@ -56,6 +56,17 @@ namespace Orion
 
 	/*!*************************************************************************
 	* \fn
+	* \brief Retrieve a reference to this sprite's mesh.
+	* \param
+	* \return
+	***************************************************************************/
+	Mesh& Sprite::GetMesh()
+	{
+		return m_mesh;
+	}
+
+	/*!*************************************************************************
+	* \fn
 	* \brief Constructor. Called only once, making it good for one-time initial
 	*  allocations.
 	* \param

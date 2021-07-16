@@ -4,8 +4,6 @@
 * \brief Manages Orion's engine life cycle (initialization, update, exit).
 *******************************************************************************/
 #include "Engine.hpp"
-#include "Window.hpp"
-#include "Renderer.hpp"
 namespace Orion
 {
 	//Initialize the static boolean that runs the engine
@@ -26,8 +24,8 @@ namespace Orion
 	***************************************************************************/
 	void Engine::Init()
 	{
-		Window::Init();
-		Renderer::Init();
+		m_window.Init();
+		m_renderer.Init();
 	}
 
 	/*!*************************************************************************
@@ -38,8 +36,8 @@ namespace Orion
 	{
 		while (s_isUpdating)
 		{
-			Window::Update();
-			Renderer::Update();
+			m_window.Update();
+			m_renderer.Update();
 		}
 	}
 
@@ -49,7 +47,7 @@ namespace Orion
 	***************************************************************************/
 	void Engine::Shutdown()
 	{
-		Window::Shutdown();
+		m_window.Shutdown();
 	}
 
 	/*!*************************************************************************

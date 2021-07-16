@@ -18,15 +18,15 @@ namespace Orion
 	{
 	public:
 		//! Create the window and GL Context.
-		static void Init();
+		void Init();
 		//! Update the current state of the window.
-		static void Update();
+		void Update();
 		//! Shut down the window and GL Context.
-		static void Shutdown();
+		void Shutdown();
 	private:
 		//! GLFW window and GL Context used for rendering.
-		static GLFWwindow* s_window;
+		GLFWwindow* s_window;
 		//! Create a window instance.
-		static void CreateWindow(int width, int height, const char* name);
+		void CreateWindow(int width, int height, const char* name);
 	};
 }

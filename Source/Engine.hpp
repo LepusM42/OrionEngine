@@ -4,8 +4,12 @@
 * \brief Interface for the core process of Orion's engine life cycle.
 *******************************************************************************/
 #pragma once
+#include "Renderer.hpp"
+#include "Window.hpp"
 namespace Orion
 {
+	class Renderer;
+	class Window;
 	/*!*************************************************************************
 	* \class Engine
 	* \brief Manages the initialization, updating, and cleanup of all Orion
@@ -28,5 +32,7 @@ namespace Orion
 		//! The engine runs as long as this is true. Kept static to avoid the
 		//! clunky Singleton Pattern.
 		static bool s_isUpdating;
+		Renderer m_renderer;
+		Window m_window;
 	};
 }

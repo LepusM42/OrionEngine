@@ -10,7 +10,6 @@
 #include <iostream>
 namespace Orion
 {
-	GLFWwindow* Window::s_window;
 	/*!*************************************************************************
 	* \fn Window::Init(int, int, const char*);
 	* \brief Create the window and GL Context.
