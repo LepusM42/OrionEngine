@@ -5,6 +5,7 @@
 *******************************************************************************/
 #include "Mesh.hpp"
 #include "Renderer.hpp"
+#include <vector>
 namespace Orion
 {
 	/*!*************************************************************************
@@ -15,25 +16,8 @@ namespace Orion
 	***************************************************************************/
 	void Mesh::Init()
 	{
-		glGenVertexArrays(1, &m_VAO);
-		glBindVertexArray(m_VAO);
-		float pos[] = {
-			0.0f,0.0f,0.0f,
-			-0.5f,0.5f,0.0f,
-			0.5f,0.5f,0.0f };
-		glGenBuffers(1, &m_VBO); //Read a numerical ID into this buffer
-		//Declare this buffer as one that holds a vertex array, then
-		//bind it to the current context.
-		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-		//Fill the bound buffer object with the vertex data, and declare
-		//it to be used for static drawing.
-		glBufferData(GL_ARRAY_BUFFER, sizeof(pos), pos, GL_STATIC_DRAW);
-		unsigned int indices[] = {
-			0, 1, 2  //Triangle 1 in this Mesh
-		};
-		glGenBuffers(1, &m_IBO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+		InitVertexArray();
+		InitVertexBuffer();
 	}
 
 	/*!*************************************************************************
@@ -75,9 +59,24 @@ namespace Orion
 	* \param foobar Does nothing.
 	* \return Value of foobar.
 	***************************************************************************/
-	GLuint Mesh::GetIBuffer()
+	unsigned Mesh::GetNumVertices()
 	{
-		return m_IBO;
+		return m_vertexNum;
+	}
+
+	/*!*************************************************************************
+	* \fn void Mesh::AddTriangle(Vertex v1, Vertex v2, Vertex v3);
+	* \brief Does nothing.
+	* \param foobar Does nothing.
+	* \param foobar Does nothing.
+	* \param foobar Does nothing.
+	* \return Value of foobar.
+	***************************************************************************/
+	void Mesh::AddTriangle(Vertex v1, Vertex v2, Vertex v3)
+	{
+		AddVertex(v1);
+		AddVertex(v2);
+		AddVertex(v3);
 	}
 
 	/*!*************************************************************************
@@ -88,7 +87,61 @@ namespace Orion
 	***************************************************************************/
 	Mesh::~Mesh()
 	{
-		glDeleteBuffers(1, &m_VBO);
-		glDeleteVertexArrays(1, &m_VAO);
+		if (m_VBO)
+		{
+			glDeleteBuffers(1, &m_VBO);
+		}
+		if (m_VAO)
+		{
+			glDeleteVertexArrays(1, &m_VAO);
+		}
+	}
+	
+	/*!*************************************************************************
+	* \fn Mesh::~Mesh();
+	* \brief Does nothing.
+	* \param foobar Does nothing.
+	* \return Value of foobar.
+	***************************************************************************/
+	void Mesh::AddVertex(Vertex v)
+	{
+		++m_vertexNum;
+		for (unsigned i = 0; i < v.size(); ++i)
+		{
+			m_coords.push_back(v[i]);
+		}
+	}
+
+	/*!*************************************************************************
+	* \fn Mesh::~Mesh();
+	* \brief Does nothing.
+	* \param foobar Does nothing.
+	* \return Value of foobar.
+	***************************************************************************/
+	void Mesh::InitVertexArray()
+	{
+		glGenVertexArrays(1, &m_VAO);
+		glBindVertexArray(m_VAO);
+	}
+
+	/*!*************************************************************************
+	* \fn Mesh::~Mesh();
+	* \brief Does nothing.
+	* \param foobar Does nothing.
+	* \return Value of foobar.
+	***************************************************************************/
+	void Mesh::InitVertexBuffer()
+	{
+		//Read a numerical ID into this buffer
+		glGenBuffers(1, &m_VBO);
+		//Declare this buffer as one that holds a vertex array, then
+		//bind it to the current context.
+		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+		//Fill the bound buffer object with the vertex data, and declare
+		//it to be used for static drawing.
+		size_t bufSize = m_coords.size() * sizeof(m_coords.front());
+		glBufferData(GL_ARRAY_BUFFER, bufSize, m_coords.data(), GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glFinish();
 	}
 }

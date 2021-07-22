@@ -11,6 +11,7 @@
 namespace Orion
 {
 	Sprite spr;
+	Sprite spr2;
 	Rigel::Matrix<float> Renderer::s_world(4);
 	static float m_scale{ 0.0f };
 
@@ -30,8 +31,37 @@ namespace Orion
 		if (retval == GLEW_OK)
 		{
 			m_shader.Init();
+
 			spr.Start();
+			spr.GetMesh().AddTriangle(
+				Vertex({ 0.00f,0.00f,0.00f }),
+				Vertex({ 0.50f,0.00f,0.00f }),
+				Vertex({ 0.00f,0.50f,0.00f })
+			);
+			spr.GetMesh().AddTriangle(
+				Vertex({ 0.50f,0.50f,0.00f }),
+				Vertex({ 0.00f,0.50f,0.00f }),
+				Vertex({ 0.50f,0.00f,0.00f })
+			);
+			spr.GetMesh().AddTriangle(
+				Vertex({ 0.00f,0.50f,0.00f }),
+				Vertex({ 0.50f,0.50f,0.00f }),
+				Vertex({ 0.25f,0.75f,0.00f })
+			);
+			spr.GetMesh().AddTriangle(
+				Vertex({ 0.50f,0.50f,0.00f }),
+				Vertex({ 0.50f,0.00f,0.00f }),
+				Vertex({ 0.75f,0.25f,0.00f })
+			);
 			spr.GetMesh().Init();
+
+			spr2.Start();
+			spr2.GetMesh().AddTriangle(
+				Vertex({ -1.0f,0.00f,0.00f }),
+				Vertex({ -0.50f,0.00f,0.00f }),
+				Vertex({ -0.50f,0.50f,0.00f })
+			);
+			spr2.GetMesh().Init();
 		}
 		else
 		{
@@ -47,6 +77,7 @@ namespace Orion
 	{
 		spr.Update(0.0f);
 		Draw(&spr, 0);
+		Draw(&spr2, 0);
 	}
 
 	/*!*************************************************************************
@@ -84,31 +115,24 @@ namespace Orion
 		//nullptr - Offset inside the buffer at which to find the
 		//attribute.
 
+		//Bind position to shader position
 		int attr_Pos = m_shader.GetAttribute("position");
 		glVertexAttribPointer(attr_Pos, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
+		//Bind scale to shader scale
 		int uni_Scale = m_shader.GetUniform("scale");
-		glUniform1f(uni_Scale, (m_scale));
-		m_scale += .001f;
+		glUniform1f(uni_Scale, m_scale);
 
-		Renderer::GetWorldMatrix()[0][0] = cosf(m_scale);
-		Renderer::GetWorldMatrix()[0][1] = -sinf(m_scale);
-		Renderer::GetWorldMatrix()[1][0] = sinf(m_scale);
-		Renderer::GetWorldMatrix()[1][1] = cosf(m_scale);
+		//Bind world matrix to the world matrix held in the shader
 		int uni_World = m_shader.GetUniform("gWorld");
 		glUniformMatrix4fv(uni_World, 1, GL_TRUE, Renderer::GetWorldMatrix()[0]);
 		float matVal[16];
 		m_shader.GetUniformData("gWorld", matVal);
 
-		//Draw a series of points, starting at index 0, drawing 1 point.
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, sprite->GetMesh().GetIBuffer());
-		//Draw in triangle mode
-		//Draw 3 indices
-		//Each index is an unsigned int
-		//Byte offset 0
-		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+		//Do the drawing
+		glDrawArrays(GL_TRIANGLES, 0, spr.GetMesh().GetNumVertices());
 
 		//Disable the attribute at index 0.
-		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(attr_Pos);
 	}
 }
