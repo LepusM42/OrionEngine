@@ -25,6 +25,9 @@ namespace Betel
 	//! sequential Pages are.
 	void Initialize(unsigned max, unsigned min = 8, unsigned growth = 2);
 
+	//! Show all allocated and unallocated Blocks in all Pages.
+	void Display();
+
 	//! Malloc-style allocation for a chunk of memory.
 	void* Balloc(unsigned size);
 
@@ -34,6 +37,7 @@ namespace Betel
 	{
 		unsigned size = count * static_cast<unsigned>(sizeof(ObjectType));
 		ObjectType* obj = static_cast<ObjectType*>(Balloc(size));
+		Betel::Display();
 		if (obj)
 		{
 			return new(obj)ObjectType();
@@ -44,6 +48,4 @@ namespace Betel
 	//! Give allocated memory back to the system.
 	void Deallocate(void* address);
 
-	//! Show all allocated and unallocated Blocks in all Pages.
-	void Display();
 }

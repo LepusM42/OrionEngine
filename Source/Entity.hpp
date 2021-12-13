@@ -37,8 +37,14 @@ namespace Orion
 		void Update(float dt);
 		//! Does nothing.
 		void Stop();
+		//! Mark for destruction
+		void Destroy();
+		//! Mark for destruction
+		bool MarkedForDestruction();
 	private:
 		//! Map of all components, accessed using each component's unique ID.
 		std::vector<Component*> m_components;
+		//! Used by manager to delete
+		bool m_marked{ false };
 	};
 }

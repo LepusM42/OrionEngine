@@ -650,6 +650,7 @@ namespace Betel
 	void Deallocate(void* address)
 	{
 		Betelgeuse.Deallocate(address);
+		Betelgeuse.Display();
 	}
 
 	/*!*************************************************************************

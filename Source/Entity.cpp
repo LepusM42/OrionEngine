@@ -61,4 +61,16 @@ namespace Orion
 			component->Stop();
 		}
 	}
+
+	//! Mark for destruction
+	void Entity::Destroy()
+	{
+		m_marked = true;
+	}
+
+	//! Marked for destruction?
+	bool Entity::MarkedForDestruction()
+	{
+		return m_marked;
+	}
 }

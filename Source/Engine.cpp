@@ -4,6 +4,7 @@
 * \brief Manages Orion's engine life cycle (initialization, update, exit).
 *******************************************************************************/
 #include "Engine.hpp"
+#include "SceneManager.hpp"
 namespace Orion
 {
 	//Initialize the static boolean that runs the engine
@@ -26,6 +27,7 @@ namespace Orion
 	{
 		m_window.Init();
 		m_renderer.Init();
+		SceneManager::Load("initialScene.scn");
 	}
 
 	/*!*************************************************************************

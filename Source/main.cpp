@@ -10,7 +10,8 @@
 using namespace Orion;
 int main(int, char**)
 {
-	if (RunUnitTests()) return 1;
+	//if (RunUnitTests()) return 1
+	Betel::Initialize(1000000);
 	//Go through the engine's entire life cycle.
 	Orion::Engine orionEngine;
 	orionEngine.Init();
