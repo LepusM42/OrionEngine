@@ -5,6 +5,7 @@
 *******************************************************************************/
 #pragma once
 #include <vector>
+#include <string>
 namespace Orion
 {
 	class Component;
@@ -41,6 +42,10 @@ namespace Orion
 		void Destroy();
 		//! Mark for destruction
 		bool MarkedForDestruction();
+		//! Remove all components
+		void ClearComponents();
+		//! Name of the object
+		std::string m_name;
 	private:
 		//! Map of all components, accessed using each component's unique ID.
 		std::vector<Component*> m_components;

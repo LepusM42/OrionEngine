@@ -75,7 +75,6 @@ namespace Orion
 	***************************************************************************/
 	void Renderer::Update()
 	{
-		spr.Update(0.0f);
 		Draw(&spr, 0);
 		Draw(&spr2, 0);
 	}

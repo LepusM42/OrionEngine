@@ -73,4 +73,14 @@ namespace Orion
 	{
 		return m_marked;
 	}
+
+	//! Remove all components
+	void Entity::ClearComponents()
+	{
+		for (Component* component : m_components)
+		{
+			Betel::Deallocate(component);
+		}
+		m_components.clear();
+	}
 }

@@ -5,6 +5,7 @@
 *******************************************************************************/
 #include "EntityManager.hpp"
 #include "Betel.hpp"
+#include "Sprite.hpp"
 namespace Orion
 {
 	std::list<Entity*> EntityManager::m_entityPool;
@@ -33,6 +34,10 @@ namespace Orion
 		for (Entity*& e : m_entityPool)
 		{
 			e->Update(dt);
+			if (auto spr = e->Get<Sprite>())
+			{
+				spr->Update(0.0f);
+			}
 			if (e->MarkedForDestruction())
 			{
 				m_entityPool.erase(iter);
@@ -81,6 +86,7 @@ namespace Orion
 			return;
 		for (auto iter = m_entityPool.begin(); iter != m_entityPool.end(); ++iter)
 		{
+			(*iter)->ClearComponents();
 			Betel::Deallocate(*iter);
 		}
 		m_entityPool.clear();
