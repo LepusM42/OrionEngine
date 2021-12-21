@@ -4,6 +4,8 @@
 * \brief This is a template for other component files.
 *******************************************************************************/
 #include "Sprite.hpp"
+#include "Renderer.hpp"
+#include "Transform.hpp"
 namespace Orion
 {
 	/*!*************************************************************************

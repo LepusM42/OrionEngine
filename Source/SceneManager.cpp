@@ -41,10 +41,10 @@ namespace Orion
 			{
 				std::cout << "New Object\n";
 				e = Betel::Allocate<Entity>();
-				EntityManager::Add(e);
 			}
 			if (str == "EndObj")
 			{
+				EntityManager::Add(e);
 				e = nullptr;
 			}
 			if (str == "Name:")
@@ -54,7 +54,7 @@ namespace Orion
 				e->m_name = str;
 				std::cout << "Name: " << e->m_name << "\n";
 			}
-			if (str == "Sprite:")
+			if (str == "Sprite")
 			{
 				Sprite* spr = Betel::Allocate<Sprite>();
 				spr->Start();
@@ -62,9 +62,17 @@ namespace Orion
 				float* triBuf = Betel::Allocate<float>(9);
 				while (str != "EndComp")
 				{
-					sceneFile >> triBuf[0] >> triBuf[1] >> triBuf[2];
-					sceneFile >> triBuf[3] >> triBuf[4] >> triBuf[5];
-					sceneFile >> triBuf[6] >> triBuf[7] >> triBuf[8];
+					sceneFile >> str;
+					if (str == "EndComp") break;
+					sceneFile >> triBuf[0];
+					sceneFile >> triBuf[1];
+					sceneFile >> triBuf[2];
+					sceneFile >> triBuf[3];
+					sceneFile >> triBuf[4];
+					sceneFile >> triBuf[5];
+					sceneFile >> triBuf[6];
+					sceneFile >> triBuf[7];
+					sceneFile >> triBuf[8];
 
 					spr->GetMesh().AddTriangle(
 						Vertex({ triBuf[0], triBuf[1], triBuf[2]}),
@@ -72,10 +80,10 @@ namespace Orion
 						Vertex({ triBuf[6], triBuf[7], triBuf[8] })
 					);
 
-					sceneFile >> str;
 				}
 				Betel::Deallocate(triBuf);
 				spr->GetMesh().Init();
+				e->Add(spr);
 			}
 		}
 	}

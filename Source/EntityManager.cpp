@@ -6,6 +6,8 @@
 #include "EntityManager.hpp"
 #include "Betel.hpp"
 #include "Sprite.hpp"
+#include "Transform.hpp"
+#include "Renderer.hpp"
 namespace Orion
 {
 	std::list<Entity*> EntityManager::m_entityPool;
@@ -33,11 +35,11 @@ namespace Orion
 		auto iter = m_entityPool.begin();
 		for (Entity*& e : m_entityPool)
 		{
+			//Update step
 			e->Update(dt);
-			if (auto spr = e->Get<Sprite>())
-			{
-				spr->Update(0.0f);
-			}
+			//Draw Step
+			Renderer::Draw(e->Get<Sprite>(), e->Get<Transform>());
+			//Kill step
 			if (e->MarkedForDestruction())
 			{
 				m_entityPool.erase(iter);

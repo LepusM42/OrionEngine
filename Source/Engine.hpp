@@ -32,7 +32,6 @@ namespace Orion
 		//! The engine runs as long as this is true. Kept static to avoid the
 		//! clunky Singleton Pattern.
 		static bool s_isUpdating;
-		Renderer m_renderer;
 		Window m_window;
 	};
 }

@@ -10,9 +10,9 @@
 #include <iostream>
 namespace Orion
 {
-	Sprite spr;
-	Sprite spr2;
 	Rigel::Matrix<float> Renderer::s_world(4);
+	std::vector<SpriteTransform> Renderer::m_drawPool;
+	ShaderProgram Renderer::m_shader; //!< Used to retrieve shader variables.
 	static float m_scale{ 0.0f };
 
 	//! Constructor
@@ -31,37 +31,6 @@ namespace Orion
 		if (retval == GLEW_OK)
 		{
 			m_shader.Init();
-
-			spr.Start();
-			spr.GetMesh().AddTriangle(
-				Vertex({ 0.00f,0.00f,0.00f }),
-				Vertex({ 0.50f,0.00f,0.00f }),
-				Vertex({ 0.00f,0.50f,0.00f })
-			);
-			spr.GetMesh().AddTriangle(
-				Vertex({ 0.50f,0.50f,0.00f }),
-				Vertex({ 0.00f,0.50f,0.00f }),
-				Vertex({ 0.50f,0.00f,0.00f })
-			);
-			spr.GetMesh().AddTriangle(
-				Vertex({ 0.00f,0.50f,0.00f }),
-				Vertex({ 0.50f,0.50f,0.00f }),
-				Vertex({ 0.25f,0.75f,0.00f })
-			);
-			spr.GetMesh().AddTriangle(
-				Vertex({ 0.50f,0.50f,0.00f }),
-				Vertex({ 0.50f,0.00f,0.00f }),
-				Vertex({ 0.75f,0.25f,0.00f })
-			);
-			spr.GetMesh().Init();
-
-			spr2.Start();
-			spr2.GetMesh().AddTriangle(
-				Vertex({ -1.0f,0.00f,0.00f }),
-				Vertex({ -0.50f,0.00f,0.00f }),
-				Vertex({ -0.50f,0.50f,0.00f })
-			);
-			spr2.GetMesh().Init();
 		}
 		else
 		{
@@ -75,8 +44,10 @@ namespace Orion
 	***************************************************************************/
 	void Renderer::Update()
 	{
-		Draw(&spr, 0);
-		Draw(&spr2, 0);
+		for (auto d : m_drawPool)
+		{
+			Render(d.spr, d.trn);
+		}
 	}
 
 	/*!*************************************************************************
@@ -97,6 +68,18 @@ namespace Orion
 	*  object to be drawn.
 	***************************************************************************/
 	void Renderer::Draw(Sprite* sprite, Transform* transform)
+	{
+		m_drawPool.push_back(SpriteTransform(sprite, transform));
+	}
+
+	/*!*************************************************************************
+	* \fn void Draw(Sprite* sprite, Transform* transform);
+	* \brief Draw something.
+	* \param sprite Visual data (texture, mesh, transparency, etc.)
+	* \param transform Spatial data (e.g. position, rotation, size) of the
+	*  object to be drawn.
+	***************************************************************************/
+	void Renderer::Render(Sprite* sprite, Transform* transform)
 	{
 		//Give this vertex attribute (position) an attribute index of 0.
 		glEnableVertexAttribArray(0);
@@ -129,7 +112,7 @@ namespace Orion
 		m_shader.GetUniformData("gWorld", matVal);
 
 		//Do the drawing
-		glDrawArrays(GL_TRIANGLES, 0, spr.GetMesh().GetNumVertices());
+		glDrawArrays(GL_TRIANGLES, 0, sprite->GetMesh().GetNumVertices());
 
 		//Disable the attribute at index 0.
 		glDisableVertexAttribArray(attr_Pos);

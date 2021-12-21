@@ -1,9 +1,2 @@
-﻿  Component.cpp
-  EntityManager.cpp
-  main.cpp
-  Entity.cpp
-  SceneManager.cpp
-  UnitTest.cpp
-  Generating Code...
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+﻿  EntityManager.cpp
   OrionEngine.vcxproj -> C:\Users\sethm\Desktop\OrionEngine\Debug\OrionEngine.exe

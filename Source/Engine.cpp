@@ -5,6 +5,7 @@
 *******************************************************************************/
 #include "Engine.hpp"
 #include "SceneManager.hpp"
+#include "EntityManager.hpp"
 namespace Orion
 {
 	//Initialize the static boolean that runs the engine
@@ -26,7 +27,7 @@ namespace Orion
 	void Engine::Init()
 	{
 		m_window.Init();
-		m_renderer.Init();
+		Renderer::Init();
 		SceneManager::Load("initialScene.scn");
 	}
 
@@ -39,7 +40,8 @@ namespace Orion
 		while (s_isUpdating)
 		{
 			m_window.Update();
-			m_renderer.Update();
+			EntityManager::Update(0.0f);
+			Renderer::Update();
 		}
 	}
 
