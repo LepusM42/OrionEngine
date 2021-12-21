@@ -33,7 +33,9 @@ namespace Rigel
 		//! Get the number of components this vector contains.
 		unsigned size();
 		//! Access a component.
-		const T operator[](unsigned index);
+		const T operator[](unsigned index) const;
+		//! Access a component.
+		T& operator[](unsigned index);
 		//! Magnitude of a vector.
 		T magnitude();
 	private:

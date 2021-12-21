@@ -6,6 +6,7 @@
 #pragma once
 #include <iostream>
 #include "Component.hpp"
+#include "Rigel.hpp"
 namespace Orion
 {
 	/*!*************************************************************************
@@ -20,6 +21,13 @@ namespace Orion
 		void Update(float dt) override;
 		void Stop() override;
 		~Transform();
+
+		Rigel::Vector<float>& GetTranslation();
+		Rigel::Vector<float>& GetScale();
+		float& GetRotation();
 	private:
+		Rigel::Vector<float> m_translation{ Rigel::Vector<float>(0.0f, 3) };
+		Rigel::Vector<float> m_scale{ Rigel::Vector<float>(0.0f, 3) };
+		float m_rotation{ 0.0f };
 	};
 }

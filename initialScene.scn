@@ -1,5 +1,7 @@
 StartObj
 	Name: obj1
+	Transform
+	EndComp
 	Sprite
 		Tri
 		0.00 0.00 0.00
@@ -14,14 +16,19 @@ StartObj
 		0.50 0.50 0.00
 		0.25 0.75 0.00
 		Tri		  
-		0.50 0.50 0.00
+		0.25 -0.25 0.00
 		0.50 0.00 0.00
-		0.25 0.25 0.00
+		0.00 -0.00 0.00
+	EndComp
+	ScriptComponent
+		sampleScript.lua
 	EndComp
 EndObj
 
 StartObj
 	Name: obj2
+	Transform
+	EndComp
 	Sprite
 		Tri
 		-1.00 0.00 0.00

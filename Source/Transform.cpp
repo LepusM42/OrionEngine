@@ -37,9 +37,9 @@ namespace Orion
 	* \param
 	* \return
 	***************************************************************************/
-	void Transform::Update(float)
+	void Transform::Update(float dt)
 	{
-
+		m_scale[0] += .001f;
 	}
 
 	/*!*************************************************************************
@@ -64,5 +64,20 @@ namespace Orion
 	Transform::~Transform()
 	{
 
+	}
+
+	Rigel::Vector<float>& Transform::GetTranslation()
+	{
+		return m_translation;
+	}
+
+	Rigel::Vector<float>& Transform::GetScale()
+	{
+		return m_scale;
+	}
+
+	float& Transform::GetRotation()
+	{
+		return m_rotation;
 	}
 }

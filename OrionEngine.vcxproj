@@ -160,6 +160,7 @@
     <ClCompile Include="Source\Physics.cpp" />
     <ClCompile Include="Source\Renderer.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
+    <ClCompile Include="Source\ScriptComponent.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\Sprite.cpp" />
     <ClCompile Include="Source\Stub.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="Source\Renderer.hpp" />
     <ClInclude Include="Source\Rigel.hpp" />
     <ClInclude Include="Source\SceneManager.hpp" />
+    <ClInclude Include="Source\ScriptComponent.hpp" />
     <ClInclude Include="Source\Shader.hpp" />
     <ClInclude Include="Source\Sprite.hpp" />
     <ClInclude Include="Source\Stub.hpp" />

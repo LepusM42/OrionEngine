@@ -7,6 +7,7 @@
 #include "EntityManager.hpp"
 #include "Betel.hpp"
 #include "Sprite.hpp"
+#include "Transform.hpp"
 #include <fstream>
 namespace Orion
 {
@@ -64,15 +65,9 @@ namespace Orion
 				{
 					sceneFile >> str;
 					if (str == "EndComp") break;
-					sceneFile >> triBuf[0];
-					sceneFile >> triBuf[1];
-					sceneFile >> triBuf[2];
-					sceneFile >> triBuf[3];
-					sceneFile >> triBuf[4];
-					sceneFile >> triBuf[5];
-					sceneFile >> triBuf[6];
-					sceneFile >> triBuf[7];
-					sceneFile >> triBuf[8];
+					sceneFile >> triBuf[0] >> triBuf[1] >> triBuf[2];
+					sceneFile >> triBuf[3] >> triBuf[4] >> triBuf[5];
+					sceneFile >> triBuf[6] >> triBuf[7] >> triBuf[8];
 
 					spr->GetMesh().AddTriangle(
 						Vertex({ triBuf[0], triBuf[1], triBuf[2]}),
@@ -83,6 +78,18 @@ namespace Orion
 				}
 				Betel::Deallocate(triBuf);
 				spr->GetMesh().Init();
+				e->Add(spr);
+			}
+			if (str == "Transform")
+			{
+				Transform* spr = Betel::Allocate<Transform>();
+				spr->Start();
+				if (!e || !spr) continue;
+				while (str != "EndComp")
+				{
+					sceneFile >> str;
+					if (str == "EndComp") break;
+				}
 				e->Add(spr);
 			}
 		}

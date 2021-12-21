@@ -5,6 +5,7 @@
 *******************************************************************************/
 #include "glew.h"
 #include "Sprite.hpp"
+#include "Transform.hpp"
 #include "Renderer.hpp"
 #include "Rigel.hpp"
 #include <iostream>
@@ -81,6 +82,8 @@ namespace Orion
 	***************************************************************************/
 	void Renderer::Render(Sprite* sprite, Transform* transform)
 	{
+		//Bail on bad input data
+		if (!sprite || !transform) return;
 		//Give this vertex attribute (position) an attribute index of 0.
 		glEnableVertexAttribArray(0);
 		//After this vertex buffer object has been bound and filled with
@@ -103,7 +106,7 @@ namespace Orion
 
 		//Bind scale to shader scale
 		int uni_Scale = m_shader.GetUniform("scale");
-		glUniform1f(uni_Scale, m_scale);
+		glUniform1f(uni_Scale, transform->GetScale()[0]);
 
 		//Bind world matrix to the world matrix held in the shader
 		int uni_World = m_shader.GetUniform("gWorld");

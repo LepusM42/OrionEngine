@@ -66,6 +66,9 @@
     <ClCompile Include="Source\EntityManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ScriptComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.hpp">
@@ -120,6 +123,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\EntityManager.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ScriptComponent.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

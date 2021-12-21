@@ -123,7 +123,19 @@ namespace Rigel
 	* \return Value of the component stored at the specified index.
 	***************************************************************************/
 	template <typename T>
-	const T Vector<T>::operator[](unsigned index)
+	const T Vector<T>::operator[](unsigned index) const
+	{
+		return m_components[index];
+	}
+
+	/**************************************************************************!
+	* \fn const T Vector<T>::operator[](unsigned index);
+	* \brief Access a component.
+	* \param index Which component to access.
+	* \return Value of the component stored at the specified index.
+	***************************************************************************/
+	template <typename T>
+	T& Vector<T>::operator[](unsigned index)
 	{
 		return m_components[index];
 	}
