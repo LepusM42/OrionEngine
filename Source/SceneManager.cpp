@@ -89,6 +89,22 @@ namespace Orion
 				{
 					sceneFile >> str;
 					if (str == "EndComp") break;
+					if (str == "Translation")
+					{
+						sceneFile >> spr->GetTranslation()[0];
+						sceneFile >> spr->GetTranslation()[1];
+						sceneFile >> spr->GetTranslation()[2];
+					}
+					if (str == "Scale")
+					{
+						sceneFile >> spr->GetScale()[0];
+						sceneFile >> spr->GetScale()[1];
+						sceneFile >> spr->GetScale()[2];
+					}
+					if (str == "Rotation")
+					{
+						sceneFile >> spr->GetRotation();
+					}
 				}
 				e->Add(spr);
 			}

@@ -2,11 +2,11 @@ StartObj
 	Name: obj1
 	Transform
 		Translation
-			1.00 1.00 0.00
+			0.00 5.00 0.00
 		Scale
-			1.00 1.00 0.00
+			1.00 2.00 0.00
 		Rotation
-			0.00
+			5.00
 	EndComp
 	Sprite
 		Tri
@@ -35,15 +35,15 @@ StartObj
 	Name: obj2
 	Transform
 		Translation
-			-1.00 -1.00 0.00
+			-200.00 0.00 0.00
 		Scale
-			0.50 0.50 0.00
+			20.00 1.00 0.00
 		Rotation
-			0.00
+			5.00
 	EndComp
 	Sprite
 		Tri
-		-1.00 0.00 0.00
+		-0.70 0.00 0.00
 		-0.50 0.00 0.00
 		-0.50 1.00 0.00
 	EndComp

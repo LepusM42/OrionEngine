@@ -102,20 +102,16 @@ namespace Orion
 
 		//Bind position to shader position
 		int attr_Pos = m_shader.GetAttribute("position");
+		float pos[3] = { transform->GetTranslation()[0], transform->GetTranslation()[1], transform->GetTranslation()[2] };
 		glVertexAttribPointer(attr_Pos, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-		//glVertexAttribPointer(attr_Pos, 3, GL_FLOAT, GL_FALSE, 0, 
+		glVertexAttrib3f(attr_Pos, pos[0], pos[1], pos[2]);
 
 		//Bind scale to shader scale
-		int uni_Scale = m_shader.GetUniform("scale");
-		//glUniform1f(uni_Scale, transform->GetScale());
 		float scale[3] = { transform->GetScale()[0], transform->GetScale()[1], transform->GetScale()[2] };
-		glUniform3fv(uni_Scale, 1, scale);
+		m_shader.GetUniformData("scale", scale);
 
 		//Bind world matrix to the world matrix held in the shader
-		int uni_World = m_shader.GetUniform("gWorld");
-		glUniformMatrix4fv(uni_World, 1, GL_TRUE, Renderer::GetWorldMatrix()[0]);
-		float matVal[16];
-		m_shader.GetUniformData("gWorld", matVal);
+		m_shader.GetUniformData("gWorld", Renderer::GetWorldMatrix().GetRawMatrixData());
 
 		//Do the drawing
 		glDrawArrays(GL_TRIANGLES, 0, sprite->GetMesh().GetNumVertices());
