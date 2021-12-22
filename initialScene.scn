@@ -2,9 +2,9 @@ StartObj
 	Name: obj1
 	Transform
 		Translation
-			0.00 5.00 0.00
+			-0.50 0.50 0.00
 		Scale
-			1.00 2.00 0.00
+			1.00 1.00 1.00
 		Rotation
 			5.00
 	EndComp
@@ -24,7 +24,7 @@ StartObj
 		Tri		  
 		0.25 -0.25 0.00
 		0.50 0.00 0.00
-		0.00 -0.00 0.00
+		0.00 0.00 0.00
 	EndComp
 	ScriptComponent
 		sampleScript.lua
@@ -35,9 +35,9 @@ StartObj
 	Name: obj2
 	Transform
 		Translation
-			-200.00 0.00 0.00
+			0.00 0.00 0.00
 		Scale
-			20.00 1.00 0.00
+			1.00 1.00 1.00
 		Rotation
 			5.00
 	EndComp

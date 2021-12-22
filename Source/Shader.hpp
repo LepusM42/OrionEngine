@@ -5,6 +5,7 @@
 *******************************************************************************/
 #pragma once
 #include "glew.h"
+#include "Rigel.hpp"
 #include <vector>
 #include <string>
 namespace Orion
@@ -49,6 +50,8 @@ namespace Orion
 		int GetUniform(const char* uniform) const;
 		//! Retrieve the name of a uniform variable from the shader program.
 		void GetUniformData(const char* uniform, float* data) const;
+		//! Retrieve the name of a uniform variable from the shader program.
+		void GetUniformMatrix(const char* uniform, Rigel::Matrix<float> data) const;
 		//! Clean up shader objects.
 		~ShaderProgram();
 	private:

@@ -25,7 +25,9 @@ namespace Orion
 		Rigel::Vector<float>& GetTranslation();
 		Rigel::Vector<float>& GetScale();
 		float& GetRotation();
+		Rigel::Matrix<float>& GetMatrix();
 	private:
+		Rigel::Matrix<float> m_matrix{ Rigel::Matrix<float>(4)};
 		Rigel::Vector<float> m_translation{ Rigel::Vector<float>(0.0f, 3) };
 		Rigel::Vector<float> m_scale{ Rigel::Vector<float>(0.0f, 3) };
 		float m_rotation{ 0.0f };

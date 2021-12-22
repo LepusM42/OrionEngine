@@ -41,9 +41,13 @@ namespace Orion
 	{
 		//m_scale[0] = 1.000f;
 		//m_scale[1] = 1.000f;
-		m_translation[0] += 0.1f;
-		m_translation[1] += 0.1f;
-		m_translation[2] += 0.1f;
+		m_translation[0] += 0.001f;
+		m_translation[1] += 0.001f;
+		//m_translation[1] += 0.1f;
+		//m_translation[2] += 0.1f;
+		m_matrix[0][3] = m_translation[0];
+		m_matrix[1][3] = m_translation[1];
+		m_matrix[2][3] = m_translation[2];
 	}
 
 	/*!*************************************************************************
@@ -83,5 +87,10 @@ namespace Orion
 	float& Transform::GetRotation()
 	{
 		return m_rotation;
+	}
+
+	Rigel::Matrix<float>& Transform::GetMatrix()
+	{
+		return m_matrix;
 	}
 }
