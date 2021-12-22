@@ -103,10 +103,13 @@ namespace Orion
 		//Bind position to shader position
 		int attr_Pos = m_shader.GetAttribute("position");
 		glVertexAttribPointer(attr_Pos, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+		//glVertexAttribPointer(attr_Pos, 3, GL_FLOAT, GL_FALSE, 0, 
 
 		//Bind scale to shader scale
 		int uni_Scale = m_shader.GetUniform("scale");
-		glUniform1f(uni_Scale, transform->GetScale()[0]);
+		//glUniform1f(uni_Scale, transform->GetScale());
+		float scale[3] = { transform->GetScale()[0], transform->GetScale()[1], transform->GetScale()[2] };
+		glUniform3fv(uni_Scale, 1, scale);
 
 		//Bind world matrix to the world matrix held in the shader
 		int uni_World = m_shader.GetUniform("gWorld");
