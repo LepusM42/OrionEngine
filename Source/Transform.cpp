@@ -40,7 +40,8 @@ namespace Orion
 	void Transform::Update(float dt)
 	{
 		//m_translation[0] += .01f;
-		m_scale[0] += .01f;
+		m_translation[0] += .001f;
+		m_rotation += .001f;
 
 		//scale
 		Rigel::Matrix<float> s = Rigel::Matrix<float>(4);
@@ -63,7 +64,7 @@ namespace Orion
 		t[2][3] = m_translation[2];
 
 		//putting it all together
-		m_matrix = (s * r * t);
+		m_matrix = (s * r);
 
 	}
 

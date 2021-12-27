@@ -101,13 +101,13 @@ namespace Orion
 
 		//Bind position to shader position
 		int attr_Pos = m_shader.GetAttribute("position");
-		//float pos[3] = { transform->GetTranslation()[0], transform->GetTranslation()[1], transform->GetTranslation()[2] };
 		glVertexAttribPointer(attr_Pos, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 		//glVertexAttrib3f(attr_Pos, pos[0], pos[1], pos[2]);
 
 		//Bind scale to shader scale
 		// 
-		//m_shader.GetUniformData("posVec", posVec);
+		float posVec[3] = { transform->GetTranslation()[0], transform->GetTranslation()[1], transform->GetTranslation()[2] };
+		m_shader.GetUniformData("posVec", posVec);
 
 		//m_shader.GetUniformData("scale", scale);
 
