@@ -14,7 +14,6 @@ namespace Orion
 	Rigel::Matrix<float> Renderer::s_world(4);
 	std::vector<SpriteTransform> Renderer::m_drawPool;
 	ShaderProgram Renderer::m_shader; //!< Used to retrieve shader variables.
-	static float m_scale{ 0.0f };
 
 	//! Constructor
 	Renderer::Renderer()
@@ -107,8 +106,10 @@ namespace Orion
 		//glVertexAttrib3f(attr_Pos, pos[0], pos[1], pos[2]);
 
 		//Bind scale to shader scale
-		float scale[3] = { transform->GetScale()[0], transform->GetScale()[1], transform->GetScale()[2] };
-		m_shader.GetUniformData("scale", scale);
+		// 
+		//m_shader.GetUniformData("posVec", posVec);
+
+		//m_shader.GetUniformData("scale", scale);
 
 		m_shader.GetUniformMatrix("transMat", transform->GetMatrix());
 

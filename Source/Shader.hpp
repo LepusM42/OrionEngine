@@ -51,7 +51,7 @@ namespace Orion
 		//! Retrieve the name of a uniform variable from the shader program.
 		void GetUniformData(const char* uniform, float* data) const;
 		//! Retrieve the name of a uniform variable from the shader program.
-		void GetUniformMatrix(const char* uniform, Rigel::Matrix<float> data) const;
+		void GetUniformMatrix(const char* uniform, Rigel::Matrix<float>& data) const;
 		//! Clean up shader objects.
 		~ShaderProgram();
 	private:

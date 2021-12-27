@@ -39,15 +39,32 @@ namespace Orion
 	***************************************************************************/
 	void Transform::Update(float dt)
 	{
-		//m_scale[0] = 1.000f;
-		//m_scale[1] = 1.000f;
-		m_translation[0] += 0.001f;
-		m_translation[1] += 0.001f;
-		//m_translation[1] += 0.1f;
-		//m_translation[2] += 0.1f;
-		m_matrix[0][3] = m_translation[0];
-		m_matrix[1][3] = m_translation[1];
-		m_matrix[2][3] = m_translation[2];
+		//m_translation[0] += .01f;
+		m_scale[0] += .01f;
+
+		//scale
+		Rigel::Matrix<float> s = Rigel::Matrix<float>(4);
+		s[0][0] = m_scale[0];
+		s[1][1] = m_scale[1];
+		s[2][2] = m_scale[2];
+		s[3][3] = 1.0f;
+
+		//rotation
+		Rigel::Matrix<float> r = Rigel::Matrix<float>(4);
+		r[0][0] = cos(m_rotation);
+		r[0][1] = -sin(m_rotation);
+		r[1][0] = sin(m_rotation);
+		r[1][1] = cos(m_rotation);
+		
+		//translation
+		Rigel::Matrix<float> t = Rigel::Matrix<float>(4);
+		t[0][3] = m_translation[0];
+		t[1][3] = m_translation[1];
+		t[2][3] = m_translation[2];
+
+		//putting it all together
+		m_matrix = (s * r * t);
+
 	}
 
 	/*!*************************************************************************

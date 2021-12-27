@@ -135,7 +135,7 @@ namespace Rigel
 		{
 			for (unsigned j = 0; j < m_width; ++j)
 			{
-				GetMember(i, j) = vector[i * sizeof(T) + j];
+				GetMember(j, i) = vector[i];
 			}
 		}
 	}
@@ -178,9 +178,10 @@ namespace Rigel
 		m0 *= (sinf(theta) / axis.magnitude());
 		Matrix<T> m1 = Matrix<T>::MatrixFromVector(axis, false);
 		Matrix<T> m2 = Matrix<T>::MatrixFromVector(axis, true);
-		Matrix<T> m3 = ((m1 * m2) * (1.0f / (axis * axis))) * (1 - cosf(theta));
+		Matrix<T> m1_2(m1 * m2);
+		m1_2 *= (1.0f / (axis * axis)) * (1 - cosf(theta));
 		Matrix<T> m4 = Matrix<T>(4) * cosf(theta);
-		Matrix<T> finalMatrix = m3 + m4 + m0;
+		Matrix<T> finalMatrix = m1_2 + m4 + m0;
 		return finalMatrix;
 	}
 
@@ -378,6 +379,6 @@ namespace Rigel
 	template <typename T>
 	Matrix<T>::~Matrix()
 	{
-		delete[] m_matrix;
+		//delete m_matrix;
 	}
 }

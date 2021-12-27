@@ -121,11 +121,12 @@ namespace Orion
 	void ShaderProgram::GetUniformData(const char* uniform, float* data) const
 	{
 		GLuint uniformName = glGetUniformLocation(m_shaderProgram, uniform);
-		glGetUniformfv(m_shaderProgram, uniformName, data);
+		//glGetUniformfv(m_shaderProgram, uniformName, data);
+		glUniform3fv(uniformName, 1, data);
 	}
 
 	//! Retrieve the name of a uniform variable from the shader program.
-	void ShaderProgram::GetUniformMatrix(const char* uniform, Rigel::Matrix<float> data) const
+	void ShaderProgram::GetUniformMatrix(const char* uniform, Rigel::Matrix<float>& data) const
 	{
 		GLuint uniformName = glGetUniformLocation(m_shaderProgram, uniform);
 		glUniformMatrix4fv(uniformName, 1, GL_FALSE, data.GetRawMatrixData());
