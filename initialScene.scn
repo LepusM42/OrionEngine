@@ -19,7 +19,8 @@ StartObj
 		0.50 0.50 0.00
 	EndComp
 	ScriptComponent
-		sampleScript.lua
+		test
+		sampleScript
 	EndComp
 EndObj
 

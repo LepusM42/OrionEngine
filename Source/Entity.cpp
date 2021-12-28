@@ -79,6 +79,7 @@ namespace Orion
 	{
 		for (Component* component : m_components)
 		{
+			component->Stop();
 			Betel::Deallocate(component);
 		}
 		m_components.clear();

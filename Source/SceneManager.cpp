@@ -8,6 +8,7 @@
 #include "Betel.hpp"
 #include "Sprite.hpp"
 #include "Transform.hpp"
+#include "ScriptComponent.hpp"
 #include <fstream>
 namespace Orion
 {
@@ -58,7 +59,6 @@ namespace Orion
 			if (str == "Sprite")
 			{
 				Sprite* spr = Betel::Allocate<Sprite>();
-				spr->Start();
 				if (!e || !spr) continue;
 				float* triBuf = Betel::Allocate<float>(9);
 				while (str != "EndComp")
@@ -78,12 +78,12 @@ namespace Orion
 				}
 				Betel::Deallocate(triBuf);
 				spr->GetMesh().Init();
+				spr->Start();
 				e->Add(spr);
 			}
 			if (str == "Transform")
 			{
 				Transform* spr = Betel::Allocate<Transform>();
-				spr->Start();
 				if (!e || !spr) continue;
 				while (str != "EndComp")
 				{
@@ -106,6 +106,20 @@ namespace Orion
 						sceneFile >> spr->GetRotation();
 					}
 				}
+				spr->Start();
+				e->Add(spr);
+			}
+			if (str == "ScriptComponent")
+			{
+				ScriptComponent* spr = Betel::Allocate<ScriptComponent>();
+				if (!e || !spr) continue;
+				while (str != "EndComp")
+				{
+					sceneFile >> str;
+					if (str == "EndComp") break;
+					spr->AddScript(str);
+				}
+				spr->Start();
 				e->Add(spr);
 			}
 		}
