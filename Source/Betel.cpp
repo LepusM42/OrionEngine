@@ -594,6 +594,7 @@ namespace Betel
 	***************************************************************************/
 	Page* Allocator::PageContaining(void* address)
 	{
+		if (!address) return nullptr;
 		Page* currentPage = m_pageList;
 		while (currentPage && currentPage->Contains(address) == false)
 		{
