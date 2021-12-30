@@ -10,6 +10,7 @@
 *******************************************************************************/
 #include "Betel.hpp"
 #include <iostream>
+
 //! If the client doesn't specify a max page size, this value will be used instead.
 #define DEFAULT_PAGE_LIMIT 10000
 // Betel class interfaces

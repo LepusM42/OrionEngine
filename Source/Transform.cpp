@@ -39,9 +39,6 @@ namespace Orion
 	***************************************************************************/
 	void Transform::Update(float dt)
 	{
-		m_rotation += .01f;
-		m_translation[0] = sin(m_rotation);
-
 		//scale
 		s[0][0] = m_scale[0];
 		s[1][1] = m_scale[1];

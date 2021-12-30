@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{7f5d66d1-ffaf-4b6c-b69b-44b6fd6da145}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -128,5 +131,13 @@
     <ClInclude Include="Source\ScriptComponent.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\sampleScript.lua">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="Scripts\test.lua">
+      <Filter>Scripts</Filter>
+    </None>
   </ItemGroup>
 </Project>
