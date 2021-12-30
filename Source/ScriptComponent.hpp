@@ -27,12 +27,13 @@ namespace Orion
 		Script(std::string filename, ScriptComponent* parent);
 		//execute lua code
 		void Start();
+		void Update();
 		int DoString(std::string string);
 		int DoFile(std::string filename);
 		int RegisterFunction(std::string funcName, int(*func)(lua_State*));
 		int CallLua(std::string funcName, int argc, int retc);
 		int CallC(std::string funcName, int(*func)(lua_State*), int argc, int retc);
-		void Validate(int result);
+		bool Validate(int result);
 		void Stop();
 	private:
 		ScriptComponent* m_parent{ nullptr };

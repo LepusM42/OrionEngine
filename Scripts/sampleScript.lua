@@ -1,9 +1,8 @@
-x = 5;
-y = 3;
-print(x,"+",y,"=",x+y);
-Foo()
-Foo()
 function Start()
-	print("START2\n");
+	print("START2")
+	return
+end
+function Update()
+	--print("UPDATE2")
 	return
 end

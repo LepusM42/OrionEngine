@@ -12,14 +12,14 @@ namespace Orion
 {
 
 	/*!*************************************************************************
-	* \fn 
+	* \fn
 	* \brief Constructor. Called only once, making it good for one-time initial
 	*  allocations.
-	* \param 
-	* \return 
+	* \param
+	* \return
 	***************************************************************************/
 	ScriptComponent::ScriptComponent() :
-	Component::Component()
+		Component::Component()
 	{
 		std::cout << "script component." << std::endl;
 	}
@@ -32,7 +32,10 @@ namespace Orion
 	***************************************************************************/
 	void ScriptComponent::Update(float)
 	{
-
+		for (auto script : m_scripts)
+		{
+			script.Update();
+		}
 	}
 
 	/*!*************************************************************************
@@ -110,30 +113,43 @@ namespace Orion
 
 	void Script::Start()
 	{
-		CallC("Foo", foo, 0, 0);
-		DoFile(m_filename);
+		std::cout << "Running " << m_filename << "\n";
+
+		RegisterFunction("Foo", foo);
+
+		if (Validate(luaL_dofile(m_luaState, m_filename.c_str())))
+		{
+			CallLua("Start", 0, 0);
+			//CallC("Foo", foo, 0, 0);
+		}
 
 		Transform* t = static_cast<Transform*>(lua_newuserdata(m_luaState, sizeof(Transform)));
 
 	}
 
+	void Script::Update()
+	{
+		if (Validate(luaL_dofile(m_luaState, m_filename.c_str())))
+		{
+			CallLua("Update", 0, 0);
+		}
+	}
+
 	int Script::DoString(std::string string)
 	{
 		std::cout << "Running " << string << "\n";
-		int result = luaL_dostring(m_luaState, string.c_str());
-		Validate(result);
-		return result;
+		Validate(luaL_dostring(m_luaState, string.c_str()));
+		return 0;
 	}
 
 	int Script::DoFile(std::string filename)
 	{
 		std::cout << "Running " << filename << "\n";
-		int result = luaL_dofile(m_luaState, filename.c_str());
-		Validate(result);
+		Validate(luaL_dofile(m_luaState, filename.c_str()));
 
 		CallLua("Start", 0, 0);
 
-		return result;
+		return 0;
 	}
 
 	int Script::RegisterFunction(std::string funcName, int(*func)(lua_State*))
@@ -147,33 +163,36 @@ namespace Orion
 		lua_getglobal(m_luaState, funcName.c_str());
 		if (lua_isfunction(m_luaState, -1))
 		{
-			int result = lua_pcall(m_luaState, argc, retc, 0);
-			Validate(result);
-			std::cout << "Called function '" << funcName << "'.\n";
+			Validate(lua_pcall(m_luaState, argc, retc, 0));
+			//std::cout << "Called function '" << funcName << "'.\n";
 		}
 		return 0;
 	}
 
 	int Script::CallC(std::string funcName, int(*func)(lua_State*), int argc, int retc)
 	{
-		RegisterFunction(funcName, func);
 		lua_getglobal(m_luaState, funcName.c_str());
-		lua_pcall(m_luaState, argc, retc, 0);
-		std::cout << "Called function '" << funcName << "'.\n";
+
+		if (lua_isfunction(m_luaState, -1))
+		{
+			lua_pcall(m_luaState, argc, retc, 0);
+			//std::cout << "Called function '" << funcName << "'.\n";
+		}
 		return 0;
 	}
 
-	void Script::Validate(int result)
+	bool Script::Validate(int result)
 	{
 		if (result == LUA_OK)
 		{
-			std::cout << "LUA operation successful.\n";
+			return true;
 		}
 		else
 		{
 			std::cout << "LUA operation unsuccessful.\n";
 			std::cout << lua_tostring(m_luaState, -1) << "\n";
 			lua_pop(m_luaState, 1);
+			return false;
 		}
 	}
 
