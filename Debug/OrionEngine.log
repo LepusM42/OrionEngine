@@ -1,4 +1,4 @@
-﻿  LuaLibs.cpp
+﻿  ScriptComponent.cpp
 C:\Users\sethm\Desktop\OrionEngine\Source\LuaLibs.hpp(19,22): warning C4244: '=': conversion from 'lua_Number' to 'float', possible loss of data
 C:\Users\sethm\Desktop\OrionEngine\Source\LuaLibs.hpp(20,31): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
           with

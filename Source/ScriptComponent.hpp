@@ -32,9 +32,7 @@ namespace Orion
 		void Update();
 		int DoString(std::string string);
 		int DoFile(std::string filename);
-		int RegisterFunction(std::string funcName, int(*func)(lua_State*));
 		int CallLua(std::string funcName);
-		int CallC(std::string funcName, int(*func)(lua_State*));
 		bool Validate(int result);
 		void Stop();
 
@@ -75,9 +73,7 @@ namespace Orion
 		//add a script file by name
 		void AddScript(std::string filename);
 		Transform* GetTransform();
-		void SetTransform(Transform* t);
 		Sprite* GetSprite();
-		void SetSprite(Sprite* t);
 	private:
 		std::vector<Script> m_scripts;
 		Transform* m_transform{ nullptr };
