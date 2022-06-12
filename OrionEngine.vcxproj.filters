@@ -72,6 +72,9 @@
     <ClCompile Include="Source\ScriptComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\LuaLibs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.hpp">
@@ -131,6 +134,9 @@
     <ClInclude Include="Source\ScriptComponent.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\LuaLibs.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\sampleScript.lua">
@@ -139,5 +145,10 @@
     <None Include="Scripts\test.lua">
       <Filter>Scripts</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="PlayerController.lua">
+      <Filter>Scripts</Filter>
+    </Text>
   </ItemGroup>
 </Project>

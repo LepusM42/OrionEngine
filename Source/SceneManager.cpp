@@ -78,8 +78,8 @@ namespace Orion
 				}
 				Betel::Deallocate(triBuf);
 				spr->GetMesh().Init();
-				spr->Start();
 				e->Add(spr);
+				spr->Start();
 			}
 			if (str == "Transform")
 			{
@@ -106,8 +106,8 @@ namespace Orion
 						sceneFile >> spr->GetRotation();
 					}
 				}
-				spr->Start();
 				e->Add(spr);
+				spr->Start();
 			}
 			if (str == "ScriptComponent")
 			{
@@ -119,8 +119,8 @@ namespace Orion
 					if (str == "EndComp") break;
 					spr->AddScript(str);
 				}
-				spr->Start();
 				e->Add(spr);
+				spr->Start();
 			}
 		}
 	}

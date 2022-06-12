@@ -7,6 +7,7 @@
 #include "Transform.hpp"
 #include "Sprite.hpp"
 #include "Entity.hpp"
+#include "LuaLibs.hpp"
 
 namespace Orion
 {
@@ -47,8 +48,8 @@ namespace Orion
 	***************************************************************************/
 	void ScriptComponent::Start()
 	{
-		//m_transform = m_parent->Get<Transform>();
-		//m_sprite = m_parent->Get<Sprite>();
+		m_transform = m_parent->Get<Transform>();
+		m_sprite = m_parent->Get<Sprite>();
 		//Begin execution of all scripts
 		for (auto script : m_scripts)
 		{
@@ -97,6 +98,26 @@ namespace Orion
 		m_scripts.push_back(s);
 	}
 
+	Transform* ScriptComponent::GetTransform()
+	{
+		return m_transform;
+	}
+
+	void ScriptComponent::SetTransform(Transform* t)
+	{
+		*m_transform = *t;
+	}
+
+	Sprite* ScriptComponent::GetSprite()
+	{
+		return m_sprite;
+	}
+
+	void ScriptComponent::SetSprite(Sprite* s)
+	{
+		*m_sprite = *s;
+	}
+
 	Script::Script(std::string filename, ScriptComponent* parent) :
 		m_filename{ filename },
 		m_parent{ parent }
@@ -117,21 +138,24 @@ namespace Orion
 
 		RegisterFunction("Foo", foo);
 
+		//Open transform operation function array library
+		LuaLib tLib(transformLib, 2);
+		tLib.Open(m_luaState, "transform");
+
 		if (Validate(luaL_dofile(m_luaState, m_filename.c_str())))
 		{
-			CallLua("Start", 0, 0);
-			//CallC("Foo", foo, 0, 0);
+			CallLua("Start");
 		}
 
-		Transform* t = static_cast<Transform*>(lua_newuserdata(m_luaState, sizeof(Transform)));
-
+		CreateUserData(m_parent->GetTransform(), "playerTransform");
+		CreateUserData(m_parent->GetSprite(), "playerSprite");
 	}
 
 	void Script::Update()
 	{
 		if (Validate(luaL_dofile(m_luaState, m_filename.c_str())))
 		{
-			CallLua("Update", 0, 0);
+			CallLua("Update");
 		}
 	}
 
@@ -146,9 +170,6 @@ namespace Orion
 	{
 		std::cout << "Running " << filename << "\n";
 		Validate(luaL_dofile(m_luaState, filename.c_str()));
-
-		CallLua("Start", 0, 0);
-
 		return 0;
 	}
 
@@ -158,25 +179,24 @@ namespace Orion
 		return 0;
 	}
 
-	int Script::CallLua(std::string funcName, int argc, int retc)
+	int Script::CallLua(std::string funcName)
 	{
 		lua_getglobal(m_luaState, funcName.c_str());
 		if (lua_isfunction(m_luaState, -1))
 		{
-			Validate(lua_pcall(m_luaState, argc, retc, 0));
-			//std::cout << "Called function '" << funcName << "'.\n";
+			Validate(lua_pcall(m_luaState, 0, 0, 0));
 		}
 		return 0;
 	}
 
-	int Script::CallC(std::string funcName, int(*func)(lua_State*), int argc, int retc)
+	//in progress
+	int Script::CallC(std::string funcName, int(*func)(lua_State*))
 	{
+		RegisterFunction(funcName, func);
 		lua_getglobal(m_luaState, funcName.c_str());
-
 		if (lua_isfunction(m_luaState, -1))
 		{
-			lua_pcall(m_luaState, argc, retc, 0);
-			//std::cout << "Called function '" << funcName << "'.\n";
+			Validate(lua_pcall(m_luaState, 0, 0, 0));
 		}
 		return 0;
 	}

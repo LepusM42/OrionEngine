@@ -1,2 +1,14 @@
-﻿  ScriptComponent.cpp
+﻿  LuaLibs.cpp
+C:\Users\sethm\Desktop\OrionEngine\Source\LuaLibs.hpp(19,22): warning C4244: '=': conversion from 'lua_Number' to 'float', possible loss of data
+C:\Users\sethm\Desktop\OrionEngine\Source\LuaLibs.hpp(20,31): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\sethm\Desktop\OrionEngine\Source\LuaLibs.hpp(21,31): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   OrionEngine.vcxproj -> C:\Users\sethm\Desktop\OrionEngine\Debug\OrionEngine.exe
