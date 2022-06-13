@@ -74,7 +74,7 @@ namespace Orion
 	* \param
 	* \return
 	***************************************************************************/
-	Rigel::Vector<float> Sprite::GetColor()
+	Rigel::Vector<float>& Sprite::GetColor()
 	{
 		return m_color;
 	}

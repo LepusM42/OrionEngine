@@ -5,27 +5,48 @@
 
 namespace Orion
 {
-	static int newTransform(lua_State* L)
+	static int transform_new(lua_State* L)
 	{
 		auto t = new Transform();
 		lua_pushlightuserdata(L, t);
-		t->GetScale()[0] = 4;
 		return 1;
 	}
 
-	static int setpos(lua_State* L)
+	static int transform_setPos(lua_State* L)
 	{
 		Transform* t = (Transform*)(lua_touserdata(L, 1));
 		t->GetRotation() = lua_tonumber(L, 2);
-		t->GetTranslation()[0] = sin(lua_tonumber(L, 2));
-		t->GetTranslation()[1] = sin(lua_tonumber(L, 3));
+		t->GetTranslation()[0] = lua_tonumber(L, 2);
+		t->GetTranslation()[1] = lua_tonumber(L, 3);
+		return 0;
+	}
+
+	static int sprite_new(lua_State* L)
+	{
+		auto t = new Sprite();
+		lua_pushlightuserdata(L, t);
+		return 1;
+	}
+
+	static int sprite_setColor(lua_State* L)
+	{
+		Sprite* s = (Sprite*)(lua_touserdata(L, 1));
+		s->GetColor()[0] = sin(lua_tonumber(L, 2));
+		s->GetColor()[1] = sin(lua_tonumber(L, 3));
+		s->GetColor()[2] = sin(lua_tonumber(L, 4));
 		return 0;
 	}
 
 	const luaL_Reg transformLib[] =
 	{
-		{"new", newTransform},
-		{"set", setpos}
+		{"new", transform_new},
+		{"setPos", transform_setPos}
+	};
+
+	const luaL_Reg spriteLib[] =
+	{
+		{"new", sprite_new},
+		{"setColor", sprite_setColor}
 	};
 
 

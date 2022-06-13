@@ -35,23 +35,12 @@ namespace Orion
 		int CallLua(std::string funcName);
 		bool Validate(int result);
 		void Stop();
-
-		template <typename T>
-		void SyncUserData(T* base, std::string var)
-		{
-			int i = lua_getglobal(m_luaState, var.c_str());
-			if (lua_islightuserdata(m_luaState, -1))
-			{
-				*base = *((T*)lua_touserdata(m_luaState, -1));
-			}
-		}
 		template <typename T>
 		void CreateUserData(T* base, std::string var)
 		{
 			lua_pushlightuserdata(m_luaState, base);
 			lua_setglobal(m_luaState, var.c_str());
 		}
-
 	private:
 		ScriptComponent* m_parent{ nullptr };
 		std::string m_filename;

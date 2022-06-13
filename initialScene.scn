@@ -17,10 +17,11 @@ StartObj
 		-0.50 0.50 0.00
 		0.50 -0.50 0.00
 		0.50 0.50 0.00
+		Color
+		1 1 1
 	EndComp
 	ScriptComponent
 		test
-		sampleScript
 	EndComp
 EndObj
 
@@ -39,5 +40,10 @@ StartObj
 		-0.50 0.00 0.00
 		0.50 0.00 0.00
 		0.00 1.00 0.00
+		Color
+		1 1 1
+	EndComp
+	ScriptComponent
+		sampleScript
 	EndComp
 EndObj

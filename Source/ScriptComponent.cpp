@@ -148,18 +148,21 @@ namespace Orion
 	{
 		std::cout << "Running " << m_filename << "\n";
 
-		//Open transform operation function array library
+		//Open function array libraries
 		LuaLib tLib(transformLib, 2);
-		tLib.Open(m_luaState, "transform");
+		tLib.Open(m_luaState, "Transform");
+		LuaLib sLib(spriteLib, 2);
+		sLib.Open(m_luaState, "Sprite");
 
+		//Call start function
 		if (Validate(luaL_dofile(m_luaState, m_filename.c_str())))
 		{
 			CallLua("Start");
 		}
 
 		//Create some userdata using the parent's existing components
-		CreateUserData(m_parent->GetTransform(), "playerTransform");
-		CreateUserData(m_parent->GetSprite(), "playerSprite");
+		CreateUserData(m_parent->GetTransform(), "transform");
+		CreateUserData(m_parent->GetSprite(), "sprite");
 	}
 
 	/*!*************************************************************************

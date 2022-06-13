@@ -22,7 +22,7 @@ namespace Orion
 		void Update(float dt) override;
 		void Stop() override;
 		Mesh& GetMesh();
-		Rigel::Vector<float> GetColor();
+		Rigel::Vector<float>& GetColor();
 		~Sprite();
 	private:
 		Mesh m_mesh;
