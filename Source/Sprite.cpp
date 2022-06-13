@@ -16,7 +16,8 @@ namespace Orion
 	* \return
 	***************************************************************************/
 	Sprite::Sprite() :
-		Component::Component()
+		Component::Component(),
+		m_color(1.0f, 4)
 	{
 		std::cout << "sprite." << std::endl;
 	}
@@ -65,6 +66,17 @@ namespace Orion
 	Mesh& Sprite::GetMesh()
 	{
 		return m_mesh;
+	}
+
+	/*!*************************************************************************
+	* \fn
+	* \brief Retrieve a reference to this sprite's mesh.
+	* \param
+	* \return
+	***************************************************************************/
+	Rigel::Vector<float> Sprite::GetColor()
+	{
+		return m_color;
 	}
 
 	/*!*************************************************************************
