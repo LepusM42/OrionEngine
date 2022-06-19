@@ -7,6 +7,7 @@
 #include "Transform.hpp"
 #include "Sprite.hpp"
 #include "Entity.hpp"
+#include "LuaLibs.hpp"
 
 namespace Orion
 {
@@ -47,8 +48,8 @@ namespace Orion
 	***************************************************************************/
 	void ScriptComponent::Start()
 	{
-		//m_transform = m_parent->Get<Transform>();
-		//m_sprite = m_parent->Get<Sprite>();
+		m_transform = m_parent->Get<Transform>();
+		m_sprite = m_parent->Get<Sprite>();
 		//Begin execution of all scripts
 		for (auto script : m_scripts)
 		{
@@ -97,6 +98,37 @@ namespace Orion
 		m_scripts.push_back(s);
 	}
 
+	/*!*************************************************************************
+	* \fn
+	* \brief Constructor. Called only once, making it good for one-time initial
+	*  allocations.
+	* \param
+	* \return
+	***************************************************************************/
+	Transform* ScriptComponent::GetTransform()
+	{
+		return m_transform;
+	}
+
+	/*!*************************************************************************
+	* \fn
+	* \brief Constructor. Called only once, making it good for one-time initial
+	*  allocations.
+	* \param
+	* \return
+	***************************************************************************/
+	Sprite* ScriptComponent::GetSprite()
+	{
+		return m_sprite;
+	}
+
+	/*!*************************************************************************
+	* \fn
+	* \brief Constructor. Called only once, making it good for one-time initial
+	*  allocations.
+	* \param
+	* \return
+	***************************************************************************/
 	Script::Script(std::string filename, ScriptComponent* parent) :
 		m_filename{ filename },
 		m_parent{ parent }
@@ -105,36 +137,56 @@ namespace Orion
 		luaL_openlibs(m_luaState);
 	}
 
-	int foo(lua_State*)
-	{
-		std::cout << "FOO\n";
-		return 0;
-	}
-
+	/*!*************************************************************************
+	* \fn
+	* \brief Constructor. Called only once, making it good for one-time initial
+	*  allocations.
+	* \param
+	* \return
+	***************************************************************************/
 	void Script::Start()
 	{
 		std::cout << "Running " << m_filename << "\n";
 
-		RegisterFunction("Foo", foo);
+		//Open function array libraries
+		LuaLib tLib(transformLib, 2);
+		tLib.Open(m_luaState, "Transform");
+		LuaLib sLib(spriteLib, 2);
+		sLib.Open(m_luaState, "Sprite");
 
+		//Call start function
 		if (Validate(luaL_dofile(m_luaState, m_filename.c_str())))
 		{
-			CallLua("Start", 0, 0);
-			//CallC("Foo", foo, 0, 0);
+			CallLua("Start");
 		}
 
-		Transform* t = static_cast<Transform*>(lua_newuserdata(m_luaState, sizeof(Transform)));
-
+		//Create some userdata using the parent's existing components
+		CreateUserData(m_parent->GetTransform(), "transform");
+		CreateUserData(m_parent->GetSprite(), "sprite");
 	}
 
+	/*!*************************************************************************
+	* \fn
+	* \brief Constructor. Called only once, making it good for one-time initial
+	*  allocations.
+	* \param
+	* \return
+	***************************************************************************/
 	void Script::Update()
 	{
 		if (Validate(luaL_dofile(m_luaState, m_filename.c_str())))
 		{
-			CallLua("Update", 0, 0);
+			CallLua("Update");
 		}
 	}
 
+	/*!*************************************************************************
+	* \fn
+	* \brief Constructor. Called only once, making it good for one-time initial
+	*  allocations.
+	* \param
+	* \return
+	***************************************************************************/
 	int Script::DoString(std::string string)
 	{
 		std::cout << "Running " << string << "\n";
@@ -142,45 +194,44 @@ namespace Orion
 		return 0;
 	}
 
+	/*!*************************************************************************
+	* \fn
+	* \brief Constructor. Called only once, making it good for one-time initial
+	*  allocations.
+	* \param
+	* \return
+	***************************************************************************/
 	int Script::DoFile(std::string filename)
 	{
 		std::cout << "Running " << filename << "\n";
 		Validate(luaL_dofile(m_luaState, filename.c_str()));
-
-		CallLua("Start", 0, 0);
-
 		return 0;
 	}
 
-	int Script::RegisterFunction(std::string funcName, int(*func)(lua_State*))
-	{
-		lua_register(m_luaState, funcName.c_str(), func);
-		return 0;
-	}
-
-	int Script::CallLua(std::string funcName, int argc, int retc)
+	/*!*************************************************************************
+	* \fn
+	* \brief Constructor. Called only once, making it good for one-time initial
+	*  allocations.
+	* \param
+	* \return
+	***************************************************************************/
+	int Script::CallLua(std::string funcName)
 	{
 		lua_getglobal(m_luaState, funcName.c_str());
 		if (lua_isfunction(m_luaState, -1))
 		{
-			Validate(lua_pcall(m_luaState, argc, retc, 0));
-			//std::cout << "Called function '" << funcName << "'.\n";
+			Validate(lua_pcall(m_luaState, 0, 0, 0));
 		}
 		return 0;
 	}
 
-	int Script::CallC(std::string funcName, int(*func)(lua_State*), int argc, int retc)
-	{
-		lua_getglobal(m_luaState, funcName.c_str());
-
-		if (lua_isfunction(m_luaState, -1))
-		{
-			lua_pcall(m_luaState, argc, retc, 0);
-			//std::cout << "Called function '" << funcName << "'.\n";
-		}
-		return 0;
-	}
-
+	/*!*************************************************************************
+	* \fn
+	* \brief Constructor. Called only once, making it good for one-time initial
+	*  allocations.
+	* \param
+	* \return
+	***************************************************************************/
 	bool Script::Validate(int result)
 	{
 		if (result == LUA_OK)
@@ -196,6 +247,13 @@ namespace Orion
 		}
 	}
 
+	/*!*************************************************************************
+	* \fn
+	* \brief Constructor. Called only once, making it good for one-time initial
+	*  allocations.
+	* \param
+	* \return
+	***************************************************************************/
 	void Script::Stop()
 	{
 		lua_close(m_luaState);

@@ -1,5 +1,6 @@
 #version 460
 in vec3 position;
+in vec3 baseColor;
 uniform vec3 posVec;
 uniform mat4x4 gWorld;
 uniform mat4x4 transMat;
@@ -8,5 +9,5 @@ void main()
 {
 	gl_Position = gWorld * transMat * vec4(position.x, position.y, position.z, 1.0);
 	gl_Position += posVec;
-	color = gl_Position;
+	color.xyz = baseColor;
 }
