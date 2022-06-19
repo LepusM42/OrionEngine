@@ -7,6 +7,7 @@
 #include "Window.hpp"
 #include "Engine.hpp"
 #include "Rigel.hpp"
+#include "Input.hpp"
 #include <iostream>
 namespace Orion
 {
@@ -16,7 +17,7 @@ namespace Orion
 	***************************************************************************/
 	void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
-		std::cout << key << std::endl;
+		Input::SendEvent(key, action);
 	}
 
 	/*!*************************************************************************

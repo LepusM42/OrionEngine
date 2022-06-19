@@ -4,17 +4,21 @@
 * \brief This is a stub file, used as a template for all other files.
 *******************************************************************************/
 #pragma once
+#include "glfw3.h"
+#include <array>
 namespace Orion
 {
-	/*!*************************************************************************
-	* \class 
-	* \brief 
-	***************************************************************************/
-	class Input
+	namespace Input
 	{
-	public:
 		//! Does nothing.
-		int Bar(int);
-	private:
-	};
+		void SendEvent(int keyCode, int event);
+		//! Does nothing.
+		int GetEvent(int keyCode);
+		//! Does nothing.
+		bool isPressed(int keyCode);
+		//! Does nothing.
+		bool isHeld(int keyCode);
+		//! Does nothing.
+		bool isReleased(int keyCode);
+	}
 }
