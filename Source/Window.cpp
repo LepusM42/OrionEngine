@@ -11,6 +11,15 @@
 namespace Orion
 {
 	/*!*************************************************************************
+	* \fn KeyCallback(GLFWwindow*, int, int, int, int)
+	* \brief
+	***************************************************************************/
+	void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+	{
+		std::cout << key << std::endl;
+	}
+
+	/*!*************************************************************************
 	* \fn Window::Init(int, int, const char*);
 	* \brief Create the window and GL Context.
 	***************************************************************************/
@@ -23,6 +32,7 @@ namespace Orion
 			CreateWindow(800, 600, "OrionEngine");
 			glfwMakeContextCurrent(s_window);
 			glfwSetWindowCloseCallback(s_window, WindowCloseCallback);
+			glfwSetKeyCallback(s_window, KeyCallback);
 		}
 		else
 		{
@@ -46,6 +56,8 @@ namespace Orion
 			glClear(mask);
 			glfwPollEvents();
 		}
+		else
+			DestroyWindow();
 	}
 	/*!*************************************************************************
 	* \fn Window::Shutdown();
@@ -70,6 +82,19 @@ namespace Orion
 			s_window = glfwCreateWindow(width, height, name, nullptr, nullptr);
 		}
 	}
+
+	/*!*************************************************************************
+	* \fn Window::DestroyWindow();
+	* \brief Destroy a window instance.
+	***************************************************************************/
+	void Window::DestroyWindow()
+	{
+		if (s_window)
+		{
+
+		}
+	}
+
 	/*!*************************************************************************
 	* \fn CreateWindow(int width, int height, const char* name);
 	* \brief Callback used when the window is closed.

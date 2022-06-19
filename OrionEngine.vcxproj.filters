@@ -75,6 +75,9 @@
     <ClCompile Include="Source\LuaLibs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.hpp">
@@ -135,6 +138,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\LuaLibs.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Input.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
