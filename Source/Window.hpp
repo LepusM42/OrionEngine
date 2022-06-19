@@ -9,6 +9,7 @@ namespace Orion
 {
 	//! Global callback used when a window is closed.
 	void WindowCloseCallback(GLFWwindow* window);
+	void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 	/*!*************************************************************************
 	* \class Window
@@ -28,5 +29,7 @@ namespace Orion
 		GLFWwindow* s_window;
 		//! Create a window instance.
 		void CreateWindow(int width, int height, const char* name);
+		//! Destroy a window instance.
+		void DestroyWindow();
 	};
 }

@@ -6,7 +6,9 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <list>
 #include "Component.hpp"
+#include "Entity.hpp"
 #include "Transform.hpp"
 #include "Sprite.hpp"
 
@@ -30,11 +32,15 @@ namespace Orion
 		void Update();
 		int DoString(std::string string);
 		int DoFile(std::string filename);
-		int RegisterFunction(std::string funcName, int(*func)(lua_State*));
-		int CallLua(std::string funcName, int argc, int retc);
-		int CallC(std::string funcName, int(*func)(lua_State*), int argc, int retc);
+		int CallLua(std::string funcName);
 		bool Validate(int result);
 		void Stop();
+		template <typename T>
+		void CreateUserData(T* base, std::string var)
+		{
+			lua_pushlightuserdata(m_luaState, base);
+			lua_setglobal(m_luaState, var.c_str());
+		}
 	private:
 		ScriptComponent* m_parent{ nullptr };
 		std::string m_filename;
@@ -55,6 +61,8 @@ namespace Orion
 		~ScriptComponent();
 		//add a script file by name
 		void AddScript(std::string filename);
+		Transform* GetTransform();
+		Sprite* GetSprite();
 	private:
 		std::vector<Script> m_scripts;
 		Transform* m_transform{ nullptr };

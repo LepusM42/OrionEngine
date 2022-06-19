@@ -7,6 +7,7 @@
 #include <iostream>
 #include "Component.hpp"
 #include "Mesh.hpp"
+#include "Rigel.hpp"
 namespace Orion
 {
 	/*!*************************************************************************
@@ -21,8 +22,10 @@ namespace Orion
 		void Update(float dt) override;
 		void Stop() override;
 		Mesh& GetMesh();
+		Rigel::Vector<float>& GetColor();
 		~Sprite();
 	private:
 		Mesh m_mesh;
+		Rigel::Vector<float> m_color;
 	};
 }

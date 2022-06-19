@@ -104,6 +104,10 @@ namespace Orion
 		glVertexAttribPointer(attr_Pos, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 		//glVertexAttrib3f(attr_Pos, pos[0], pos[1], pos[2]);
 
+		int attr_Col = m_shader.GetAttribute("baseColor");
+		glVertexAttribPointer(attr_Col, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+		glVertexAttrib3f(attr_Col, sprite->GetColor()[0], sprite->GetColor()[1], sprite->GetColor()[2]);
+
 		//Bind scale to shader scale
 		// 
 		float posVec[3] = { transform->GetTranslation()[0], transform->GetTranslation()[1], transform->GetTranslation()[2] };

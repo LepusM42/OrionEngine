@@ -65,21 +65,27 @@ namespace Orion
 				{
 					sceneFile >> str;
 					if (str == "EndComp") break;
-					sceneFile >> triBuf[0] >> triBuf[1] >> triBuf[2];
-					sceneFile >> triBuf[3] >> triBuf[4] >> triBuf[5];
-					sceneFile >> triBuf[6] >> triBuf[7] >> triBuf[8];
+					if (str == "Tri")
+					{
+						sceneFile >> triBuf[0] >> triBuf[1] >> triBuf[2];
+						sceneFile >> triBuf[3] >> triBuf[4] >> triBuf[5];
+						sceneFile >> triBuf[6] >> triBuf[7] >> triBuf[8];
 
-					spr->GetMesh().AddTriangle(
-						Vertex({ triBuf[0], triBuf[1], triBuf[2]}),
-						Vertex({ triBuf[3], triBuf[4], triBuf[5] }),
-						Vertex({ triBuf[6], triBuf[7], triBuf[8] })
-					);
-
+						spr->GetMesh().AddTriangle(
+							Vertex({ triBuf[0], triBuf[1], triBuf[2] }),
+							Vertex({ triBuf[3], triBuf[4], triBuf[5] }),
+							Vertex({ triBuf[6], triBuf[7], triBuf[8] })
+						);
+					}
+					if (str == "Color")
+					{
+						sceneFile >> spr->GetColor()[0] >> spr->GetColor()[1] >> spr->GetColor()[2];
+					}
 				}
 				Betel::Deallocate(triBuf);
 				spr->GetMesh().Init();
-				spr->Start();
 				e->Add(spr);
+				spr->Start();
 			}
 			if (str == "Transform")
 			{
@@ -106,8 +112,8 @@ namespace Orion
 						sceneFile >> spr->GetRotation();
 					}
 				}
-				spr->Start();
 				e->Add(spr);
+				spr->Start();
 			}
 			if (str == "ScriptComponent")
 			{
@@ -119,8 +125,8 @@ namespace Orion
 					if (str == "EndComp") break;
 					spr->AddScript(str);
 				}
-				spr->Start();
 				e->Add(spr);
+				spr->Start();
 			}
 		}
 	}
