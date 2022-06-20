@@ -1,13 +1,14 @@
 
 function Start()
 	i=0;
+	x = Transform.getCoord(transform, 0);
+	y = Transform.getCoord(transform, 1);
 	print("START1")
 	return
 end
 function Update()
 	--print("UPDATE1")
-	Transform.setPos(transform, math.sin(i), -1);
-	i = i + .1;
+
 	if(Input.isPressed(69)) then
 	Sprite.setColor(sprite,1,.1,.1);
 	end
@@ -17,5 +18,12 @@ function Update()
 	if(Input.isReleased(69)) then
 	Sprite.setColor(sprite,.1,.1,1);
 	end
+
+	if(Input.isHeld(69)) then
+		x = x + .01;
+	end
+
+	Transform.setPos(transform, x, y);
+
 	return
 end

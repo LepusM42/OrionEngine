@@ -2,7 +2,7 @@ StartObj
 	Name: obj1
 	Transform
 		Translation
-			0.50 0.50 0.00
+			0.00 0.00 0.00
 		Scale
 			0.10 0.10 0.10
 		Rotation

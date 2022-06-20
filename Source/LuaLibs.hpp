@@ -16,10 +16,17 @@ namespace Orion
 	static int transform_setPos(lua_State* L)
 	{
 		Transform* t = (Transform*)(lua_touserdata(L, 1));
-		t->GetRotation() = lua_tonumber(L, 2);
 		t->GetTranslation()[0] = lua_tonumber(L, 2);
 		t->GetTranslation()[1] = lua_tonumber(L, 3);
 		return 0;
+	}
+
+	static int transform_getCoord(lua_State* L)
+	{
+		Transform* t = (Transform*)(lua_touserdata(L, 1));
+		int coord = lua_tonumber(L, 2);
+		lua_pushinteger(L, t->GetTranslation()[coord]);
+		return 1;
 	}
 
 	static int sprite_new(lua_State* L)
@@ -62,7 +69,8 @@ namespace Orion
 	const luaL_Reg transformLib[] =
 	{
 		{"new", transform_new},
-		{"setPos", transform_setPos}
+		{"setPos", transform_setPos},
+		{"getCoord", transform_getCoord}
 	};
 
 	const luaL_Reg spriteLib[] =
