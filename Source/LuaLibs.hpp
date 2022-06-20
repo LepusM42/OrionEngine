@@ -67,37 +67,37 @@ namespace Orion
 	}
 	static int input_isZPressed(lua_State* L)
 	{
-		lua_pushboolean(L, Input::isPressed(90));
+		lua_pushboolean(L, Input::isPressed(GLFW_KEY_Z));
 		return 1;
 	}
 	static int input_isXPressed(lua_State* L)
 	{
-		lua_pushboolean(L, Input::isPressed(342));
+		lua_pushboolean(L, Input::isPressed(GLFW_KEY_X));
 		return 1;
 	}
 	static int input_isCPressed(lua_State * L)
 	{
-		lua_pushboolean(L, Input::isPressed(67));
+		lua_pushboolean(L, Input::isPressed(GLFW_KEY_C));
 		return 1;
 	}
 	static int input_isRPressed(lua_State * L)
 	{
-		lua_pushboolean(L, Input::isPressed(262) || Input::isHeld(262));
+		lua_pushboolean(L, Input::isPressed(GLFW_KEY_RIGHT) || Input::isHeld(GLFW_KEY_RIGHT));
 		return 1;
 	}
 	static int input_isLPressed(lua_State * L)
 	{
-		lua_pushboolean(L, Input::isPressed(263) || Input::isHeld(263));
+		lua_pushboolean(L, Input::isPressed(GLFW_KEY_LEFT) || Input::isHeld(GLFW_KEY_LEFT));
 		return 1;
 	}
 	static int input_isDPressed(lua_State* L)
 	{
-		lua_pushboolean(L, Input::isPressed(264) || Input::isHeld(264));
+		lua_pushboolean(L, Input::isPressed(GLFW_KEY_DOWN) || Input::isHeld(GLFW_KEY_DOWN));
 		return 1;
 	}
 	static int input_isUPressed(lua_State* L)
 	{
-		lua_pushboolean(L, Input::isPressed(265) || Input::isHeld(265));
+		lua_pushboolean(L, Input::isPressed(GLFW_KEY_UP) || Input::isHeld(GLFW_KEY_UP));
 		return 1;
 	}
 
@@ -119,13 +119,13 @@ namespace Orion
 		{"isPressed", input_isPressed},
 		{"isHeld", input_isHeld},
 		{"isReleased", input_isReleased},
-		{"isZPressed", input_isZPressed},
-		{"isXPressed", input_isXPressed},
-		{"isCPressed", input_isCPressed},
-		{"isUpPressed", input_isUPressed},
-		{"isLeftPressed", input_isLPressed},
-		{"isDownPressed", input_isDPressed},
-		{"isRightPressed", input_isRPressed}
+		{"isAPressed", input_isZPressed},
+		{"isBPressed", input_isXPressed},
+		{"isEnterPressed", input_isCPressed},
+		{"isUpDown", input_isUPressed},
+		{"isLeftDown", input_isLPressed},
+		{"isDownDown", input_isDPressed},
+		{"isRightDown", input_isRPressed}
 	};
 
 

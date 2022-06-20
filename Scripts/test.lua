@@ -9,26 +9,16 @@ end
 function Update()
 	--print("UPDATE1")
 
-	if(Input.isPressed(69)) then
-	Sprite.setColor(sprite,1,.1,.1);
-	end
-	if(Input.isHeld(69)) then
-	Sprite.setColor(sprite,.1,1,.1);
-	end
-	if(Input.isReleased(69)) then
-	Sprite.setColor(sprite,.1,.1,1);
-	end
-
-	if(Input.isLeftPressed()) then
+	if(Input.isLeftDown()) then
 		x = x - .01;
 	end
-	if(Input.isRightPressed()) then
+	if(Input.isRightDown()) then
 		x = x + .01;
 	end
-	if(Input.isUpPressed()) then
+	if(Input.isUpDown()) then
 		y = y + .01;
 	end
-	if(Input.isDownPressed()) then
+	if(Input.isDownDown()) then
 		y = y - .01;
 	end
 
