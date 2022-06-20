@@ -11,6 +11,8 @@ namespace Orion
 	namespace Input
 	{
 		//! Does nothing.
+		void Update();
+		//! Does nothing.
 		void SendEvent(int keyCode, int event);
 		//! Does nothing.
 		int GetEvent(int keyCode);

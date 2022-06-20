@@ -5,6 +5,7 @@
 *******************************************************************************/
 #include "Input.hpp"
 #include <iostream>
+#define KEY_OFF -1
 namespace Orion
 {
 	namespace Input
@@ -17,6 +18,8 @@ namespace Orion
 		{
 		public:
 			//! Does nothing.
+			void Update();
+			//! Does nothing.
 			void SendKeyEvent(int keyCode, int event);
 			//! Does nothing.
 			int GetKeyEvent(int keyCode);
@@ -27,6 +30,19 @@ namespace Orion
 		//! Does nothing.
 		InputManager input;
 
+		/*!*************************************************************************
+		* \fn
+		* \brief
+		* \param
+		* \return
+		***************************************************************************/
+		void InputManager::Update()
+		{
+			for (int i = 0; i < m_keys.size(); ++i)
+			{
+				m_keys[i] = KEY_OFF;
+			}
+		}
 		/*!*************************************************************************
 		* \fn
 		* \brief
@@ -48,6 +64,16 @@ namespace Orion
 			return m_keys[keyCode];
 		}
 
+		/*!*************************************************************************
+		* \fn
+		* \brief
+		* \param
+		* \return
+		***************************************************************************/
+		void Update()
+		{
+			input.Update();
+		}
 		/*!*************************************************************************
 		* \fn
 		* \brief

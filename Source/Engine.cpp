@@ -4,6 +4,7 @@
 * \brief Manages Orion's engine life cycle (initialization, update, exit).
 *******************************************************************************/
 #include "Engine.hpp"
+#include "Input.hpp"
 #include "SceneManager.hpp"
 #include "EntityManager.hpp"
 namespace Orion
@@ -40,6 +41,7 @@ namespace Orion
 		while (s_isUpdating)
 		{
 			m_window.Update();
+			Input::Update();
 			EntityManager::Update(0.0f);
 			Renderer::Update();
 		}
