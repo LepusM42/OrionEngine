@@ -19,8 +19,17 @@ function Update()
 	Sprite.setColor(sprite,.1,.1,1);
 	end
 
-	if(Input.isHeld(69)) then
+	if(Input.isLeftPressed()) then
+		x = x - .01;
+	end
+	if(Input.isRightPressed()) then
 		x = x + .01;
+	end
+	if(Input.isUpPressed()) then
+		y = y + .01;
+	end
+	if(Input.isDownPressed()) then
+		y = y - .01;
 	end
 
 	Transform.setPos(transform, x, y);

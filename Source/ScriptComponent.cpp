@@ -153,7 +153,7 @@ namespace Orion
 		tLib.Open(m_luaState, "Transform");
 		LuaLib sLib(spriteLib, 2);
 		sLib.Open(m_luaState, "Sprite");
-		LuaLib iLib(inputLib, 3);
+		LuaLib iLib(inputLib, 10);
 		iLib.Open(m_luaState, "Input");
 
 		//Create some userdata using the parent's existing components

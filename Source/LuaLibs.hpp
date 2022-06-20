@@ -65,6 +65,41 @@ namespace Orion
 		lua_pushboolean(L, Input::isReleased(keyCode));
 		return 1;
 	}
+	static int input_isZPressed(lua_State* L)
+	{
+		lua_pushboolean(L, Input::isPressed(90));
+		return 1;
+	}
+	static int input_isXPressed(lua_State* L)
+	{
+		lua_pushboolean(L, Input::isPressed(342));
+		return 1;
+	}
+	static int input_isCPressed(lua_State * L)
+	{
+		lua_pushboolean(L, Input::isPressed(67));
+		return 1;
+	}
+	static int input_isRPressed(lua_State * L)
+	{
+		lua_pushboolean(L, Input::isPressed(262) || Input::isHeld(262));
+		return 1;
+	}
+	static int input_isLPressed(lua_State * L)
+	{
+		lua_pushboolean(L, Input::isPressed(263) || Input::isHeld(263));
+		return 1;
+	}
+	static int input_isDPressed(lua_State* L)
+	{
+		lua_pushboolean(L, Input::isPressed(264) || Input::isHeld(264));
+		return 1;
+	}
+	static int input_isUPressed(lua_State* L)
+	{
+		lua_pushboolean(L, Input::isPressed(265) || Input::isHeld(265));
+		return 1;
+	}
 
 	const luaL_Reg transformLib[] =
 	{
@@ -83,7 +118,14 @@ namespace Orion
 	{
 		{"isPressed", input_isPressed},
 		{"isHeld", input_isHeld},
-		{"isReleased", input_isReleased}
+		{"isReleased", input_isReleased},
+		{"isZPressed", input_isZPressed},
+		{"isXPressed", input_isXPressed},
+		{"isCPressed", input_isCPressed},
+		{"isUpPressed", input_isUPressed},
+		{"isLeftPressed", input_isLPressed},
+		{"isDownPressed", input_isDPressed},
+		{"isRightPressed", input_isRPressed}
 	};
 
 
