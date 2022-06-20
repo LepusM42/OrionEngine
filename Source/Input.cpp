@@ -38,10 +38,7 @@ namespace Orion
 		***************************************************************************/
 		void InputManager::Update()
 		{
-			for (int i = 0; i < m_keys.size(); ++i)
-			{
-				m_keys[i] = KEY_OFF;
-			}
+
 		}
 		/*!*************************************************************************
 		* \fn
@@ -83,7 +80,6 @@ namespace Orion
 		void SendEvent(int keyCode, int event)
 		{
 			input.SendKeyEvent(keyCode, event);
-			std::cout << keyCode << " " << event << "\n";
 		}
 		/*!*************************************************************************
 		* \fn

@@ -153,6 +153,8 @@ namespace Orion
 		tLib.Open(m_luaState, "Transform");
 		LuaLib sLib(spriteLib, 2);
 		sLib.Open(m_luaState, "Sprite");
+		LuaLib iLib(inputLib, 3);
+		iLib.Open(m_luaState, "Input");
 
 		//Call start function
 		if (Validate(luaL_dofile(m_luaState, m_filename.c_str())))

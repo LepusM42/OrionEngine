@@ -2,6 +2,7 @@
 #include "ScriptComponent.hpp"
 #include "Transform.hpp"
 #include "Sprite.hpp"
+#include "Input.hpp"
 
 namespace Orion
 {
@@ -37,6 +38,27 @@ namespace Orion
 		return 0;
 	}
 
+	static int input_isPressed(lua_State* L)
+	{
+		int keyCode = lua_tonumber(L, 1);
+		lua_pushboolean(L, Input::isPressed(keyCode));
+		return 1;
+	}
+
+	static int input_isHeld(lua_State* L)
+	{
+		int keyCode = lua_tonumber(L, 1);
+		lua_pushboolean(L, Input::isHeld(keyCode));
+		return 1;
+	}
+
+	static int input_isReleased(lua_State* L)
+	{
+		int keyCode = lua_tonumber(L, 1);
+		lua_pushboolean(L, Input::isReleased(keyCode));
+		return 1;
+	}
+
 	const luaL_Reg transformLib[] =
 	{
 		{"new", transform_new},
@@ -47,6 +69,13 @@ namespace Orion
 	{
 		{"new", sprite_new},
 		{"setColor", sprite_setColor}
+	};
+
+	const luaL_Reg inputLib[] =
+	{
+		{"isPressed", input_isPressed},
+		{"isHeld", input_isHeld},
+		{"isReleased", input_isReleased}
 	};
 
 

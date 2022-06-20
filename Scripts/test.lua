@@ -7,7 +7,15 @@ end
 function Update()
 	--print("UPDATE1")
 	Transform.setPos(transform, math.sin(i), -1);
-	Sprite.setColor(sprite,1,.2,.5);
 	i = i + .1;
+	if(Input.isPressed(69)) then
+	Sprite.setColor(sprite,1,.1,.1);
+	end
+	if(Input.isHeld(69)) then
+	Sprite.setColor(sprite,.1,1,.1);
+	end
+	if(Input.isReleased(69)) then
+	Sprite.setColor(sprite,.1,.1,1);
+	end
 	return
 end
