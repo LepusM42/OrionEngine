@@ -166,6 +166,7 @@
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\Sprite.cpp" />
     <ClCompile Include="Source\Stub.cpp" />
+    <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
     <ClCompile Include="Source\UnitTest.cpp" />
     <ClCompile Include="Source\Window.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="Source\Shader.hpp" />
     <ClInclude Include="Source\Sprite.hpp" />
     <ClInclude Include="Source\Stub.hpp" />
+    <ClInclude Include="Source\Texture.hpp" />
     <ClInclude Include="Source\Transform.hpp" />
     <ClInclude Include="Source\UnitTest.h" />
     <ClInclude Include="Source\Window.hpp" />

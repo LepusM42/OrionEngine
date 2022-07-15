@@ -8,6 +8,7 @@
 #include "Component.hpp"
 #include "Mesh.hpp"
 #include "Rigel.hpp"
+#include "Texture.hpp"
 namespace Orion
 {
 	/*!*************************************************************************
@@ -22,10 +23,13 @@ namespace Orion
 		void Update(float dt) override;
 		void Stop() override;
 		Mesh& GetMesh();
+		Texture* GetTexture();
+		void SetTexture(Texture* tex);
 		Rigel::Vector<float>& GetColor();
 		~Sprite();
 	private:
 		Mesh m_mesh;
+		Texture* m_texture{ nullptr };
 		Rigel::Vector<float> m_color;
 	};
 }

@@ -120,8 +120,16 @@ namespace Orion
 		//Bind world matrix to the world matrix held in the shader
 		m_shader.GetUniformMatrix("gWorld", Renderer::GetWorldMatrix());
 
+		//Bind texture
+		if (Texture* tex = sprite->GetTexture())
+		{
+			m_shader.BindTexture(tex, 0);
+		}
+
 		//Do the drawing
 		glDrawArrays(GL_TRIANGLES, 0, sprite->GetMesh().GetNumVertices());
+
+		//Unbind texture
 
 		//Disable the attribute at index 0.
 		glDisableVertexAttribArray(attr_Pos);

@@ -74,6 +74,28 @@ namespace Orion
 	* \param
 	* \return
 	***************************************************************************/
+	Texture* Sprite::GetTexture()
+	{
+		return m_texture;
+	}
+
+	/*!*************************************************************************
+	* \fn
+	* \brief Retrieve a reference to this sprite's mesh.
+	* \param
+	* \return
+	***************************************************************************/
+	void Sprite::SetTexture(Texture* tex)
+	{
+		m_texture = tex;
+	}
+
+	/*!*************************************************************************
+	* \fn
+	* \brief Retrieve a reference to this sprite's mesh.
+	* \param
+	* \return
+	***************************************************************************/
 	Rigel::Vector<float>& Sprite::GetColor()
 	{
 		return m_color;

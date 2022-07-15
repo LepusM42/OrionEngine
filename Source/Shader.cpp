@@ -132,6 +132,23 @@ namespace Orion
 		glUniformMatrix4fv(uniformName, 1, GL_FALSE, data.GetRawMatrixData());
 	}
 
+	//! Bind a texture to a location in the shader program.
+	void ShaderProgram::BindTexture(Texture* tex, GLuint unit)
+	{
+		if (tex)
+		{
+			glActiveTexture(GL_TEXTURE0 + unit);
+			glBindTexture(GL_TEXTURE_2D, tex->GetID());
+			const int loc = glGetUniformLocation(m_shaderProgram, tex->GetName().c_str());
+			glUniform1i(loc, unit);
+		}
+		else
+		{
+			glActiveTexture(GL_TEXTURE0 + unit);
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
+	}
+
 	/*!*************************************************************************
 	* \fn void ShaderProgram::CompileShaderSource(ShaderObject shader);
 	* \brief Compile one shader object and attach it to the shader program.
