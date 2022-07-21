@@ -105,15 +105,15 @@ namespace Orion
 		//glVertexAttrib3f(attr_Pos, pos[0], pos[1], pos[2]);
 
 		int attr_Col = m_shader.GetAttribute("baseColor");
-		glVertexAttribPointer(attr_Col, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+		glVertexAttribPointer(attr_Col, 3, GL_FLOAT, GL_FALSE, 0, (void*)(3 * sizeof(float)));
 		glVertexAttrib3f(attr_Col, sprite->GetColor()[0], sprite->GetColor()[1], sprite->GetColor()[2]);
 
-		//Bind scale to shader scale
-		// 
+		int attr_texCoord = m_shader.GetAttribute("vertexTexture");
+		glVertexAttribPointer(attr_texCoord, 2, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)(0));
+		glEnableVertexAttribArray(attr_texCoord);
+
 		float posVec[3] = { transform->GetTranslation()[0], transform->GetTranslation()[1], transform->GetTranslation()[2] };
 		m_shader.GetUniformData("posVec", posVec);
-
-		//m_shader.GetUniformData("scale", scale);
 
 		m_shader.GetUniformMatrix("transMat", transform->GetMatrix());
 
@@ -123,7 +123,7 @@ namespace Orion
 		//Bind texture
 		if (Texture* tex = sprite->GetTexture())
 		{
-			m_shader.BindTexture(tex, 0);
+			m_shader.BindTexture(tex, 1);
 		}
 
 		//Do the drawing

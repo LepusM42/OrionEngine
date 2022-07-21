@@ -85,9 +85,10 @@ namespace Orion
 	* \param
 	* \return
 	***************************************************************************/
-	void Sprite::SetTexture(Texture* tex)
+	void Sprite::SetTexture(std::string filename)
 	{
-		m_texture = tex;
+		if (m_texture) delete m_texture;
+		m_texture = new Texture(filename);
 	}
 
 	/*!*************************************************************************

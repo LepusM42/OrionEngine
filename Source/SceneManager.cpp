@@ -81,6 +81,12 @@ namespace Orion
 					{
 						sceneFile >> spr->GetColor()[0] >> spr->GetColor()[1] >> spr->GetColor()[2];
 					}
+					if (str == "Texture")
+					{
+						std::string texName;
+						sceneFile >> texName;
+						spr->SetTexture(texName);
+					}
 				}
 				Betel::Deallocate(triBuf);
 				spr->GetMesh().Init();

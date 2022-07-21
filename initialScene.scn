@@ -4,21 +4,23 @@ StartObj
 		Translation
 			0.00 0.00 0.00
 		Scale
-			0.10 0.10 0.10
+			1.0 1.0 1.0
 		Rotation
 			0.00
 	EndComp
 	Sprite
 		Tri
-		-0.50 -0.50 0.00
-		-0.50 0.50 0.00
-		0.50 -0.50 0.00
+		1 1 0
+		1 0 0
+		0 0 0
 		Tri
-		-0.50 0.50 0.00
-		0.50 -0.50 0.00
-		0.50 0.50 0.00
+		1 1 0
+		0 0 0
+		0 1 0
 		Color
 		1 1 1
+		Texture
+		img.png
 	EndComp
 	ScriptComponent
 		test
@@ -42,6 +44,8 @@ StartObj
 		0.00 1.00 0.00
 		Color
 		1 1 1
+		Texture
+		img.png
 	EndComp
 	ScriptComponent
 		sampleScript

@@ -139,7 +139,7 @@ namespace Orion
 		{
 			glActiveTexture(GL_TEXTURE0 + unit);
 			glBindTexture(GL_TEXTURE_2D, tex->GetID());
-			const int loc = glGetUniformLocation(m_shaderProgram, tex->GetName().c_str());
+			const int loc = glGetUniformLocation(m_shaderProgram, "tex");
 			glUniform1i(loc, unit);
 		}
 		else
