@@ -26,28 +26,3 @@ StartObj
 		test
 	EndComp
 EndObj
-
-StartObj
-	Name: obj2
-	Transform
-		Translation
-			-0.50 0.00 0.00
-		Scale
-			1.00 1.00 1.00
-		Rotation
-			0.00
-	EndComp
-	Sprite
-		Tri
-		-0.50 0.00 0.00
-		0.50 0.00 0.00
-		0.00 1.00 0.00
-		Color
-		1 1 1
-		Texture
-		img.png
-	EndComp
-	ScriptComponent
-		sampleScript
-	EndComp
-EndObj
