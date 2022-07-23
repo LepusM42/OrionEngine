@@ -72,7 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\sethm\Desktop\OrionEngine\External Libraries\stb\include;C:\Users\sethm\Desktop\OrionEngine\lua542\include;C:\Users\sethm\Desktop\OrionEngine\External Libraries\glew-2.1.0\include\GL;C:\Users\sethm\Desktop\OrionEngine\External Libraries\glfw-3.3.4.bin.WIN32\include\GLFW;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\sethm\Desktop\OrionEngine\External Libraries\imgui-master;C:\Users\sethm\Desktop\OrionEngine\External Libraries\stb\include;C:\Users\sethm\Desktop\OrionEngine\lua542\include;C:\Users\sethm\Desktop\OrionEngine\External Libraries\glew-2.1.0\include\GL;C:\Users\sethm\Desktop\OrionEngine\External Libraries\glfw-3.3.4.bin.WIN32\include;$(IncludePath)</IncludePath>
     <SourcePath>$(SourcePath)</SourcePath>
     <LibraryPath>C:\Users\sethm\Desktop\OrionEngine\External Libraries\stb\lib;C:\Users\sethm\Desktop\OrionEngine\lua542;C:\Users\sethm\Desktop\OrionEngine\External Libraries\glew-2.1.0\lib\Release\Win32;C:\Users\sethm\Desktop\OrionEngine\External Libraries\glfw-3.3.4.bin.WIN32\lib-vc2019;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
@@ -92,6 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\sethm\Desktop\OrionEngine\External Libraries\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -149,11 +150,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="External Libraries\imgui-master\backends\imgui_impl_glfw.cpp" />
+    <ClCompile Include="External Libraries\imgui-master\backends\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="External Libraries\imgui-master\backends\imgui_impl_win32.cpp" />
+    <ClCompile Include="External Libraries\imgui-master\imgui.cpp" />
+    <ClCompile Include="External Libraries\imgui\imgui_demo.cpp" />
+    <ClCompile Include="External Libraries\imgui\imgui_draw.cpp" />
+    <ClCompile Include="External Libraries\imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="External Libraries\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="External Libraries\imgui\imgui_tables.cpp" />
+    <ClCompile Include="External Libraries\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Source\Betel.cpp" />
     <ClCompile Include="Source\Component.cpp" />
     <ClCompile Include="Source\Engine.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
     <ClCompile Include="Source\Example.cpp" />
+    <ClCompile Include="Source\ImGuiInterface.cpp" />
     <ClCompile Include="Source\Input.cpp" />
     <ClCompile Include="Source\LuaLibs.cpp" />
     <ClCompile Include="Source\main.cpp" />
@@ -177,6 +189,7 @@
     <ClInclude Include="Source\Engine.hpp" />
     <ClInclude Include="Source\EntityManager.hpp" />
     <ClInclude Include="Source\Example.hpp" />
+    <ClInclude Include="Source\ImGuiInterface.hpp" />
     <ClInclude Include="Source\Input.hpp" />
     <ClInclude Include="Source\LuaLibs.hpp" />
     <ClInclude Include="Source\Mesh.hpp" />

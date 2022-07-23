@@ -52,4 +52,7 @@ namespace Orion
 		//! Used by manager to delete
 		bool m_marked{ false };
 	};
+
+	//! Make a new blank entity
+	Entity* CreateEntity();
 }

@@ -4,8 +4,11 @@
 * \brief This is a stub file, used as a template for all other files.
 *******************************************************************************/
 #include "Entity.hpp"
+#include "EntityManager.hpp"
 #include "Component.hpp"
 #include "Betel.hpp"
+#include "Transform.hpp"
+#include "Sprite.hpp"
 namespace Orion
 {
 	/*!*************************************************************************
@@ -83,5 +86,43 @@ namespace Orion
 			Betel::Deallocate(component);
 		}
 		m_components.clear();
+	}
+
+	//! Make a new blank entity
+	Entity* CreateEntity()
+	{
+		Entity* e = Betel::Allocate<Entity>();
+
+		Transform* t = Betel::Allocate<Transform>();
+		Sprite* s = Betel::Allocate<Sprite>();
+
+		float p1[3] = { 0,0,0 };
+		float p2[3] = { 1,1,0 };
+		float p3[3] = { 0,1,0 };
+		float p4[3] = { 1,0,0 };
+
+		Vertex v1 = Vertex(p1, 3);
+		Vertex v2 = Vertex(p2, 3);
+		Vertex v3 = Vertex(p3, 3);
+		Vertex v4 = Vertex(p4, 3);
+
+		s->GetMesh().AddTriangle(v2, v4, v1);
+		s->GetMesh().AddTriangle(v2, v1, v3);
+		s->GetMesh().Init();
+		s->GetColor()[0] = 1;
+		s->GetColor()[1] = .5;
+		s->GetColor()[2] = .5;
+		s->GetColor()[3] = 1;
+		e->Add(s);
+		s->Start();
+
+		t->GetTranslation() = Rigel::Vector<float>(1.0f, 3);
+		t->GetScale() = Rigel::Vector<float>(1.0f, 2);
+		e->Add(t);
+		t->Start();
+
+		EntityManager::Add(e);
+
+		return e;
 	}
 }
