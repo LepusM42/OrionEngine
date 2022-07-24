@@ -52,6 +52,22 @@ namespace Orion
 
 	/*!*************************************************************************
 	* \fn
+	* \brief Get a list of the names of all objects in a scene.
+	* \param
+	* \return
+	***************************************************************************/
+	std::vector<Entity*> EntityManager::Pool()
+	{
+		std::vector<Entity*> pool;
+		for (Entity* e : m_entityPool)
+		{
+			pool.push_back(e);
+		}
+		return pool;
+	}
+
+	/*!*************************************************************************
+	* \fn
 	* \brief Called at least once in the constructor to initialize some
 	*  properties. Can be called later upon the reset of this component.
 	* \param

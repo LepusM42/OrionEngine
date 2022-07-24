@@ -4,7 +4,7 @@
 * \brief This is a stub file, used as a template for all other files.
 *******************************************************************************/
 #pragma once
-#include "glfw3.h"
+#include "GLFW/glfw3.h"
 #include <array>
 namespace Orion
 {

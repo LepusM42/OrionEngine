@@ -33,6 +33,8 @@ namespace Orion
 		ComponentType* Get();
 		//! Set the parent Entity of this component. Can only be done once.
 		void SetParent(Entity* parent);
+		//! Display data in IMGui
+		virtual void DisplayImGui();
 		//! Destructor. Called only once, and cleans up any remaining allocated
 		//! objects.
 		~Component();

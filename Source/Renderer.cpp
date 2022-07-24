@@ -36,6 +36,8 @@ namespace Orion
 		{
 			std::cout << glewGetErrorString(retval) << std::endl;
 		}
+		s_world[0][0] = 1.0f/800.f;
+		s_world[1][1] = 1.0f/600.f;
 	}
 
 	/*!*************************************************************************
@@ -48,6 +50,7 @@ namespace Orion
 		{
 			Render(d.spr, d.trn);
 		}
+		m_drawPool.clear();
 	}
 
 	/*!*************************************************************************

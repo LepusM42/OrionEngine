@@ -102,15 +102,18 @@ namespace Orion
 		//Bind position to shader position
 		int attr_Pos = m_shader.GetAttribute("position");
 		glVertexAttribPointer(attr_Pos, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-		//glVertexAttrib3f(attr_Pos, pos[0], pos[1], pos[2]);
 
 		int attr_Col = m_shader.GetAttribute("baseColor");
 		glVertexAttribPointer(attr_Col, 3, GL_FLOAT, GL_FALSE, 0, (void*)(3 * sizeof(float)));
 		glVertexAttrib3f(attr_Col, sprite->GetColor()[0], sprite->GetColor()[1], sprite->GetColor()[2]);
-
+		
 		int attr_texCoord = m_shader.GetAttribute("vertexTexture");
 		glVertexAttribPointer(attr_texCoord, 2, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)(0));
 		glEnableVertexAttribArray(attr_texCoord);
+
+		int attr_Texd = m_shader.GetUniform("textured");
+		if(sprite->GetTexture()) glUniform1i(attr_Texd, 1);
+		else glUniform1i(attr_Texd, 0);
 
 		float posVec[3] = { transform->GetTranslation()[0], transform->GetTranslation()[1], transform->GetTranslation()[2] };
 		m_shader.GetUniformData("posVec", posVec);
@@ -121,15 +124,14 @@ namespace Orion
 		m_shader.GetUniformMatrix("gWorld", Renderer::GetWorldMatrix());
 
 		//Bind texture
-		if (Texture* tex = sprite->GetTexture())
-		{
-			m_shader.BindTexture(tex, 1);
-		}
+		m_shader.BindTexture(sprite->GetTexture(), 1);
+		
 
 		//Do the drawing
 		glDrawArrays(GL_TRIANGLES, 0, sprite->GetMesh().GetNumVertices());
 
 		//Unbind texture
+		m_shader.BindTexture(sprite->GetTexture(), 0);
 
 		//Disable the attribute at index 0.
 		glDisableVertexAttribArray(attr_Pos);

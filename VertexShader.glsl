@@ -10,7 +10,7 @@ out vec4 color;
 void main()
 {
 	gl_Position = gWorld * transMat * vec4(position.x, position.y, position.z, 1.0);
-	gl_Position += posVec;
+	gl_Position += vec4(posVec, 1.0) * gWorld;
 	color.xyz = baseColor;
 	texCoord = vertexTexture;
 }

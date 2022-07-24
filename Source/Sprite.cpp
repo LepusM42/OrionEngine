@@ -90,6 +90,7 @@ namespace Orion
 	{
 		if (m_texture) delete m_texture;
 		m_texture = new Texture(filename);
+		m_texture->SetName(filename);
 	}
 
 	/*!*************************************************************************
@@ -112,6 +113,13 @@ namespace Orion
 	void Sprite::DisplayImGui()
 	{
 		ImGui::Text("Sprite");
+		if (m_texture)
+		{
+			char buffer[64];
+			memcpy(buffer, m_texture->GetName().c_str(), 64);
+			ImGui::InputText("Texture", buffer, 64);
+			SetTexture(buffer);
+		}
 		ImGui::SliderFloat("R", &GetColor()[0], 0, 1, 0, 0);
 		ImGui::SliderFloat("G", &GetColor()[1], 0, 1, 0, 0);
 		ImGui::SliderFloat("B", &GetColor()[2], 0, 1, 0, 0);

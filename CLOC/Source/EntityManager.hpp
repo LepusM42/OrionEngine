@@ -18,6 +18,7 @@ namespace Orion
 	{
 	public:
 		EntityManager();
+		static std::vector<Entity*> Pool();
 		static void Add(Entity* e);
 		static void Update(float dt);
 		static void Remove(Entity* e);

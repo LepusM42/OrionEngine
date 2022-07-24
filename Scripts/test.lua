@@ -10,16 +10,16 @@ function Update()
 	--print("UPDATE1")
 
 	if(Input.isLeftDown()) then
-		x = x - .01;
+		x = x - 1;
 	end
 	if(Input.isRightDown()) then
-		x = x + .01;
+		x = x + 1;
 	end
 	if(Input.isUpDown()) then
-		y = y + .01;
+		y = y + 1;
 	end
 	if(Input.isDownDown()) then
-		y = y - .01;
+		y = y - 1;
 	end
 
 	Transform.setPos(transform, x, y);

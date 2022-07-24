@@ -7,6 +7,7 @@
 #include "Input.hpp"
 #include "SceneManager.hpp"
 #include "EntityManager.hpp"
+#include "ImGuiInterface.hpp"
 namespace Orion
 {
 	//Initialize the static boolean that runs the engine
@@ -30,6 +31,7 @@ namespace Orion
 		m_window.Init();
 		Renderer::Init();
 		SceneManager::Load("initialScene.scn");
+		Cetus::Init(m_window.GetWindow());
 	}
 
 	/*!*************************************************************************
@@ -43,6 +45,7 @@ namespace Orion
 			m_window.Update();
 			Input::Update();
 			EntityManager::Update(0.0f);
+			Cetus::Render();
 			Renderer::Update();
 		}
 	}
@@ -53,6 +56,7 @@ namespace Orion
 	***************************************************************************/
 	void Engine::Shutdown()
 	{
+		Cetus::Shutdown();
 		m_window.Shutdown();
 	}
 

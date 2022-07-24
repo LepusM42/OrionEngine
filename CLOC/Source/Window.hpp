@@ -4,7 +4,7 @@
 * \brief Creates and manages the application window.
 *******************************************************************************/
 #pragma once
-#include "glfw3.h"
+#include "GLFW/glfw3.h"
 namespace Orion
 {
 	//! Global callback used when a window is closed.
@@ -24,6 +24,8 @@ namespace Orion
 		void Update();
 		//! Shut down the window and GL Context.
 		void Shutdown();
+		//! Get an instance of the static window.
+		GLFWwindow* GetWindow();
 	private:
 		//! GLFW window and GL Context used for rendering.
 		GLFWwindow* s_window;

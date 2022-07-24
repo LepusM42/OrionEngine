@@ -4,6 +4,7 @@
 * \brief This is a template for other component files.
 *******************************************************************************/
 #include "Transform.hpp"
+#include "Renderer.hpp"
 #include <imgui.h>
 namespace Orion
 {
@@ -86,6 +87,9 @@ namespace Orion
 		ImGui::InputFloat("Position X", &GetTranslation()[0]);
 		ImGui::InputFloat("Position Y", &GetTranslation()[1]);
 		ImGui::InputFloat("Position Z", &GetTranslation()[2]);
+		ImGui::InputFloat("Scale X", &GetScale()[0]);
+		ImGui::InputFloat("Scale Y", &GetScale()[1]);
+		ImGui::InputFloat("Scale Z", &GetScale()[2]);
 	}
 
 	/*!*************************************************************************

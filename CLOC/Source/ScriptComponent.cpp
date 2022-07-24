@@ -8,6 +8,7 @@
 #include "Sprite.hpp"
 #include "Entity.hpp"
 #include "LuaLibs.hpp"
+#include <imgui.h>
 
 namespace Orion
 {
@@ -69,6 +70,28 @@ namespace Orion
 		for (auto script : m_scripts)
 		{
 			script.Stop();
+		}
+	}
+
+	/*!*************************************************************************
+	* \fn
+	* \brief Display some data for the ImGui window.
+	* \param
+	* \return
+	***************************************************************************/
+	void ScriptComponent::DisplayImGui()
+	{
+		ImGui::Text("LUA Scripts");
+		for (auto script : m_scripts)
+		{
+			ImGui::Text(script.m_filename.c_str());
+		}
+		ImGui::InputText("##", m_imguiBuffer, 64);
+		ImGui::SameLine();
+		if (ImGui::Button("New Script"))
+		{
+			AddScript(m_imguiBuffer);
+			m_scripts[m_scripts.size() - 1].Start();
 		}
 	}
 

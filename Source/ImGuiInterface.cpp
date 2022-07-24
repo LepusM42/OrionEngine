@@ -7,6 +7,7 @@
 #include "Entity.hpp"
 #include "EntityManager.hpp"
 #include "Sprite.hpp"
+#include "ScriptComponent.hpp"
 #include "Transform.hpp"
 #include "Betel.hpp"
 #include <string>
@@ -35,18 +36,6 @@ namespace Orion
 		int itemCurrent = 0;
 		void MakeGUI(std::string title)
 		{
-			ImGui::Begin("Objects in Scene");
-			auto pool = EntityManager::Pool();
-			std::vector<const char*> namePool;
-			for (auto entity : pool)
-			{
-				namePool.push_back(entity->m_name.c_str());
-			}
-			ImGui::ListBox("Objects", &itemCurrent, namePool.data(), namePool.size());
-			currentEntity = pool[itemCurrent];
-
-			ImGui::End();
-
 			ImGui::Begin(title.c_str());
 
 			if (ImGui::Button("New Game Object"))
@@ -60,8 +49,36 @@ namespace Orion
 				ImGui::InputText("Object Name", buffer[itemCurrent], 64);
 				currentEntity->m_name = buffer[itemCurrent];
 				currentEntity->DisplayComponents();
+				if (ImGui::BeginMenu("AddComponent"))
+				{
+					bool transformSelected, spriteSelected, scriptSelected;
+					if (ImGui::MenuItem("Transform", "1", &transformSelected))
+					{
+						currentEntity->AddNew<Transform>();
+					}
+					if (ImGui::MenuItem("Sprite", "2", &spriteSelected))
+					{
+						currentEntity->AddNew<Sprite>();
+					}
+					if (ImGui::MenuItem("Script", "3", &scriptSelected))
+					{
+						currentEntity->AddNew<ScriptComponent>();
+					}
+					ImGui::EndMenu();
+				}
 			}
 
+			ImGui::End();
+
+			ImGui::Begin("Objects in Scene");
+			auto pool = EntityManager::Pool();
+			std::vector<const char*> namePool;
+			for (auto entity : pool)
+			{
+				namePool.push_back(entity->m_name.c_str());
+			}
+			ImGui::ListBox("Objects", &itemCurrent, namePool.data(), namePool.size());
+			currentEntity = pool[itemCurrent];
 			ImGui::End();
 		}
 		void Render()

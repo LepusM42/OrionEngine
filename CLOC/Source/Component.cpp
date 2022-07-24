@@ -95,6 +95,17 @@ namespace Orion
 
 	/*!*************************************************************************
 	* \fn
+	* \brief Display data in IMGui.
+	* \param
+	* \return
+	***************************************************************************/
+	void Component::DisplayImGui()
+	{
+
+	}
+
+	/*!*************************************************************************
+	* \fn
 	* \brief Destructor. Called only once, and cleans up any remaining allocated
 	*  objects.
 	* \param

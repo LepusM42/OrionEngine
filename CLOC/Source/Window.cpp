@@ -8,6 +8,7 @@
 #include "Engine.hpp"
 #include "Rigel.hpp"
 #include "Input.hpp"
+#include "ImGuiInterface.hpp"
 #include <iostream>
 namespace Orion
 {
@@ -67,6 +68,14 @@ namespace Orion
 	void Window::Shutdown()
 	{
 		glfwTerminate();
+	}
+	/*!*************************************************************************
+	* \fn Window::GetWindow();
+	* \brief Get an instance of the static window.
+	***************************************************************************/
+	GLFWwindow* Window::GetWindow()
+	{
+		return s_window;
 	}
 
 	/*!*************************************************************************

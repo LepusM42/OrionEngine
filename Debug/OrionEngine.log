@@ -1,5 +1,4 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(1097,5): warning MSB8027: Two or more files with the name of imgui_impl_glfw.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are External Libraries\imgui-master\backends\imgui_impl_glfw.cpp, External Libraries\imgui\imgui_impl_glfw.cpp.
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(1097,5): warning MSB8027: Two or more files with the name of imgui_impl_opengl3.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are External Libraries\imgui-master\backends\imgui_impl_opengl3.cpp, External Libraries\imgui\imgui_impl_opengl3.cpp.
-  ImGuiInterface.cpp
-C:\Users\sethm\Desktop\OrionEngine\Source\ImGuiInterface.cpp(58,39): warning C4018: '>': signed/unsigned mismatch
+  Transform.cpp
   OrionEngine.vcxproj -> C:\Users\sethm\Desktop\OrionEngine\Debug\OrionEngine.exe

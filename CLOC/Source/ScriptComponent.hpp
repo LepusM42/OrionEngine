@@ -41,9 +41,9 @@ namespace Orion
 			lua_pushlightuserdata(m_luaState, base);
 			lua_setglobal(m_luaState, var.c_str());
 		}
+		std::string m_filename;
 	private:
 		ScriptComponent* m_parent{ nullptr };
-		std::string m_filename;
 		lua_State* m_luaState;
 	};
 
@@ -58,6 +58,7 @@ namespace Orion
 		void Start() override;
 		void Update(float dt) override;
 		void Stop() override;
+		void DisplayImGui() override;
 		~ScriptComponent();
 		//add a script file by name
 		void AddScript(std::string filename);
@@ -67,5 +68,6 @@ namespace Orion
 		std::vector<Script> m_scripts;
 		Transform* m_transform{ nullptr };
 		Sprite* m_sprite{ nullptr };
+		char m_imguiBuffer[64]{ "" };
 	};
 }
