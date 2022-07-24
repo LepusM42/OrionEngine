@@ -44,6 +44,8 @@ namespace Orion
 		bool MarkedForDestruction();
 		//! Remove all components
 		void ClearComponents();
+		//! Display all components in ImGui
+		void DisplayComponents();
 		//! Name of the object
 		std::string m_name;
 	private:

@@ -6,6 +6,7 @@
 #include "Sprite.hpp"
 #include "Renderer.hpp"
 #include "Transform.hpp"
+#include <imgui.h>
 namespace Orion
 {
 	/*!*************************************************************************
@@ -100,6 +101,20 @@ namespace Orion
 	Rigel::Vector<float>& Sprite::GetColor()
 	{
 		return m_color;
+	}
+
+	/*!*************************************************************************
+	* \fn
+	* \brief Display data in IMGui.
+	* \param
+	* \return
+	***************************************************************************/
+	void Sprite::DisplayImGui()
+	{
+		ImGui::Text("Sprite");
+		ImGui::SliderFloat("R", &GetColor()[0], 0, 1, 0, 0);
+		ImGui::SliderFloat("G", &GetColor()[1], 0, 1, 0, 0);
+		ImGui::SliderFloat("B", &GetColor()[2], 0, 1, 0, 0);
 	}
 
 	/*!*************************************************************************

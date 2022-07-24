@@ -17,6 +17,7 @@ namespace Orion
 	public:
 		Example();
 		void Update(float dt) override;
+		void DisplayComponents();
 		~Example();
 	private:
 		void Start() override;

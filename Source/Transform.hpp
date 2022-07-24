@@ -20,6 +20,7 @@ namespace Orion
 		void Start() override;
 		void Update(float dt) override;
 		void Stop() override;
+		void DisplayImGui() override;
 		~Transform();
 
 		Rigel::Vector<float>& GetTranslation();

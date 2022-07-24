@@ -4,6 +4,7 @@
 * \brief This is a template for other component files.
 *******************************************************************************/
 #include "Transform.hpp"
+#include <imgui.h>
 namespace Orion
 {
 	/*!*************************************************************************
@@ -71,6 +72,20 @@ namespace Orion
 	void Transform::Stop()
 	{
 
+	}
+
+	/*!*************************************************************************
+	* \fn
+	* \brief Display data in IMGui.
+	* \param
+	* \return
+	***************************************************************************/
+	void Transform::DisplayImGui()
+	{
+		ImGui::Text("Transform");
+		ImGui::InputFloat("Position X", &GetTranslation()[0]);
+		ImGui::InputFloat("Position Y", &GetTranslation()[1]);
+		ImGui::InputFloat("Position Z", &GetTranslation()[2]);
 	}
 
 	/*!*************************************************************************

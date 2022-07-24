@@ -88,6 +88,15 @@ namespace Orion
 		m_components.clear();
 	}
 
+	//! Display all components in ImGui
+	void Entity::DisplayComponents()
+	{
+		for (Component* component : m_components)
+		{
+			component->DisplayImGui();
+		}
+	}
+
 	//! Make a new blank entity
 	Entity* CreateEntity()
 	{
@@ -96,10 +105,10 @@ namespace Orion
 		Transform* t = Betel::Allocate<Transform>();
 		Sprite* s = Betel::Allocate<Sprite>();
 
-		float p1[3] = { 0,0,0 };
-		float p2[3] = { 1,1,0 };
-		float p3[3] = { 0,1,0 };
-		float p4[3] = { 1,0,0 };
+		float p1[3] = { -.5,-.5,0 };
+		float p2[3] = { .5,.5,0 };
+		float p3[3] = { -.5,.5,0 };
+		float p4[3] = { .5,-.5,0 };
 
 		Vertex v1 = Vertex(p1, 3);
 		Vertex v2 = Vertex(p2, 3);
@@ -112,11 +121,11 @@ namespace Orion
 		s->GetColor()[0] = 1;
 		s->GetColor()[1] = .5;
 		s->GetColor()[2] = .5;
-		s->GetColor()[3] = 1;
+		s->GetColor()[3] = .1;
 		e->Add(s);
 		s->Start();
 
-		t->GetTranslation() = Rigel::Vector<float>(1.0f, 3);
+		t->GetTranslation() = Rigel::Vector<float>(0.0f, 3);
 		t->GetScale() = Rigel::Vector<float>(1.0f, 2);
 		e->Add(t);
 		t->Start();

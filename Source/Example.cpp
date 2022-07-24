@@ -30,6 +30,8 @@ namespace Orion
 
 	}
 
+	void DisplayComponents();
+
 	/*!*************************************************************************
 	* \fn
 	* \brief Called at least once in the constructor to initialize some
