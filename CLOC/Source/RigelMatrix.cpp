@@ -278,6 +278,7 @@ namespace Rigel
 				newMatrix.GetMember(i, j) = sum;
 			}
 		}
+
 		return newMatrix;
 	}
 
@@ -298,6 +299,24 @@ namespace Rigel
 			}
 		}
 		return newMatrix;
+	}
+
+	//! Assign a matrix
+	template <typename T>
+	Matrix<T>& Matrix<T>::operator=(Matrix<T> other)
+	{
+		m_width = other.m_width;
+		m_height = other.m_height;
+		delete[] m_matrix;
+		m_matrix = AllocateMatrix();
+		for (unsigned i = 0; i < m_height; ++i)
+		{
+			for (unsigned j = 0; j < m_width; ++j)
+			{
+				m_matrix[i * sizeof(T) + j] = other.m_matrix[i * sizeof(T) + j];
+			}
+		}
+		return *this;
 	}
 
 	/**************************************************************************!
@@ -361,8 +380,7 @@ namespace Rigel
 	template <typename T>
 	T* Matrix<T>::AllocateMatrix()
 	{
-		T* newMatrix = new T[m_width * m_height];
-		return newMatrix;
+		return new T[m_width * m_height];
 	}
 
 	//! Get a particular element.
@@ -379,6 +397,6 @@ namespace Rigel
 	template <typename T>
 	Matrix<T>::~Matrix()
 	{
-		//delete m_matrix;
+		delete[] m_matrix;
 	}
 }

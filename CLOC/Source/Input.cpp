@@ -80,7 +80,7 @@ namespace Orion
 		void SendEvent(int keyCode, int event)
 		{
 			input.SendKeyEvent(keyCode, event);
-			std::cout << keyCode << "\n";
+			//std::cout << keyCode << "\n";
 		}
 		/*!*************************************************************************
 		* \fn

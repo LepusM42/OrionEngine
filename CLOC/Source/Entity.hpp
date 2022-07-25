@@ -6,6 +6,7 @@
 #pragma once
 #include <vector>
 #include <string>
+#include "Betel.hpp"
 namespace Orion
 {
 	class Component;
@@ -32,6 +33,17 @@ namespace Orion
 		}
 		//! Does nothing.
 		void Add(Component* component);
+		//! Does nothing.
+		template <typename ComponentType>
+		void AddNew()
+		{
+			if (!Get<ComponentType>())
+			{
+				ComponentType* newComponent = Betel::Allocate<ComponentType>();
+				Add(newComponent);
+				newComponent->Start();
+			}
+		}
 		//! Does nothing.
 		void Start();
 		//! Does nothing.

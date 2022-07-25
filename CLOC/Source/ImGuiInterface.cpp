@@ -7,6 +7,7 @@
 #include "Entity.hpp"
 #include "EntityManager.hpp"
 #include "Sprite.hpp"
+#include "ScriptComponent.hpp"
 #include "Transform.hpp"
 #include "Betel.hpp"
 #include <string>
@@ -48,6 +49,23 @@ namespace Orion
 				ImGui::InputText("Object Name", buffer[itemCurrent], 64);
 				currentEntity->m_name = buffer[itemCurrent];
 				currentEntity->DisplayComponents();
+				if (ImGui::BeginMenu("AddComponent"))
+				{
+					bool transformSelected, spriteSelected, scriptSelected;
+					if (ImGui::MenuItem("Transform", "1", &transformSelected))
+					{
+						currentEntity->AddNew<Transform>();
+					}
+					if (ImGui::MenuItem("Sprite", "2", &spriteSelected))
+					{
+						currentEntity->AddNew<Sprite>();
+					}
+					if (ImGui::MenuItem("Script", "3", &scriptSelected))
+					{
+						currentEntity->AddNew<ScriptComponent>();
+					}
+					ImGui::EndMenu();
+				}
 			}
 
 			ImGui::End();
@@ -78,6 +96,10 @@ namespace Orion
 			ImGui_ImplGlfw_Shutdown();
 			ImGui_ImplOpenGL3_Shutdown();
 			ImGui::DestroyContext(context);
+			for (auto b : buffer)
+			{
+				delete[] b;
+			}
 		}
 	}
 }

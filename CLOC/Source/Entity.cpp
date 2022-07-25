@@ -121,12 +121,12 @@ namespace Orion
 		s->GetColor()[0] = 1;
 		s->GetColor()[1] = .5;
 		s->GetColor()[2] = .5;
-		s->GetColor()[3] = .1;
+		s->GetColor()[3] = 1;
 		e->Add(s);
 		s->Start();
 
 		t->GetTranslation() = Rigel::Vector<float>(0.0f, 3);
-		t->GetScale() = Rigel::Vector<float>(1.0f, 2);
+		t->GetScale() = Rigel::Vector<float>(200.0f, 3);
 		e->Add(t);
 		t->Start();
 

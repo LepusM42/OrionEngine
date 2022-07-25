@@ -59,6 +59,7 @@ namespace Orion
 	std::vector<Entity*> EntityManager::Pool()
 	{
 		std::vector<Entity*> pool;
+		if (m_entityPool.empty()) return pool;
 		for (Entity* e : m_entityPool)
 		{
 			pool.push_back(e);
