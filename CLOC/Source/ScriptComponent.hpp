@@ -42,6 +42,7 @@ namespace Orion
 			lua_setglobal(m_luaState, var.c_str());
 		}
 		std::string m_filename;
+		std::string m_shortname;
 	private:
 		ScriptComponent* m_parent{ nullptr };
 		lua_State* m_luaState;
@@ -64,6 +65,7 @@ namespace Orion
 		void AddScript(std::string filename);
 		Transform* GetTransform();
 		Sprite* GetSprite();
+		std::vector<Script> GetScripts();
 	private:
 		std::vector<Script> m_scripts;
 		Transform* m_transform{ nullptr };

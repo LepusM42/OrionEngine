@@ -77,6 +77,17 @@ namespace Orion
 		AddVertex(v1);
 		AddVertex(v2);
 		AddVertex(v3);
+		m_triangles.push_back(Triangle(v1, v2, v3));
+	}
+
+	/*!*************************************************************************
+	* \fn void Mesh::GEtTriangles();
+	* \brief Does nothing.
+	* \return Value of foobar.
+	***************************************************************************/
+	std::vector<Triangle> Mesh::GetTriangles()
+	{
+		return m_triangles;
 	}
 
 	/*!*************************************************************************

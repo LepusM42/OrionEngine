@@ -29,7 +29,8 @@ namespace Orion
 			auto pool = EntityManager::Pool();
 			for (auto entity : pool)
 			{
-				buffer.push_back(new char[64]());
+				char* name = new char[64]{ "EMPTY" };
+				buffer.push_back(name);
 			}
 		}
 		Entity* currentEntity{ nullptr };
@@ -41,7 +42,8 @@ namespace Orion
 			if (ImGui::Button("New Game Object"))
 			{
 				CreateEntity();
-				buffer.push_back(new char[64]());
+				char* name = new char[64]{ "EMPTY" };
+				buffer.push_back(name);
 			}
 
 			if (currentEntity && buffer.size() > itemCurrent)

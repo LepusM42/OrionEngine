@@ -116,8 +116,10 @@ namespace Orion
 	***************************************************************************/
 	void ScriptComponent::AddScript(std::string filename)
 	{
-		filename = "Scripts/" + filename + ".lua";
+		std::string shortname = filename;
+		filename = "Scripts/" + shortname + ".lua";
 		Script s(filename, this);
+		s.m_shortname = shortname;
 		m_scripts.push_back(s);
 	}
 
@@ -143,6 +145,18 @@ namespace Orion
 	Sprite* ScriptComponent::GetSprite()
 	{
 		return m_sprite;
+	}
+
+	/*!*************************************************************************
+	* \fn
+	* \brief Constructor. Called only once, making it good for one-time initial
+	*  allocations.
+	* \param
+	* \return
+	***************************************************************************/
+	std::vector<Script> ScriptComponent::GetScripts()
+	{
+		return m_scripts;
 	}
 
 	/*!*************************************************************************

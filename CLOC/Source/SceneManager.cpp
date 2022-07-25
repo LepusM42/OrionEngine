@@ -46,6 +46,8 @@ namespace Orion
 			}
 			if (str == "EndObj")
 			{
+				if (!e)
+					return;
 				EntityManager::Add(e);
 				e = nullptr;
 			}
@@ -146,7 +148,58 @@ namespace Orion
 	***************************************************************************/
 	void SceneManager::Save(std::string name)
 	{
+		std::ofstream sceneFile(name);
+		for (Entity* e : EntityManager::Pool())
+		{
+			sceneFile << "StartObj\n";
+			sceneFile << "Name: " << e->m_name << "\n";
+			if (Sprite* s = e->Get<Sprite>())
+			{
+				sceneFile << "Sprite\n";
+				for (auto tri : s->GetMesh().GetTriangles())
+				{
+					sceneFile << "Tri\n";
+					sceneFile << tri.m_v1[0] << " " << tri.m_v1[1] << " " << tri.m_v1[2] << "\n";
+					sceneFile << tri.m_v2[0] << " " << tri.m_v2[1] << " " << tri.m_v2[2] << "\n";
+					sceneFile << tri.m_v3[0] << " " << tri.m_v3[1] << " " << tri.m_v3[2] << "\n";
+				}
+				sceneFile << "Color\n";
+				sceneFile << s->GetColor()[0] << " " << s->GetColor()[1] << " " << s->GetColor()[2] << "\n";
+				if (Texture* t = s->GetTexture())
+				{
+					sceneFile << "Texture\n";
+					sceneFile << t->GetName() << "\n";
+				}
+				sceneFile << "EndComp\n";
+			}
+			if (Transform* t = e->Get<Transform>())
+			{
+				sceneFile << "Transform\n";
 
+				sceneFile << "Translation\n";
+				sceneFile << t->GetTranslation()[0] << " " << t->GetTranslation()[1] << " " << t->GetTranslation()[2] << "\n";
+				sceneFile << "Scale\n";
+				sceneFile << t->GetScale()[0] << " " << t->GetScale()[1] << " " << t->GetScale()[2] << "\n";
+				sceneFile << "Rotation\n";
+				sceneFile << t->GetRotation() << "\n";
+
+				sceneFile << "EndComp\n";
+			}
+			if (ScriptComponent* s = e->Get<ScriptComponent>())
+			{
+				sceneFile << "ScriptComponent\n";
+
+				for (auto script : s->GetScripts())
+				{
+					sceneFile << script.m_shortname << "\n";
+				}
+
+				sceneFile << "EndComp\n";
+			}
+
+			sceneFile << "EndObj\n";
+
+		}
 	}
 
 	/*!*************************************************************************
