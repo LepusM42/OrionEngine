@@ -30,7 +30,7 @@ namespace Orion
 	{
 		m_window.Init();
 		Renderer::Init();
-		SceneManager::Load("initialScene.scn");
+		SceneManager::Load("savefile.scn");
 		Cetus::Init(m_window.GetWindow());
 	}
 
@@ -56,6 +56,7 @@ namespace Orion
 	***************************************************************************/
 	void Engine::Shutdown()
 	{
+		SceneManager::Save("savefile.scn");
 		Cetus::Shutdown();
 		m_window.Shutdown();
 	}
