@@ -91,6 +91,8 @@ namespace Rigel
 		Matrix<T> operator*(Matrix<T> matrix);
 		//! Add a matrix to another matrix.
 		Matrix<T> operator+(Matrix<T> matrix);
+		//! Assign a matrix
+		Matrix<T>& operator=(Matrix<T> matrix);
 		//! Transform a vector by multiplying it by a matrix.
 		Vector<T> operator*(Vector<T> vector);
 		//! Access a row.

@@ -5718,7 +5718,9 @@ static void ShowDemoWindowMisc()
         IMGUI_DEMO_MARKER("Inputs, Navigation & Focus/Keyboard, Gamepad & Navigation State");
         if (ImGui::TreeNode("Keyboard, Gamepad & Navigation State"))
         {
-            // We iterate both legacy native range and named ImGuiKey ranges, which is a little odd but this allow displaying the data for old/new backends.
+            // We iterate both legacy native range and named ImGuiKey ranges, which is a little odd but this allow displaying the data for old/
+            // 
+            // backends.
             // User code should never have to go through such hoops: old code may use native keycodes, new code may use ImGuiKey codes.
 #ifdef IMGUI_DISABLE_OBSOLETE_KEYIO
             struct funcs { static bool IsLegacyNativeDupe(ImGuiKey) { return false; } };

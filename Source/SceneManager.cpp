@@ -158,6 +158,10 @@ namespace Orion
 	***************************************************************************/
 	SceneManager::~SceneManager()
 	{
-
+		for (auto e : EntityManager::Pool())
+		{
+			Betel::Deallocate(e);
+		}
+		EntityManager::Pool().clear();
 	}
 }

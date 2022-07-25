@@ -96,6 +96,10 @@ namespace Orion
 			ImGui_ImplGlfw_Shutdown();
 			ImGui_ImplOpenGL3_Shutdown();
 			ImGui::DestroyContext(context);
+			for (auto b : buffer)
+			{
+				delete[] b;
+			}
 		}
 	}
 }

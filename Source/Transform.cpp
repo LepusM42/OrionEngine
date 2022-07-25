@@ -59,7 +59,7 @@ namespace Orion
 		t[2][3] = m_translation[2];
 
 		//putting it all together
-		m_matrix = (s * r);
+		m_matrix = s * r;
 
 	}
 
