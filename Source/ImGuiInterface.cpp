@@ -53,19 +53,23 @@ namespace Orion
 				currentEntity->DisplayComponents();
 				if (ImGui::BeginMenu("AddComponent"))
 				{
-					bool transformSelected, spriteSelected, scriptSelected;
-					if (ImGui::MenuItem("Transform", "1", &transformSelected))
+					bool traExist;
+					bool sprExist;
+					bool scrExist;
+
+					if (ImGui::MenuItem("Transform", "1", &traExist))
 					{
 						currentEntity->AddNew<Transform>();
 					}
-					if (ImGui::MenuItem("Sprite", "2", &spriteSelected))
+					if (ImGui::MenuItem("Sprite", "2", &sprExist))
 					{
 						currentEntity->AddNew<Sprite>();
 					}
-					if (ImGui::MenuItem("Script", "3", &scriptSelected))
+					if (ImGui::MenuItem("Script", "3", &scrExist))
 					{
 						currentEntity->AddNew<ScriptComponent>();
 					}
+
 					ImGui::EndMenu();
 				}
 			}

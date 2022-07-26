@@ -82,9 +82,14 @@ namespace Orion
 	void ScriptComponent::DisplayImGui()
 	{
 		ImGui::Text("LUA Scripts");
-		for (auto script : m_scripts)
+		for (auto script = m_scripts.begin(); script != m_scripts.end(); ++script)
 		{
-			ImGui::Text(script.m_filename.c_str());
+			ImGui::Text(script->m_filename.c_str());
+			ImGui::SameLine();
+			if (ImGui::Button("Remove Script"))
+			{
+				m_scripts.erase(script);
+			}
 		}
 		ImGui::InputText("##", m_imguiBuffer, 64);
 		ImGui::SameLine();
@@ -92,6 +97,29 @@ namespace Orion
 		{
 			AddScript(m_imguiBuffer);
 			m_scripts[m_scripts.size() - 1].Start();
+		}
+	}
+
+	void ScriptComponent::Save(std::ostream& sceneFile)
+	{
+		sceneFile << "ScriptComponent\n";
+
+		for (auto script : GetScripts())
+		{
+			sceneFile << script.m_shortname << "\n";
+		}
+
+		sceneFile << "EndComp\n";
+	}
+
+	void ScriptComponent::Load(std::istream& sceneFile)
+	{
+		std::string str;
+		while (str != "EndComp")
+		{
+			sceneFile >> str;
+			if (str == "EndComp") break;
+			AddScript(str);
 		}
 	}
 

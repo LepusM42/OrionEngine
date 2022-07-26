@@ -6,6 +6,8 @@
 #pragma once
 #include <iostream>
 #include <map>
+#include "Betel.hpp"
+#include "Entity.hpp"
 namespace Orion
 {
 	/*!*************************************************************************
@@ -30,5 +32,14 @@ namespace Orion
 		~SceneManager();
 	private:
 		std::map<std::string, Scene> m_sceneMap;
+		template<typename ComponentType>
+		static void LoadComponent(Entity* entity, std::istream& sceneFile)
+		{
+			ComponentType* component = Betel::Allocate<ComponentType>();
+			if (!entity || !component) return;
+			component->Load(sceneFile);
+			entity->Add(component);
+			component->Start();
+		}
 	} SM;
 }

@@ -6,6 +6,7 @@
 #include "Sprite.hpp"
 #include "Renderer.hpp"
 #include "Transform.hpp"
+#include "Betel.hpp"
 #include <imgui.h>
 namespace Orion
 {
@@ -123,6 +124,61 @@ namespace Orion
 		ImGui::SliderFloat("R", &GetColor()[0], 0, 1, 0, 0);
 		ImGui::SliderFloat("G", &GetColor()[1], 0, 1, 0, 0);
 		ImGui::SliderFloat("B", &GetColor()[2], 0, 1, 0, 0);
+	}
+
+	void Sprite::Save(std::ostream& sceneFile)
+	{
+		sceneFile << "Sprite\n";
+		for (auto tri : GetMesh().GetTriangles())
+		{
+			sceneFile << "Tri\n";
+			sceneFile << tri.m_v1[0] << " " << tri.m_v1[1] << " " << tri.m_v1[2] << "\n";
+			sceneFile << tri.m_v2[0] << " " << tri.m_v2[1] << " " << tri.m_v2[2] << "\n";
+			sceneFile << tri.m_v3[0] << " " << tri.m_v3[1] << " " << tri.m_v3[2] << "\n";
+		}
+		sceneFile << "Color\n";
+		sceneFile << GetColor()[0] << " " << GetColor()[1] << " " << GetColor()[2] << "\n";
+		if (Texture* t = GetTexture())
+		{
+			sceneFile << "Texture\n";
+			sceneFile << t->GetName() << "\n";
+		}
+		sceneFile << "EndComp\n";
+	}
+
+	void Sprite::Load(std::istream& sceneFile)
+	{
+		std::string str;
+		float* triBuf = Betel::Allocate<float>(9);
+		while (str != "EndComp")
+		{
+			sceneFile >> str;
+			if (str == "EndComp") break;
+			if (str == "Tri")
+			{
+				sceneFile >> triBuf[0] >> triBuf[1] >> triBuf[2];
+				sceneFile >> triBuf[3] >> triBuf[4] >> triBuf[5];
+				sceneFile >> triBuf[6] >> triBuf[7] >> triBuf[8];
+
+				GetMesh().AddTriangle(
+					Vertex({ triBuf[0], triBuf[1], triBuf[2] }),
+					Vertex({ triBuf[3], triBuf[4], triBuf[5] }),
+					Vertex({ triBuf[6], triBuf[7], triBuf[8] })
+				);
+			}
+			if (str == "Color")
+			{
+				sceneFile >> GetColor()[0] >> GetColor()[1] >> GetColor()[2];
+			}
+			if (str == "Texture")
+			{
+				std::string texName;
+				sceneFile >> texName;
+				SetTexture(texName);
+			}
+		}
+		Betel::Deallocate(triBuf);
+		GetMesh().Init();
 	}
 
 	/*!*************************************************************************

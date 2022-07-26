@@ -21,6 +21,8 @@ namespace Orion
 		void Update(float dt) override;
 		void Stop() override;
 		void DisplayImGui() override;
+		void Save(std::ostream& os) override;
+		void Load(std::istream& is) override;
 		~Transform();
 
 		Rigel::Vector<float>& GetTranslation();

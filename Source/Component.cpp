@@ -106,6 +106,28 @@ namespace Orion
 
 	/*!*************************************************************************
 	* \fn
+	* \brief Serialization.
+	* \param
+	* \return
+	***************************************************************************/
+	void Component::Save(std::ostream& os)
+	{
+
+	}
+
+	/*!*************************************************************************
+	* \fn
+	* \brief Serialization.
+	* \param
+	* \return
+	***************************************************************************/
+	void Component::Load(std::istream& is)
+	{
+
+	}
+
+	/*!*************************************************************************
+	* \fn
 	* \brief Destructor. Called only once, and cleans up any remaining allocated
 	*  objects.
 	* \param

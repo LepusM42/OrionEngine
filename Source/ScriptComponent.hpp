@@ -60,6 +60,8 @@ namespace Orion
 		void Update(float dt) override;
 		void Stop() override;
 		void DisplayImGui() override;
+		void Save(std::ostream& os) override;
+		void Load(std::istream& is) override;
 		~ScriptComponent();
 		//add a script file by name
 		void AddScript(std::string filename);

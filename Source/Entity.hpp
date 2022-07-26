@@ -58,6 +58,8 @@ namespace Orion
 		void ClearComponents();
 		//! Display all components in ImGui
 		void DisplayComponents();
+		//! Serialization
+		void Save(std::ostream& sceneFile);
 		//! Name of the object
 		std::string m_name;
 	private:

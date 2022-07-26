@@ -9,6 +9,7 @@
 #include "Betel.hpp"
 #include "Transform.hpp"
 #include "Sprite.hpp"
+#include <imgui.h>
 namespace Orion
 {
 	/*!*************************************************************************
@@ -91,9 +92,23 @@ namespace Orion
 	//! Display all components in ImGui
 	void Entity::DisplayComponents()
 	{
+		for (auto component = m_components.begin(); component != m_components.end(); ++component)
+		{
+			(*component)->DisplayImGui();
+			if (ImGui::Button("Remove Component"))
+			{
+				m_components.erase(component);
+				return;
+			}
+		}
+	}
+
+	//! Serialization
+	void Entity::Save(std::ostream& sceneFile)
+	{
 		for (Component* component : m_components)
 		{
-			component->DisplayImGui();
+			component->Save(sceneFile);
 		}
 	}
 

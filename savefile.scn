@@ -2,6 +2,31 @@ StartObj
 Name: EMPTY
 Sprite
 Tri
+0.5 0.5 0
+0.5 -0.5 0
+-0.5 -0.5 0
+Tri
+0.5 0.5 0
+-0.5 -0.5 0
+-0.5 0.5 0
+Color
+0 0.841471 0
+EndComp
+Transform
+Translation
+-293 265 0
+Scale
+500 500 200
+Rotation
+0
+EndComp
+ScriptComponent
+EndComp
+EndObj
+StartObj
+Name: EMPTY
+Sprite
+Tri
 1 1 0
 1 0 0
 0 0 0
@@ -16,7 +41,7 @@ img.png
 EndComp
 Transform
 Translation
-348 407 2
+415 684 2
 Scale
 100 100 1
 Rotation
@@ -24,28 +49,5 @@ Rotation
 EndComp
 ScriptComponent
 test
-EndComp
-EndObj
-StartObj
-Name: EMPTY
-Sprite
-Tri
-0.5 0.5 0
-0.5 -0.5 0
--0.5 -0.5 0
-Tri
-0.5 0.5 0
--0.5 -0.5 0
--0.5 0.5 0
-Color
-0.141 0.789 0.116
-EndComp
-Transform
-Translation
-0 0 0
-Scale
-500 500 200
-Rotation
-0
 EndComp
 EndObj

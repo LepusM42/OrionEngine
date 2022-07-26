@@ -27,6 +27,8 @@ namespace Orion
 		void SetTexture(std::string filename);
 		Rigel::Vector<float>& GetColor();
 		void DisplayImGui() override;
+		void Save(std::ostream& os) override;
+		void Load(std::istream& is) override;
 		~Sprite();
 	private:
 		Mesh m_mesh;

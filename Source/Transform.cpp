@@ -92,6 +92,46 @@ namespace Orion
 		ImGui::InputFloat("Scale Z", &GetScale()[2]);
 	}
 
+	void Transform::Save(std::ostream& sceneFile)
+	{
+		sceneFile << "Transform\n";
+
+		sceneFile << "Translation\n";
+		sceneFile << GetTranslation()[0] << " " << GetTranslation()[1] << " " << GetTranslation()[2] << "\n";
+		sceneFile << "Scale\n";
+		sceneFile << GetScale()[0] << " " << GetScale()[1] << " " << GetScale()[2] << "\n";
+		sceneFile << "Rotation\n";
+		sceneFile << GetRotation() << "\n";
+
+		sceneFile << "EndComp\n";
+	}
+
+	void Transform::Load(std::istream& sceneFile)
+	{
+		std::string str;
+		while (str != "EndComp")
+		{
+			sceneFile >> str;
+			if (str == "EndComp") break;
+			if (str == "Translation")
+			{
+				sceneFile >> GetTranslation()[0];
+				sceneFile >> GetTranslation()[1];
+				sceneFile >> GetTranslation()[2];
+			}
+			if (str == "Scale")
+			{
+				sceneFile >> GetScale()[0];
+				sceneFile >> GetScale()[1];
+				sceneFile >> GetScale()[2];
+			}
+			if (str == "Rotation")
+			{
+				sceneFile >> GetRotation();
+			}
+		}
+	}
+
 	/*!*************************************************************************
 	* \fn
 	* \brief Constructor. Called only once, making it good for one-time initial

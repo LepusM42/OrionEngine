@@ -35,6 +35,10 @@ namespace Orion
 		void SetParent(Entity* parent);
 		//! Display data in IMGui
 		virtual void DisplayImGui();
+		//! Serialization
+		virtual void Save(std::ostream& os);
+		//! Serialization
+		virtual void Load(std::istream& is);
 		//! Destructor. Called only once, and cleans up any remaining allocated
 		//! objects.
 		~Component();
