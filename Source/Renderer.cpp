@@ -9,6 +9,7 @@
 #include "Renderer.hpp"
 #include "Rigel.hpp"
 #include <iostream>
+#include <algorithm>
 namespace Orion
 {
 	Rigel::Matrix<float> Renderer::s_world(4);
@@ -46,6 +47,7 @@ namespace Orion
 	***************************************************************************/
 	void Renderer::Update()
 	{
+		std::sort(m_drawPool.begin(), m_drawPool.end());
 		for (auto d : m_drawPool)
 		{
 			Render(d.spr, d.trn);

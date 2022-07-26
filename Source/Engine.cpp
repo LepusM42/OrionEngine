@@ -45,8 +45,8 @@ namespace Orion
 			m_window.Update();
 			Input::Update();
 			EntityManager::Update(0.0f);
-			Cetus::Render();
 			Renderer::Update();
+			Cetus::Render();
 		}
 	}
 

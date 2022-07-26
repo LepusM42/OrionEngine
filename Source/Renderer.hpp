@@ -6,6 +6,7 @@
 #pragma once
 #include "Rigel.hpp"
 #include "Shader.hpp"
+#include "Transform.hpp"
 namespace Orion
 {
 	class Sprite;
@@ -18,6 +19,10 @@ namespace Orion
 			spr{ s }, trn{ t }
 		{
 
+		}
+		bool operator<(const SpriteTransform& other)
+		{
+			return trn->GetTranslation()[2] < other.trn->GetTranslation()[2];
 		}
 		Sprite* spr{ nullptr };
 		Transform* trn{ nullptr };

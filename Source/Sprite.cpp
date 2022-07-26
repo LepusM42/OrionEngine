@@ -113,13 +113,23 @@ namespace Orion
 	***************************************************************************/
 	void Sprite::DisplayImGui()
 	{
+		char buffer[64] = "";
+
 		ImGui::Text("Sprite");
+		ImGui::InputText("Texture", buffer, 64);
 		if (m_texture)
 		{
-			char buffer[64];
 			memcpy(buffer, m_texture->GetName().c_str(), 64);
-			ImGui::InputText("Texture", buffer, 64);
 			m_texture->SetName(buffer);
+		}
+		else
+		{
+			ImGui::InputText("Texture", buffer, 64);
+			if (buffer != "")
+			{
+				std::cout << "MAKE A TEXTURE\n";
+				SetTexture(buffer);
+			}
 		}
 		ImGui::SliderFloat("R", &GetColor()[0], 0, 1, 0, 0);
 		ImGui::SliderFloat("G", &GetColor()[1], 0, 1, 0, 0);
