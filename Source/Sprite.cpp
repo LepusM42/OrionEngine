@@ -125,10 +125,14 @@ namespace Orion
 		else
 		{
 			ImGui::InputText("Texture", buffer, 64);
+			std::cout << "MAKE A TEXTURE\n";
 			if (buffer != "")
 			{
-				std::cout << "MAKE A TEXTURE\n";
 				SetTexture(buffer);
+			}
+			else
+			{
+
 			}
 		}
 		ImGui::SliderFloat("R", &GetColor()[0], 0, 1, 0, 0);
@@ -151,6 +155,10 @@ namespace Orion
 		if (Texture* t = GetTexture())
 		{
 			sceneFile << "Texture\n";
+			if (t->GetName() == "")
+			{
+				t->SetName("img.png");
+			}
 			sceneFile << t->GetName() << "\n";
 		}
 		sceneFile << "EndComp\n";
